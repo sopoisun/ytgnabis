@@ -26,12 +26,16 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
-
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
+    Route::group(['prefix' => 'backend'], function(){
+        Route::get('/business', 'BusinessController@index');
+        Route::get('/business/category', 'CategoryController@index');
+        Route::get('/product', 'ProductController@index');
+        Route::get('/product/category', 'ProductCategoryController@index');
+    });
+
+    // has login routes
     Route::get('/home', 'HomeController@index');
 });
