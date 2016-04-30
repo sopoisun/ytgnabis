@@ -19,6 +19,7 @@ class CreateTableBusinessProducts extends Migration
             $table->string('price');
             $table->string('image_url');
             $table->string('product_category_id');
+            $table->enum('active', [1, 0])->default(1);
             $table->timestamps();
         });
     }

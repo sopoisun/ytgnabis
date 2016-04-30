@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Business extends Model
 {
-    protected $fillable = ['name', 'address', 'map_lat', 'map_long', 'phone'];
+    protected $fillable = ['name', 'address', 'map_lat', 'map_long', 'phone', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
 
     public function categories()

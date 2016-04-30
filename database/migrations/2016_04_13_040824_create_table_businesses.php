@@ -19,6 +19,7 @@ class CreateTableBusinesses extends Migration
             $table->string('map_lat');
             $table->string('map_long');
             $table->string('phone');
+            $table->enum('active', [1, 0])->default(1);
             $table->timestamps();
         });
     }

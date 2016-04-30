@@ -27,10 +27,16 @@ class ProductController extends Controller
                 $business->where('business_id', $request->get('business'));
             }
 
-            return $business->get();
+            $products = $business->get();
         }
 
-        return BusinessProduct::with(['category', 'business'])->get();
+        $products = BusinessProduct::with(['category', 'business'])->get();
+
+        return $data = [
+            'products' => $products,
+        ];
+
+        return view(config('app.backend_template').'.product.table', $data);
     }
 
     /**

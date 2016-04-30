@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\CategoryRequest;
 use App\Category;
 
 class CategoryController extends Controller
@@ -16,7 +17,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        $categories = Category::where('active', 1)->get();
+
+        $data = [
+            'categories' => $categories,
+        ];
+
+        return view(config('app.backend_template').'.category.table', $data);
     }
 
     /**
@@ -26,7 +33,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view(config('app.backend_template').'.category.create');
     }
 
     /**
@@ -35,9 +42,13 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        if( Category::create($request->all()) ){
+            return redirect('/backend/business/category')->with('success', 'Sukses simpan data kategori bisnis.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal simpan data kategori bisnis.']);
     }
 
     /**
@@ -48,7 +59,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -59,7 +70,14 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kategori = Category::find($id);
+
+        if( !$kategori ){
+            return view(config('app.backend_template').'.error.404');
+        }
+
+        $data = ['kategori' => $kategori];
+        return view(config('app.backend_template').'.category.update', $data);
     }
 
     /**
@@ -69,9 +87,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        if( Category::find($id)->update($request->all()) ){
+            return redirect('/backend/business/category')->with('success', 'Sukses ubah data kategori bisnis.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal ubah data kategori bisnis.']);
     }
 
     /**
@@ -82,6 +104,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kategori = Category::find($id);
+
+        if( $kategori && $kategori->update(['active' => 0]) ){
+            return redirect()->back()->with('success', 'Sukses hapus data '.$kategori->nama.'.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal hapus data kategori bisnis.']);
     }
 }

@@ -17,12 +17,18 @@ class BusinessController extends Controller
     public function index(Request $request)
     {
         if( $request->get('category') ){
-            return Business::whereHas('categories', function($query) use ($request) {
+            $businesses = Business::whereHas('categories', function($query) use ($request) {
                 $query->where('id', $request->get('category'));
-            })->get();
+            })->where('active', 1)->get();
+        }else{
+            $businesses = Business::where('active', 1)->get();
         }
 
-        return Business::all();
+        $data = [
+            'businesses' => $businesses,
+        ];
+
+        return view(config('app.backend_template').'.business.table', $data);
     }
 
     /**
@@ -32,7 +38,7 @@ class BusinessController extends Controller
      */
     public function create()
     {
-        //
+        return view(config('app.backend_template').'.business.create'); 
     }
 
     /**

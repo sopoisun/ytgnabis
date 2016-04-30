@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\CategoryProductRequest;
 use App\ProductCategory;
 
 class ProductCategoryController extends Controller
@@ -16,7 +17,13 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        return ProductCategory::all();
+        $categories = ProductCategory::where('active', 1)->get();
+
+        $data = [
+            'categories' => $categories,
+        ];
+
+        return view(config('app.backend_template').'.product-category.table', $data);
     }
 
     /**
@@ -26,7 +33,7 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view(config('app.backend_template').'.product-category.create');
     }
 
     /**
@@ -35,9 +42,13 @@ class ProductCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryProductRequest $request)
     {
-        //
+        if( ProductCategory::create($request->all()) ){
+            return redirect('/backend/product/category')->with('success', 'Sukses simpan data kategori produk.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal simpan data kategori produk.']);
     }
 
     /**
@@ -59,7 +70,14 @@ class ProductCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kategori = ProductCategory::find($id);
+
+        if( !$kategori ){
+            return view(config('app.backend_template').'.error.404');
+        }
+
+        $data = ['kategori' => $kategori];
+        return view(config('app.backend_template').'.product-category.update', $data);
     }
 
     /**
@@ -71,7 +89,11 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if( ProductCategory::find($id)->update($request->all()) ){
+            return redirect('/backend/product/category')->with('success', 'Sukses ubah data kategori produk.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal ubah data kategori produk.']);
     }
 
     /**
@@ -82,6 +104,12 @@ class ProductCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kategori = ProductCategory::find($id);
+
+        if( $kategori && $kategori->update(['active' => 0]) ){
+            return redirect()->back()->with('success', 'Sukses hapus data '.$kategori->nama.'.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal hapus data kategori bisnis.']);
     }
 }

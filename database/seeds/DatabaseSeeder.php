@@ -5,6 +5,7 @@ use App\Category;
 use App\Business;
 use App\BusinessProduct;
 use App\ProductCategory;
+use App\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +17,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //$this->call(UserTableSeeder::class);
+
+        $user = User::create([
+            'name' => 'Ahmad Rizal Afani',
+            'email' => 'ahmadrizalafani@gmail.com',
+            'password' => bcrypt('administrator'),
+        ]);
 
     	# Categories
     	$restoran = Category::create(['name' => 'Restoran']);

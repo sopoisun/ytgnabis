@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BusinessProduct extends Model
 {
-    protected $fillable = ['business_id', 'name', 'price', 'image_url', 'product_category_id'];
+    protected $fillable = ['business_id', 'name', 'price', 'image_url', 'product_category_id', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
 
     public function business()
