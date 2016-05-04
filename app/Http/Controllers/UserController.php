@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
 use App\User;
+use Validator;
+use Hash;
 
 class UserController extends Controller
 {
@@ -16,7 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('active', 1)->get();
+        $id = auth('web')->user()->id;
+        $users = User::whereNotIn('id', [$id])->where('active', 1)->get();
 
         $data = [
             'users' => $users,
@@ -43,47 +46,16 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        if( User::create($request->all()) ){
+        $inputs = $request->all();
+        $inputs['password'] = Hash::make($request->get('password'));
+
+        if( User::create($inputs) ){
             return redirect('/backend/user')->with('success', 'Sukses simpan data user.');
         }
 
         return redirect()->back()->withErrors(['failed' => 'Gagal simpan data user.']);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -99,5 +71,87 @@ class UserController extends Controller
         }
 
         return redirect()->back()->withErrors(['failed' => 'Gagal hapus data user.']);
+    }
+
+    public function resetPassword($id)
+    {
+        $user = User::find($id);
+
+        if( $user && $user->update(['password' => Hash::make('administrator')]) ){
+            return redirect()->back()->with('success', 'Sukses reset password user '.$user->name.'.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal reset password user.']);
+    }
+
+    public function account(Request $request)
+    {
+        $act    = $request->get('act') ? $request->get('act') : 'profile';
+        $acts   = ['profile', 'password'];
+
+        if( in_array($act, $acts) ){
+            $data = [
+                'user'  => auth('web')->user(),
+                'act'   => '/backend/save-'.$act,
+            ];
+            return view(config('app.backend_template').'.account.'.$act, $data);
+        }
+
+        return view(config('app.backend_template').'.error.404');
+    }
+
+    public function saveProfile(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ], [
+            'name.required' => 'Nama tidak boleh kosong.'
+        ]);
+
+        if( $validator->fails() ){
+            return redirect()->back()->withInput()
+                ->withErrors($validator);
+        }
+
+        $res = auth('web')->user()->update($request->all());
+
+        if( $res ){
+            return redirect()->back()->with('success', 'Sukses ubah profile akun.');
+        }
+
+        return redirect()->back()->with('failed', 'Gagal ubah profile akun.');
+    }
+
+    public function savePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'password' => 'required|confirmed',
+        ], [
+            'old_password.required' => 'Password lama tidak boleh kosong.',
+            'password.required' => 'Password tidak boleh kosong.',
+            'password.confirmed' => 'Password konfirmasi tidak sama.'
+        ]);
+
+        if( $validator->fails() ){
+            return redirect()->back()->withInput()
+                ->withErrors($validator);
+        }
+
+        $user = auth('web')->user();
+
+        if( Hash::check($request->get('old_password'), $user->password) ){
+            $res = $user->update([
+                'password' => Hash::make($request->get('password')),
+            ]);
+
+            if( $res ){
+                return redirect()->back()->with('success', 'Sukses ubah password akun.');
+            }
+        }else{
+            return redirect()->back()->with('warning', 'Password lama tidak sama.');
+        }
+
+        return redirect()->back()->with('failed', 'Gagal ubah password akun.');
     }
 }

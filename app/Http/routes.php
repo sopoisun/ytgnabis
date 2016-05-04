@@ -93,6 +93,12 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/user/add', 'UserController@create');
             Route::post('/user/add', 'UserController@store');
             Route::get('/user/{id}/delete', 'UserController@destroy');
+            Route::get('/user/{id}/reset-password', 'UserController@resetPassword');
+
+            // Account
+            Route::get('/change-account', 'UserController@account');
+            Route::post('/save-profile', 'UserController@saveProfile');
+            Route::post('/save-password', 'UserController@savePassword');
         });
     });
 

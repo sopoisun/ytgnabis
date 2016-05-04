@@ -36,6 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if( $businesses->count() )
                         {{--*/ $no = 0; /*--}}
                         @foreach($businesses as $business)
                         {{--*/ $no++; /*--}}
@@ -49,7 +50,13 @@
                             </td>
                         </tr>
                         @endforeach
+                        @else
+                        <tr>
+                            <td colspan="4" style="text-align:center;">No Data Here</td>
+                        </tr>
+                        @endif
                     </tbody>
+
                 </table>
             </section>
         </div>

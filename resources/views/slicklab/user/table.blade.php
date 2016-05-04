@@ -36,6 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if( $users->count() )
                         {{--*/ $no = 0; /*--}}
                         @foreach($users as $user)
                         {{--*/ $no++; /*--}}
@@ -44,10 +45,16 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
+                                <a class="btn btn-danger btn-xs" href="{{ url('backend/user/'.$user->id.'/reset-password') }}" onclick="return confirm('Yakin password direset ??')"><i class="fa fa-refresh "></i></a>
                                 <a class="btn btn-danger btn-xs" href="{{ url('backend/user/'.$user->id.'/delete') }}" onclick="return confirm('Yakin dihapus ??')"><i class="fa fa-trash-o "></i></a>
                             </td>
                         </tr>
                         @endforeach
+                        @else
+                        <tr>
+                            <td colspan="4" style="text-align:center;">No Data Here</td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </section>

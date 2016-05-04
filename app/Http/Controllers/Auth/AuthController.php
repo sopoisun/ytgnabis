@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -42,6 +43,14 @@ class AuthController extends Controller
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
         $this->loginView = config('app.backend_template') . '.auth.login';
+    }
+
+    /**
+     * Override Get getCredentials
+     */
+    protected function getCredentials(Request $request)
+    {
+        return $request->only($this->loginUsername(), 'password') + ['active' => 1];
     }
 
     /**

@@ -38,6 +38,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if( $products->count() )
                         {{--*/ $no = 0; /*--}}
                         @foreach($products as $product)
                         {{--*/ $no++; /*--}}
@@ -53,6 +54,11 @@
                             </td>
                         </tr>
                         @endforeach
+                        @else
+                        <tr>
+                            <td colspan="6" style="text-align:center;">No Data Here</td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </section>

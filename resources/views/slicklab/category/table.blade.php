@@ -36,6 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if( $categories->count() )
                         {{--*/ $no = 0; /*--}}
                         @foreach($categories as $category)
                         {{--*/ $no++; /*--}}
@@ -48,6 +49,11 @@
                             </td>
                         </tr>
                         @endforeach
+                        @else
+                        <tr>
+                            <td colspan="3" style="text-align:center;">No Data Here</td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </section>

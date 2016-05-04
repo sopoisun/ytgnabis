@@ -8,5 +8,5 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Member extends Authenticatable
 {
     protected $fillable = ['name', 'email', 'password', 'address', 'phone', 'photo'];
-    protected $hidden   = ['created_at', 'updated_at'];
+    protected $hidden   = ['created_at', 'updated_at', 'password', 'remember_token'];
 }

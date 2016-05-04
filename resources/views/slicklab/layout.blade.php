@@ -624,23 +624,13 @@
 
                         <li>
                             <a href="javascript:;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <img src="{{ url('/assets/'.config('app.backend_template')) }}/img/avatar-mini.jpg" alt="">John Doe
+                                <img src="{{ url('/assets/'.config('app.backend_template')) }}/img/avatar-mini.jpg" alt="">
+                                {{ auth('web')->user()->name }}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu purple pull-right">
-                                <li><a href="javascript:;">  Profile</a></li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <span class="badge bg-danger pull-right">40%</span>
-                                        <span>Settings</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <span class="label bg-info pull-right">new</span>
-                                        Help
-                                    </a>
-                                </li>
+                                <li><a href="{{ url('/backend/change-account?act=profile') }}">  Change Profile</a></li>
+                                <li><a href="{{ url('/backend/change-account?act=password') }}">  Change Password</a></li>
                                 <li><a href="{{ url('/backend/logout') }}" onclick="return confirm('Yakin logout ??')"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>
