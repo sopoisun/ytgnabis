@@ -21,6 +21,11 @@ class Authenticate
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
+                if( $guard == 'web' ){
+                    return redirect('/backend/login')
+                        ->with('warning', 'Anda belum login. Mohon login dulu. :)');
+                }
+
                 return redirect()->guest('login');
             }
         }

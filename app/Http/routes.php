@@ -27,41 +27,73 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+
+    Route::get('/login', 'Auth\MemberAuthController@getLogin');
+    Route::post('/login', 'Auth\MemberAuthController@postLogin');
+    Route::get('/register', 'Auth\MemberAuthController@getRegister');
+    Route::post('/register', 'Auth\MemberAuthController@postRegister');
+    Route::get('/logout', 'Auth\MemberAuthController@logout');
+
+    Route::get('/cek-login', function(){
+        if( auth('web')->check() ){
+            return "Login User";
+        }elseif( auth('member')->check() ){
+            return "Login Member";
+        }else{
+            return "Belum login";
+        }
+    });
 
     Route::group(['prefix' => 'backend'], function(){
-        // Business
-        Route::get('/business', 'BusinessController@index');
-        Route::get('/business/add', 'BusinessController@create');
-        Route::post('/business/add', 'BusinessController@store');
-        Route::get('/business/{id}/edit', 'BusinessController@edit');
-        Route::post('/business/{id}/edit', 'BusinessController@update');
-        Route::get('/business/{id}/delete', 'BusinessController@destroy');
+        // Login
+        Route::get('/login', 'Auth\AuthController@getLogin');
+        Route::post('/login', 'Auth\AuthController@postLogin');
+        Route::get('/logout', 'Auth\AuthController@logout');
 
-        // Business Category
-        Route::get('/business/category', 'CategoryController@index');
-        Route::get('/business/category/add', 'CategoryController@create');
-        Route::post('/business/category/add', 'CategoryController@store');
-        Route::get('/business/category/{id}/edit', 'CategoryController@edit');
-        Route::post('/business/category/{id}/edit', 'CategoryController@update');
-        Route::get('/business/category/{id}/delete', 'CategoryController@destroy');
+        Route::group(['middleware' => 'auth:web'], function(){
+            // Dashboard
+            Route::get('/', 'DashboardController@index');
+            Route::get('/dashboard', 'DashboardController@index');
 
-        // Business Products or service
-        Route::get('/product', 'ProductController@index');
+            // Business
+            Route::get('/business', 'BusinessController@index');
+            Route::get('/business/map', 'BusinessController@map');
+            Route::get('/business/add', 'BusinessController@create');
+            Route::post('/business/add', 'BusinessController@store');
+            Route::get('/business/{id}/edit', 'BusinessController@edit');
+            Route::post('/business/{id}/edit', 'BusinessController@update');
+            Route::get('/business/{id}/delete', 'BusinessController@destroy');
 
-        // Product category
-        Route::get('/product/category', 'ProductCategoryController@index');
-        Route::get('/product/category/add', 'ProductCategoryController@create');
-        Route::post('/product/category/add', 'ProductCategoryController@store');
-        Route::get('/product/category/{id}/edit', 'ProductCategoryController@edit');
-        Route::post('/product/category/{id}/edit', 'ProductCategoryController@update');
-        Route::get('/product/category/{id}/delete', 'ProductCategoryController@destroy');
+            // Business Category
+            Route::get('/business/category', 'CategoryController@index');
+            Route::get('/business/category/add', 'CategoryController@create');
+            Route::post('/business/category/add', 'CategoryController@store');
+            Route::get('/business/category/{id}/edit', 'CategoryController@edit');
+            Route::post('/business/category/{id}/edit', 'CategoryController@update');
+            Route::get('/business/category/{id}/delete', 'CategoryController@destroy');
 
-        // User Application
-        Route::get('/user', 'UserController@index');
-        Route::get('/user/add', 'UserController@create');
-        Route::post('/user/add', 'UserController@store');
-        Route::get('/user/{id}/delete', 'UserController@destroy');
+            // Business Products or service
+            Route::get('/product', 'ProductController@index');
+            Route::get('/product/add', 'ProductController@create');
+            Route::post('/product/add', 'ProductController@store');
+            Route::get('/product/{id}/edit', 'ProductController@edit');
+            Route::post('/product/{id}/edit', 'ProductController@update');
+            Route::get('/product/{id}/delete', 'ProductController@destroy');
+
+            // Product category
+            Route::get('/product/category', 'ProductCategoryController@index');
+            Route::get('/product/category/add', 'ProductCategoryController@create');
+            Route::post('/product/category/add', 'ProductCategoryController@store');
+            Route::get('/product/category/{id}/edit', 'ProductCategoryController@edit');
+            Route::post('/product/category/{id}/edit', 'ProductCategoryController@update');
+            Route::get('/product/category/{id}/delete', 'ProductCategoryController@destroy');
+
+            // User Application
+            Route::get('/user', 'UserController@index');
+            Route::get('/user/add', 'UserController@create');
+            Route::post('/user/add', 'UserController@store');
+            Route::get('/user/{id}/delete', 'UserController@destroy');
+        });
     });
 
     // has login routes

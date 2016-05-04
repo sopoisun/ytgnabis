@@ -17,7 +17,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ProductCategory::where('active', 1)->get();
+        $categories = ProductCategory::where('active', 1)->orderBy('name')->get();
 
         $data = [
             'categories' => $categories,
@@ -107,7 +107,7 @@ class ProductCategoryController extends Controller
         $kategori = ProductCategory::find($id);
 
         if( $kategori && $kategori->update(['active' => 0]) ){
-            return redirect()->back()->with('success', 'Sukses hapus data '.$kategori->nama.'.');
+            return redirect()->back()->with('success', 'Sukses hapus data '.$kategori->name.'.');
         }
 
         return redirect()->back()->withErrors(['failed' => 'Gagal hapus data kategori bisnis.']);

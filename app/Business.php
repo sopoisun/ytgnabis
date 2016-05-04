@@ -34,6 +34,6 @@ class Business extends Model
             $category = Category::where('name', $category)->first();
         }
 
-        return $this->categories()->detach($permission);
+        return $this->categories()->detach($category);
     }
 }

@@ -44,8 +44,8 @@
                             <td>{{ $business->name }}</td>
                             <td>{{ $business->address }}</td>
                             <td>
-                                <a class="btn btn-primary btn-xs" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
-                                <a class="btn btn-danger btn-xs" href="javascript:void(0);"><i class="fa fa-trash-o "></i></a>
+                                <a class="btn btn-primary btn-xs" href="{{ url('/backend/business/'.$business->id.'/edit') }}"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-danger btn-xs" href="{{ url('/backend/business/'.$business->id.'/delete') }}" onclick="return confirm('Yakin dihapus ??')"><i class="fa fa-trash-o "></i></a>
                             </td>
                         </tr>
                         @endforeach

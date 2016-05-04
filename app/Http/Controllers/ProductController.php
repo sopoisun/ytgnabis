@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\BusinessProductRequest;
+use App\Business;
 use App\BusinessProduct;
+use App\ProductCategory;
+
 
 class ProductController extends Controller
 {
@@ -27,13 +31,13 @@ class ProductController extends Controller
                 $business->where('business_id', $request->get('business'));
             }
 
-            $products = $business->get();
+            $products = $business->where('active', 1)->orderBy('name')->get();
+        }else{
+            $products = BusinessProduct::where('active', 1)->orderBy('name')->get();
         }
 
-        $products = BusinessProduct::with(['category', 'business'])->get();
-
-        return $data = [
-            'products' => $products,
+        $data = [
+            'products' => $products->load(['category', 'business']),
         ];
 
         return view(config('app.backend_template').'.product.table', $data);
@@ -44,9 +48,14 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = [
+            'businesses' => Business::where('active', 1)->lists('name', 'id'),
+            'categories' => ProductCategory::where('active', 1)->lists('name', 'id'),
+        ];
+
+        return view(config('app.backend_template').'.product.create', $data);
     }
 
     /**
@@ -55,9 +64,27 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BusinessProductRequest $request)
     {
-        //
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                $ext    = $request->file('image')->getClientOriginalExtension();
+                $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
+                $request->file('image')->move(public_path().'/files/products', $imgUrl);
+
+                $inputs = $request->only([
+                    'business_id', 'name', 'price', 'product_category_id'
+                ]) + [
+                    'image_url' => $imgUrl,
+                ];
+
+                $product = BusinessProduct::create($inputs);
+
+                return redirect('/backend/product')->with('success', 'Sukses simpan data produk.');
+            }
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal simpan data produk.']);
     }
 
     /**
@@ -79,7 +106,19 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = BusinessProduct::find($id);
+
+        if( !$product ){
+            return view(config('app.backend_template').'.error.404');
+        }
+
+        $data = [
+            'product'       => $product,
+            'businesses'    => Business::where('active', 1)->lists('name', 'id'),
+            'categories'    => ProductCategory::where('active', 1)->lists('name', 'id'),
+        ];
+
+        return view(config('app.backend_template').'.product.update', $data);
     }
 
     /**
@@ -89,9 +128,30 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BusinessProductRequest $request, $id)
     {
-        //
+        $inputs = $request->only([
+            'business_id', 'name', 'price', 'product_category_id'
+        ]);
+
+        $product = BusinessProduct::find($id);
+
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                unlink(public_path().'/files/products/'.$product->image_url);
+                $ext    = $request->file('image')->getClientOriginalExtension();
+                $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
+                $request->file('image')->move(public_path().'/files/products', $imgUrl);
+
+                $inputs += [ 'image_url' => $imgUrl ];
+            }
+        }
+
+        if( $product->update($inputs) ){
+            return redirect('/backend/product')->with('success', 'Sukses ubah data produk.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal ubah data produk.']);
     }
 
     /**
@@ -102,6 +162,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = BusinessProduct::find($id);
+
+        if( $product && $product->update(['active' => 0]) ){
+            return redirect()->back()->with('success', 'Sukses hapus data '.$product->name.'.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal hapus data produk.']);
     }
 }

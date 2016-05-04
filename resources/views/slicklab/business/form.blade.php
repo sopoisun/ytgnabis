@@ -1,7 +1,7 @@
 <div class="form-group @if($errors->has('name')) has-error @endif">
     <label for="name" class="col-lg-3 col-sm-3 control-label">Business name</label>
     <div class="col-lg-9">
-        {{ Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Enter category name']) }}
+        {{ Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Enter business name']) }}
         @if($errors->has('name'))<span class="help-block">{{ $errors->first('name') }}</span>@endif
     </div>
 </div>
@@ -10,6 +10,13 @@
     <div class="col-lg-9">
         {{ Form::text('phone', null, ['class' => 'form-control', 'id' => 'phone', 'placeholder' => 'Enter phone number']) }}
         @if($errors->has('phone'))<span class="help-block">{{ $errors->first('phone') }}</span>@endif
+    </div>
+</div>
+<div class="form-group @if($errors->has('categories')) has-error @endif">
+    <label for="name" class="col-lg-3 col-sm-3 control-label">Kategori</label>
+    <div class="col-lg-9">
+        {{ Form::select('categories[]', $categories, isset($business) ? json_decode($business->categories->lists('id'), true) : [], ['id' => 'categories', 'class' => 'form-control select2-multiple', 'multiple' => 'multiple']) }}
+        @if($errors->has('categories'))<span class="help-block">{{ $errors->first('categories') }}</span>@endif
     </div>
 </div>
 <div class="form-group @if($errors->has('map_lat')) has-error @endif">

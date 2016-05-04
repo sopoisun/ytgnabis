@@ -33,7 +33,7 @@
                     Add new business
                 </header>
                 <div class="panel-body">
-                    {!! Form::open(['role' => 'form', 'class' => 'form-horizontal']) !!}
+                    {!! Form::model($business, ['role' => 'form', 'class' => 'form-horizontal']) !!}
                         @include('slicklab.business.form')
                     {!! Form::close() !!}
                 </div>
@@ -79,8 +79,8 @@
     });
 
     // Default to blambangan location
-    var defLat  = -8.212292045017827;
-    var defLong = 114.37672555446625;
+    var defLat  = {{ $business->map_lat }};
+    var defLong = {{ $business->map_long }};
 
     var map = new GMaps({
         div: '#map',
@@ -89,40 +89,19 @@
         zoom: 16,
     });
 
-    GMaps.geolocate({
-        success: function(position) {
-            defLat  = position.coords.latitude;
-            defLong = position.coords.longitude;
-            map.setCenter(position.coords.latitude, position.coords.longitude);
-        },
-        error: function(error) {
-            // set to blambangan location
-            map.setCenter(defLat, defLong);
-            //alert('Geolocation failed: '+error.message);
-        },
-        not_supported: function() {
-            toastr.options.closeButton = true;
-            toastr.options.positionClass = "toast-bottom-right";
-            toastr.error("Your browser does not support geolocation");
-        },
-        always: function() {
-            $("#map_lat").val(defLat);
-            $("#map_long").val(defLong);
-
-            map.addMarker({
-                lat: defLat,
-                lng: defLong,
-                draggable: true,
-                dragend: function(e) {
-                    var location = {
-                        lat: e.latLng.lat(),
-                        long: e.latLng.lng()
-                    };
-                    //console.log(location);
-                    $("#map_lat").val(location.lat);
-                    $("#map_long").val(location.long);
-                }
-            });
+    map.addMarker({
+        lat: defLat,
+        lng: defLong,
+        title: "{{ $business->name }}",
+        draggable: true,
+        dragend: function(e) {
+            var location = {
+                lat: e.latLng.lat(),
+                long: e.latLng.lng()
+            };
+            //console.log(location);
+            $("#map_lat").val(location.lat);
+            $("#map_long").val(location.long);
         }
     });
 </script>

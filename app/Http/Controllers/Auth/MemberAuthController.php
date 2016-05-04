@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Member;
+use Validator;
 
-class AuthController extends Controller
+class MemberAuthController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -28,10 +31,10 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/backend'; // redirect after login
-    protected $redirectAfterLogout = '/backend/login'; // redirect after logout
-    protected $guard = 'web'; // guard login [ user / member / admin ]
-    protected $loginView = '';
+    protected $redirectTo = '/home'; // redirect after login
+    protected $redirectAfterLogout = '/login'; // redirect after logout
+    protected $guard = 'member'; // guard login [ user / member / admin ]
+    //protected $loginView = '';
 
     /**
      * Create a new authentication controller instance.
@@ -41,7 +44,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
-        $this->loginView = config('app.backend_template') . '.auth.login';
+        //$this->loginView = config('app.frontend_template') . '.auth.login';
     }
 
     /**
@@ -54,7 +57,7 @@ class AuthController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:members',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -67,10 +70,12 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return Member::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            //'address' => $data['address'],
+            //'phone' => $data['phone'],
         ]);
     }
 }

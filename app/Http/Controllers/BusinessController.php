@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\BusinessRequest;
 use App\Business;
+use App\Category;
 
 class BusinessController extends Controller
 {
@@ -19,9 +21,9 @@ class BusinessController extends Controller
         if( $request->get('category') ){
             $businesses = Business::whereHas('categories', function($query) use ($request) {
                 $query->where('id', $request->get('category'));
-            })->where('active', 1)->get();
+            })->where('active', 1)->orderBy('name')->get();
         }else{
-            $businesses = Business::where('active', 1)->get();
+            $businesses = Business::where('active', 1)->orderBy('name')->get();
         }
 
         $data = [
@@ -31,6 +33,23 @@ class BusinessController extends Controller
         return view(config('app.backend_template').'.business.table', $data);
     }
 
+    public function map(Request $request)
+    {
+        if( $request->get('category') ){
+            $businesses = Business::whereHas('categories', function($query) use ($request) {
+                $query->where('id', $request->get('category'));
+            })->where('active', 1)->get();
+        }else{
+            $businesses = Business::where('active', 1)->get();
+        }
+
+        $data = [
+            'businesses' => $businesses,
+        ];
+
+        return view(config('app.backend_template').'.business.map', $data);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -38,7 +57,11 @@ class BusinessController extends Controller
      */
     public function create()
     {
-        return view(config('app.backend_template').'.business.create'); 
+        $data = [
+            'categories' => Category::where('active', 1)->lists('name', 'id'),
+        ];
+
+        return view(config('app.backend_template').'.business.create', $data);
     }
 
     /**
@@ -47,9 +70,17 @@ class BusinessController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BusinessRequest $request)
     {
-        //
+        $business = Business::create($request->all());
+
+        $business->addCategory($request->get('categories'));
+
+        if( $business ){
+            return redirect('/backend/business')->with('success', 'Sukses simpan data bisnis.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal simpan data bisnis.']);
     }
 
     /**
@@ -71,7 +102,18 @@ class BusinessController extends Controller
      */
     public function edit($id)
     {
-        //
+        $business = Business::find($id);
+
+        if( !$business ){
+            return view(config('app.backend_template').'.error.404');
+        }
+
+        $data = [
+            'business' => $business,
+            'categories' => Category::where('active', 1)->lists('name', 'id'),
+        ];
+
+        return view(config('app.backend_template').'.business.update', $data);
     }
 
     /**
@@ -81,9 +123,27 @@ class BusinessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BusinessRequest $request, $id)
     {
-        //
+        $business       = Business::find($id);
+        $oldCategories  = json_decode($business->categories->lists('id'), true);
+
+        if( $business->update($request->all()) ){
+
+            $newCategories = array_diff($request->get('categories'), $oldCategories);
+            if( count($newCategories) ){
+                $business->addCategory($newCategories);
+            }
+
+            $removeCategories = array_diff($oldCategories, $request->get('categories'));
+            if( count($removeCategories) ){
+                $business->removeCategory($removeCategories);
+            }
+
+            return redirect('/backend/business')->with('success', 'Sukses ubah data bisnis.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal ubah data bisnis.']);
     }
 
     /**
@@ -94,6 +154,12 @@ class BusinessController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $business = Business::find($id);
+
+        if( $business && $business->update(['active' => 0]) ){
+            return redirect()->back()->with('success', 'Sukses hapus data '.$business->name.'.');
+        }
+
+        return redirect()->back()->withErrors(['failed' => 'Gagal hapus data bisnis.']);
     }
 }

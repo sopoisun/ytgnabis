@@ -44,11 +44,12 @@
                         <tr>
                             <td>{{ $no }}</td>
                             <td>{{ $product->name }}</td>
-                            <td>{{ $product->business->name }}</td>
+                            <td>{{ number_format($product->price, 0, ',', '.') }}</td>
+                            <td>{{ $product->category->name }}</td>
                             <td>{{ $product->business->name }}</td>
                             <td>
-                                <a class="btn btn-primary btn-xs" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
-                                <a class="btn btn-danger btn-xs" href="javascript:void(0);"><i class="fa fa-trash-o "></i></a>
+                                <a class="btn btn-primary btn-xs" href="{{ url('/backend/product/'.$product->id.'/edit') }}"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-danger btn-xs" href="{{ url('/backend/product/'.$product->id.'/delete') }}"><i class="fa fa-trash-o "></i></a>
                             </td>
                         </tr>
                         @endforeach

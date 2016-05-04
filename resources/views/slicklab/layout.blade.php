@@ -641,7 +641,7 @@
                                         Help
                                     </a>
                                 </li>
-                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                <li><a href="{{ url('/backend/logout') }}" onclick="return confirm('Yakin logout ??')"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>
                         <li>
@@ -1209,8 +1209,11 @@
         @if(Session::has('success'))
         toastr.success('{{ Session::get("success") }}');
         @endif
-        @if($errors->has('failed'))
-        toastr.error('{{ $errors->first("failed") }}');
+        @if(Session::has('warning'))
+        toastr.warning('{{ Session::get("warning") }}');
+        @endif
+        @if(Session::has('failed'))
+        toastr.error('{{ Session::get("failed") }}');
         @endif
     });
 
