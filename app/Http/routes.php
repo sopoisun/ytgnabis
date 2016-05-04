@@ -99,6 +99,22 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/change-account', 'UserController@account');
             Route::post('/save-profile', 'UserController@saveProfile');
             Route::post('/save-password', 'UserController@savePassword');
+
+            // Permission
+            Route::get('/permission', 'PermissionController@index');
+            Route::get('/permission/add', 'PermissionController@create');
+            Route::post('/permission/add', 'PermissionController@store');
+            Route::get('/permission/{id}/edit', 'PermissionController@edit');
+            Route::post('/permission/{id}/edit', 'PermissionController@update');
+            Route::get('/permission/{id}/delete', 'PermissionController@destroy');
+
+            // Role
+            Route::get('/role', 'RoleController@index');
+            Route::get('/role/add', 'RoleController@create');
+            Route::post('/role/add', 'RoleController@store');
+            Route::get('/role/{id}/edit', 'RoleController@edit');
+            Route::post('/role/{id}/edit', 'RoleController@update');
+            Route::get('/role/{id}/delete', 'RoleController@destroy');
         });
     });
 

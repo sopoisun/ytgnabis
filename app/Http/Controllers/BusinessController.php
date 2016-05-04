@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\BusinessRequest;
 use App\Business;
 use App\Category;
+use Gate;
 
 class BusinessController extends Controller
 {
@@ -18,6 +19,11 @@ class BusinessController extends Controller
      */
     public function index(Request $request)
     {
+        if( Gate::denies('business.read') ){
+            return "Not Accept";
+            return view(config('app.template').'.error.403');
+        }
+
         if( $request->get('category') ){
             $businesses = Business::whereHas('categories', function($query) use ($request) {
                 $query->where('id', $request->get('category'));

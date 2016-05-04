@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Permission;
+use Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        /**
+         * NOTE!!
+         * First time migration will fails, because permissions table doesn't exists.
+         */
+         foreach($this->getPermissions() as $permission) {
+             $gate->define($permission->key, function($user) use ($permission) {
+                 return $user->hasRole($permission->roles);
+             });
+         }
+    }
+
+    protected function getPermissions()
+    {
+        return Permission::with('roles')->get();
     }
 }
