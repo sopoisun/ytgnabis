@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
+use App\Http\Requests\SeoRequest;
 
-class CategoryRequest extends Request
+class CategoryRequest extends SeoRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,23 @@ class CategoryRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required',
         ];
+
+        $rules += $this->seoRules();
+
+        return $rules;
     }
 
     public function messages()
     {
-        return [
+        $messages = [
             'name.required' => 'Nama kategori tidak boleh kosong.',
         ];
+
+        $messages += $this->seoMessages();
+
+        return $messages;
     }
 }

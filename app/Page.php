@@ -3,12 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\SeoModel;
-use Carbon\Carbon;
 
-class ProductCategory extends SeoModel
+class Page extends Model
 {
-    protected $fillable = ['name', 'seo_id', 'active'];
+    protected $fillable = ['page_title', 'seo_id', 'isi', 'show_in_menu', 'sort', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
 
     public function seo()
@@ -16,19 +14,14 @@ class ProductCategory extends SeoModel
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
     }
 
-    public function products()
-    {
-        return $this->hasMany(BusinessProduct::class);
-    }
-
     public static function seoIdAttribute()
     {
-        return "PCAT-".Carbon::now()->format('dmyhis').str_random(5);
+        return "PAGE-".Carbon::now()->format('dmyhis').str_random(5);
     }
 
     public static function controllerAttribute()
     {
-        return "ProductCategoryController";
+        return "PageController";
     }
 
     public static function functionAttribute()

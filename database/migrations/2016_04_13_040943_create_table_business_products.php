@@ -14,11 +14,13 @@ class CreateTableBusinessProducts extends Migration
     {
         Schema::create('business_products', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('seo_id');
             $table->string('business_id');
             $table->string('name');
             $table->string('price');
             $table->string('image_url');
             $table->string('product_category_id');
+            $table->integer('counter')->default(0);
             $table->enum('active', [1, 0])->default(1);
             $table->timestamps();
         });

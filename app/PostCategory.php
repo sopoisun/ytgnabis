@@ -3,10 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\SeoModel;
-use Carbon\Carbon;
 
-class ProductCategory extends SeoModel
+class PostCategory extends Model
 {
     protected $fillable = ['name', 'seo_id', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
@@ -15,20 +13,20 @@ class ProductCategory extends SeoModel
     {
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
     }
-
-    public function products()
+    
+    public function post()
     {
-        return $this->hasMany(BusinessProduct::class);
+        return $this->hasMany(Post::class);
     }
 
     public static function seoIdAttribute()
     {
-        return "PCAT-".Carbon::now()->format('dmyhis').str_random(5);
+        return "PSCAT-".Carbon::now()->format('dmyhis').str_random(5);
     }
 
     public static function controllerAttribute()
     {
-        return "ProductCategoryController";
+        return "PostCategoryController";
     }
 
     public static function functionAttribute()
