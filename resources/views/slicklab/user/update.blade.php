@@ -28,7 +28,7 @@
                     Add new user
                 </header>
                 <div class="panel-body">
-                    {!! Form::open(['role' => 'form', 'class' => 'form-horizontal']) !!}
+                    {!! Form::model($user, ['role' => 'form', 'class' => 'form-horizontal']) !!}
                         @include('slicklab.user.form')
                     {!! Form::close() !!}
                 </div>

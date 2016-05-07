@@ -92,6 +92,8 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/user', 'UserController@index');
             Route::get('/user/add', 'UserController@create');
             Route::post('/user/add', 'UserController@store');
+            Route::get('/user/{id}/edit', 'UserController@edit');
+            Route::post('/user/{id}/edit', 'UserController@update');
             Route::get('/user/{id}/delete', 'UserController@destroy');
             Route::get('/user/{id}/reset-password', 'UserController@resetPassword');
 

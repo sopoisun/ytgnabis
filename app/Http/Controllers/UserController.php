@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
 use App\User;
+use App\Role;
 use Validator;
 use Hash;
 
@@ -35,7 +36,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view(config('app.backend_template').'.user.create');
+        $data = [
+            'roles' => Role::where('key', '!=', 'superuser')->get(),
+        ];
+
+        return view(config('app.backend_template').'.user.create', $data);
     }
 
     /**
@@ -49,13 +54,52 @@ class UserController extends Controller
         $inputs = $request->all();
         $inputs['password'] = Hash::make($request->get('password'));
 
-        if( User::create($inputs) ){
+        $user =  User::create($inputs);
+
+        if( $user ){
+            $roles = $request->get('roles') != "" ? $request->get('roles') : [];
+            $user->assignRole($roles);
+
             return redirect('/backend/user')->with('success', 'Sukses simpan data user.');
         }
 
         return redirect()->back()->withErrors(['failed' => 'Gagal simpan data user.']);
     }
-    
+
+    public function edit($id)
+    {
+        $user = User::with(['roles'])->find($id);
+
+        if( !$user ){
+            return view(config('app.backend_template').'.error.404');
+        }
+
+        $roles  = Role::where('key', '!=', 'superuser')->get();
+        $data   = ['roles' => $roles, 'user' => $user];
+        return view(config('app.backend_template').'.user.update', $data);
+    }
+
+    public function update(UserRequest $request, $id)
+    {
+        $user = User::with(['roles'])->find($id);
+
+        $inRoles   = $request->get('roles') != "" ? $request->get('roles') : [];
+        $userRoles = array_column($user->roles->toArray(), 'id');
+
+        // for new permissions
+        $newRoles = array_diff($inRoles, $userRoles);
+        if( count($newRoles) ){
+            $user->assignRole($newRoles);
+        }
+        // for delete permissions
+        $deleteRoles = array_diff($userRoles, $inRoles);
+        if( count($deleteRoles) ){
+            $user->revokeRole($deleteRoles);
+        }
+
+        return redirect('/backend/user')->with('success', 'Sukses ubah user.');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
