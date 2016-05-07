@@ -28,6 +28,13 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'web'], function () {
 
+    Route::get('/send-mail', function(){
+        Mail::raw('Text to e-mail', function ($message) {
+            $message->to('ahmadrizalafani@gmail.com', 'Rizal Afani');
+            $message->subject('Hello World!');
+        });
+    });
+
     Route::get('/login', 'Auth\MemberAuthController@getLogin');
     Route::post('/login', 'Auth\MemberAuthController@postLogin');
     Route::get('/register', 'Auth\MemberAuthController@getRegister');
@@ -50,7 +57,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('/login', 'Auth\AuthController@postLogin');
         Route::get('/logout', 'Auth\AuthController@logout');
 
-        Route::group(['middleware' => 'auth:web'], function(){
+        Route::group(['middleware' => 'auth:web', 'namespace' => 'Admin'], function(){
             // Dashboard
             Route::get('/', 'DashboardController@index');
             Route::get('/dashboard', 'DashboardController@index');
