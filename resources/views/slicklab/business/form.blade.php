@@ -5,6 +5,25 @@
         @if($errors->has('name'))<span class="help-block">{{ $errors->first('name') }}</span>@endif
     </div>
 </div>
+<div class="form-group @if($errors->has('seo.permalink')) has-error @endif">
+    <label for="seo[permalink]" class="col-lg-3 col-sm-3 control-label">Permalink</label>
+    <div class="col-lg-9">
+        {{--*/
+            $opts = ['class' => 'form-control', 'id' => 'permalink'];
+            if( isset($kategori) ){ $opts += ['disabled' => 'disabled'];
+            }else{ $opts += ['readonly' => 'readonly']; }
+        /*--}}
+        {{ Form::text('seo[permalink]', null, $opts) }}
+        @if($errors->has('seo.permalink'))<span class="help-block">{{ $errors->first('seo.permalink') }}</span>@endif
+    </div>
+</div>
+<div class="form-group @if($errors->has('seo.site_title')) has-error @endif">
+    <label for="seo[site_title]" class="col-lg-3 col-sm-3 control-label">Site Title</label>
+    <div class="col-lg-9">
+        {{ Form::text('seo[site_title]', null, ['class' => 'form-control', 'id' => 'site_title', 'placeholder' => 'Enter site title page']) }}
+        @if($errors->has('seo.site_title'))<span class="help-block">{{ $errors->first('seo.site_title') }}</span>@endif
+    </div>
+</div>
 <div class="form-group @if($errors->has('phone')) has-error @endif">
     <label for="name" class="col-lg-3 col-sm-3 control-label">Phone</label>
     <div class="col-lg-9">
@@ -36,8 +55,22 @@
 <div class="form-group @if($errors->has('address')) has-error @endif">
     <label for="name" class="col-lg-3 col-sm-3 control-label">Address</label>
     <div class="col-lg-9">
-        {{ Form::textarea('address', null, ['class' => 'form-control', 'id' => 'address']) }}
+        {{ Form::textarea('address', null, ['class' => 'form-control', 'id' => 'address', 'rows' => 3]) }}
         @if($errors->has('address'))<span class="help-block">{{ $errors->first('address') }}</span>@endif
+    </div>
+</div>
+<div class="form-group @if($errors->has('seo.description')) has-error @endif">
+    <label for="seo[description]" class="col-lg-3 col-sm-3 control-label">Description</label>
+    <div class="col-lg-9">
+        {{ Form::textarea('seo[description]', null, ['class' => 'form-control', 'id' => 'description', 'rows' => 3, 'placeholder' => 'Enter description page']) }}
+        @if($errors->has('seo.description'))<span class="help-block">{{ $errors->first('seo.description') }}</span>@endif
+    </div>
+</div>
+<div class="form-group @if($errors->has('seo.keywords')) has-error @endif">
+    <label for="seo[keywords]" class="col-lg-3 col-sm-3 control-label">Keywords</label>
+    <div class="col-lg-9">
+        {{ Form::textarea('seo[keywords]', null, ['class' => 'form-control', 'id' => 'keywords', 'rows' => 3, 'placeholder' => 'Enter keywords page']) }}
+        @if($errors->has('seo.keywords'))<span class="help-block">{{ $errors->first('seo.keywords') }}</span>@endif
     </div>
 </div>
 <div class="form-group">

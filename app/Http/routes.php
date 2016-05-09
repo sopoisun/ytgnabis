@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/tes', function(){
-    
+    return "Test";
 });
 
 /*

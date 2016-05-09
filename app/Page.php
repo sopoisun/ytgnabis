@@ -3,8 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\SeoModel;
+use Carbon\Carbon;
 
-class Page extends Model
+class Page extends SeoModel
 {
     protected $fillable = ['page_title', 'seo_id', 'isi', 'show_in_menu', 'sort', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];

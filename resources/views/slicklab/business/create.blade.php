@@ -126,4 +126,5 @@
         }
     });
 </script>
+@include('slicklab.partials.seo-create-section')
 @stop

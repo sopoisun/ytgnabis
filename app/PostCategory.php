@@ -3,8 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\SeoModel;
+use Carbon\Carbon;
 
-class PostCategory extends Model
+class PostCategory extends SeoModel
 {
     protected $fillable = ['name', 'seo_id', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
@@ -13,7 +15,7 @@ class PostCategory extends Model
     {
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
     }
-    
+
     public function post()
     {
         return $this->hasMany(Post::class);

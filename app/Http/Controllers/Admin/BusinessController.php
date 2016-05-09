@@ -78,11 +78,7 @@ class BusinessController extends Controller
      */
     public function store(BusinessRequest $request)
     {
-        $business = Business::create($request->all());
-
-        $business->addCategory($request->get('categories'));
-
-        if( $business ){
+        if( Business::simpan($request) ){
             return redirect('/backend/business')->with('success', 'Sukses simpan data bisnis.');
         }
 
@@ -115,7 +111,7 @@ class BusinessController extends Controller
         }
 
         $data = [
-            'business' => $business,
+            'business' => $business->load('seo'),
             'categories' => Category::where('active', 1)->lists('name', 'id'),
         ];
 
@@ -131,21 +127,7 @@ class BusinessController extends Controller
      */
     public function update(BusinessRequest $request, $id)
     {
-        $business       = Business::find($id);
-        $oldCategories  = json_decode($business->categories->lists('id'), true);
-
-        if( $business->update($request->all()) ){
-
-            $newCategories = array_diff($request->get('categories'), $oldCategories);
-            if( count($newCategories) ){
-                $business->addCategory($newCategories);
-            }
-
-            $removeCategories = array_diff($oldCategories, $request->get('categories'));
-            if( count($removeCategories) ){
-                $business->removeCategory($removeCategories);
-            }
-
+        if( Business::ubah($id, $request) ){
             return redirect('/backend/business')->with('success', 'Sukses ubah data bisnis.');
         }
 
@@ -160,9 +142,9 @@ class BusinessController extends Controller
      */
     public function destroy($id)
     {
-        $business = Business::find($id);
+        $business = Business::hapus($id);
 
-        if( $business && $business->update(['active' => 0]) ){
+        if( $business ){
             return redirect()->back()->with('success', 'Sukses hapus data '.$business->name.'.');
         }
 

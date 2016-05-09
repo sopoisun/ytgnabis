@@ -105,4 +105,5 @@
         }
     });
 </script>
+@include('slicklab.partials.seo-update-section')
 @stop

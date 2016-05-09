@@ -23,7 +23,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Restoran',
             ],
         ]);
-    	$restoran = Category::simpan($r);
+    	$restoran = \App\Category::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'name' => 'Hotel',
@@ -32,7 +32,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Hotel',
             ],
         ]);
-    	$hotel = Category::simpan($r);
+    	$hotel = \App\Category::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'name' => 'Kafe',
@@ -41,63 +41,63 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Kafe',
             ],
         ]);
-    	$cafe = Category::simpan($r);
+    	$cafe = \App\Category::simpan($r);
 
     	# Businesses
         $r = request()->create('/', 'GET', [
     		'name' 		=> 'Restoran Bajak Laut',
     		'address' 	=> 'Jl. Ahmad Yani No. 65, Kec. Banyuwangi, Jawa Timur',
-    		'map_lat' 	=> '-8222512',
-    		'map_long' 	=> '114367814',
+    		'map_lat' 	=> '-8.222535748888834',
+    		'map_long' 	=> '114.36782318766632',
     		'phone'		=> '0859-0415-0105',
             'seo' => [
                 'permalink' => 'restoran-bajak-laut',
                 'site_title' => 'Restoran Bajak Laut',
             ],
     	]);
-    	$bajakLaut = Business::simpan($r) ;
+    	$bajakLaut = \App\Business::simpan($r) ;
     	$bajakLaut->addCategory($restoran);
 
         $r = request()->create('/', 'GET', [
             'name' 		=> 'Smile Every Day (SE)',
             'address' 	=> 'Jl. Ahmad Yani No. 103, Kec. Banyuwangi, Jawa Timur',
-            'map_lat' 	=> '-8219884427536580',
-            'map_long' 	=> '11436858773231500',
+            'map_lat' 	=> '-8.219764299163641',
+            'map_long' 	=> '114.36863321478882',
             'phone'		=> '',
             'seo' => [
                 'permalink' => 'smile-every-day-se',
                 'site_title' => 'Smile Every Day (SE)',
             ],
     	]);
-    	$se = Business::simpan($r) ;
+    	$se = \App\Business::simpan($r) ;
     	$se->addCategory($cafe);
 
         $r = request()->create('/', 'GET', [
             'name' 		=> 'Cak Wang',
             'address' 	=> 'Jl. Adi Sucipto No 32, Kec. Banyuwangi, Jawa Timur',
-            'map_lat' 	=> '-8230375480555220',
-            'map_long' 	=> '11436355590820300',
+            'map_lat' 	=> '-8.230425248723444',
+            'map_long' 	=> '114.36355847533264',
             'phone'		=> '',
             'seo' => [
                 'permalink' => 'cak-wang',
                 'site_title' => 'Cak Wang',
             ],
     	]);
-    	$cakWang = Business::simpan($r) ;
+    	$cakWang = \App\Business::simpan($r) ;
     	$cakWang->addCategory($cafe);
 
         $r = request()->create('/', 'GET', [
             'name' 		=> 'Hotel Slamet',
             'address' 	=> 'Jl. Kapten Piere Tendean No.89 Karangrejo Kec. Banyuwangi Kabupaten Banyuwangi, Jawa Timur',
-            'map_lat' 	=> '-8216981552982290s',
-            'map_long' 	=> '11437511086463900',
+            'map_lat' 	=> '-8.217205203868481',
+            'map_long' 	=> '114.37510270293274',
             'phone'		=> '',
             'seo' => [
                 'permalink' => 'hotel-slamet',
                 'site_title' => 'Hotel Slamet',
             ],
     	]);
-    	$hotelSlamet = Business::simpan($r) ;
+    	$hotelSlamet = \App\Business::simpan($r) ;
     	$hotelSlamet->addCategory($hotel);
     	$hotelSlamet->addCategory($restoran);
     	$hotelSlamet->addCategory($cafe);
@@ -110,7 +110,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Makanan',
             ],
     	]);
-    	$makanan = ProductCategory::simpan($r);
+    	$makanan = \App\ProductCategory::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'name' => 'Minuman'
@@ -119,7 +119,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Minuman',
             ],
     	]);
-    	$minuman = ProductCategory::simpan($r);
+    	$minuman = \App\ProductCategory::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'name' => 'Snack'
@@ -128,7 +128,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Snack',
             ],
     	]);
-    	$snack = ProductCategory::simpan($r);
+    	$snack = \App\ProductCategory::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'name' => 'Kamar Hotel'
@@ -137,7 +137,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Kamar Hotel',
             ],
     	]);
-    	$kamarHotel = ProductCategory::simpan($r);
+    	$kamarHotel = \App\ProductCategory::simpan($r);
 
     	# BusinessProduct
     	// Bajak Laut
@@ -152,7 +152,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Nasi Goreng',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $bajakLaut->id,
@@ -165,7 +165,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Nasi Goreng Hijau',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $bajakLaut->id,
@@ -178,7 +178,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Ayam Berbeque',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $bajakLaut->id,
@@ -191,7 +191,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Jus Mangga',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $bajakLaut->id,
@@ -204,7 +204,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Jus Melon',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $bajakLaut->id,
@@ -217,7 +217,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Kentang Goreng',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
     	// SE
         $r = request()->create('/', 'GET', [
@@ -231,7 +231,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Nasi Goreng',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $se->id,
@@ -244,7 +244,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Kentang Goreng',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $se->id,
@@ -257,7 +257,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Jus Alphukat',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $se->id,
@@ -270,7 +270,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Jus Melon',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $se->id,
@@ -283,7 +283,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Es Cream Montain',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $se->id,
@@ -296,7 +296,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Es Capucino',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
     	// Cak Wang
         $r = request()->create('/', 'GET', [
@@ -310,7 +310,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Es Jeruk',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $cakWang->id,
@@ -323,7 +323,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Jus Mangga',
             ],
     	]);
-    	BusinessProduct::create($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $cakWang->id,
@@ -336,7 +336,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Kopi Tubruk',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $cakWang->id,
@@ -349,7 +349,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Singkong Keju',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $cakWang->id,
@@ -362,7 +362,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Pisang Crispy',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $cakWang->id,
@@ -375,7 +375,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Capucino Hangat',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
     	// Hotel Slamet
         $r = request()->create('/', 'GET', [
@@ -389,7 +389,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Nasi Goreng',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -402,7 +402,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Ayam Bakar',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -415,7 +415,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'ikan Bakar',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -428,7 +428,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Mie Goreng',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -441,7 +441,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Jus Jambu',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -454,7 +454,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Jus Alphukat',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -467,7 +467,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Es Teh',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -480,7 +480,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Es Susu',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -493,7 +493,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Kamar Ekonomi',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -506,7 +506,7 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Kamar Bisnis',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'business_id' => $hotelSlamet->id,
@@ -519,6 +519,6 @@ class SeoContentSeeder extends Seeder
                 'site_title' => 'Kamar VIP',
             ],
     	]);
-    	BusinessProduct::simpan($r);
+    	\App\BusinessProduct::simpan($r);
     }
 }

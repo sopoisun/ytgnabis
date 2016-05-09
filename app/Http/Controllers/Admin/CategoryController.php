@@ -44,7 +44,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        if( Category::create($request->all()) ){
+        if( Category::simpan($request) ){
             return redirect('/backend/business/category')->with('success', 'Sukses simpan data kategori bisnis.');
         }
 
@@ -76,7 +76,7 @@ class CategoryController extends Controller
             return view(config('app.backend_template').'.error.404');
         }
 
-        $data = ['kategori' => $kategori];
+        $data = ['kategori' => $kategori->load('seo')];
         return view(config('app.backend_template').'.category.update', $data);
     }
 
@@ -89,7 +89,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        if( Category::find($id)->update($request->all()) ){
+        if( Category::ubah($id, $request) ){
             return redirect('/backend/business/category')->with('success', 'Sukses ubah data kategori bisnis.');
         }
 
@@ -104,10 +104,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $kategori = Category::find($id);
-
-        if( $kategori && $kategori->update(['active' => 0]) ){
-            return redirect()->back()->with('success', 'Sukses hapus data '.$kategori->name.'.');
+        $category = Category::hapus($id);
+        
+        if( $category ){
+            return redirect()->back()->with('success', 'Sukses hapus data '.$category->name.'.');
         }
 
         return redirect()->back()->withErrors(['failed' => 'Gagal hapus data kategori bisnis.']);

@@ -3,8 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\SeoModel;
+use Carbon\Carbon;
 
-class Post extends Model
+class Post extends SeoModel
 {
     protected $fillable = ['post_title', 'seo_id', 'isi', 'user_id', 'post_category_id',
                             'publish', 'active', 'counter'];

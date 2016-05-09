@@ -44,7 +44,7 @@ class ProductCategoryController extends Controller
      */
     public function store(CategoryProductRequest $request)
     {
-        if( ProductCategory::create($request->all()) ){
+        if( ProductCategory::simpan($request) ){
             return redirect('/backend/product/category')->with('success', 'Sukses simpan data kategori produk.');
         }
 
@@ -76,7 +76,7 @@ class ProductCategoryController extends Controller
             return view(config('app.backend_template').'.error.404');
         }
 
-        $data = ['kategori' => $kategori];
+        $data = ['kategori' => $kategori->load('seo')];
         return view(config('app.backend_template').'.product-category.update', $data);
     }
 
@@ -89,7 +89,7 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if( ProductCategory::find($id)->update($request->all()) ){
+        if( ProductCategory::ubah($id, $request) ){
             return redirect('/backend/product/category')->with('success', 'Sukses ubah data kategori produk.');
         }
 
@@ -104,9 +104,9 @@ class ProductCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $kategori = ProductCategory::find($id);
+        $kategori = ProductCategory::hapus($id);
 
-        if( $kategori && $kategori->update(['active' => 0]) ){
+        if( $kategori ){
             return redirect()->back()->with('success', 'Sukses hapus data '.$kategori->name.'.');
         }
 

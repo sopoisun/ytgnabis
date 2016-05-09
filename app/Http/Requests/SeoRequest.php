@@ -10,12 +10,11 @@ class SeoRequest extends Request
     {
         $rules = [
             'seo.site_title'    => 'required',
-            'seo.permalink'     => 'required',
         ];
 
         if ( $this->segment(count(explode('/', $this->path()))) == 'add' ) {
             $rules += [
-                'seo.permalink' => 'required|unique:seos',
+                'seo.permalink' => 'required|unique:seos,permalink',
             ];
         }
 

@@ -24,7 +24,9 @@ class SeoModel extends Model
             $inputs['seo']['function']      = isset ( $inputs['seo']['function'] ) ?
                                               $inputs['seo']['function'] : self::functionAttribute();
 
-            return Seo::create( $inputs['seo'] );
+            if( Seo::create( $inputs['seo'] ) ){
+                return $result;
+            }
         }
 
         return false;
@@ -37,7 +39,9 @@ class SeoModel extends Model
             $fields     = ['seo.site_title', 'seo.description', 'seo.keywords'];
             $fields     = array_merge($fields, $custom_fields);
             $seoInputs  = $request->only( $fields );
-            return Seo::where('id', $current->seo_id)->update( $seoInputs['seo'] );
+            if( Seo::where('seo_id', $current->seo_id)->update( $seoInputs['seo'] ) ){
+                return $current;
+            }
         }
 
         return false;
@@ -47,7 +51,9 @@ class SeoModel extends Model
     {
         $current = self::find( $id );
         if (  $current->update(['active' => 0]) ) {
-            return Seo::where('id', $current->seo_id)->delete();
+            if( Seo::where('seo_id', $current->seo_id)->delete() ){
+                return $current;
+            }
         }
 
         return false;

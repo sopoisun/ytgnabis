@@ -41,3 +41,7 @@
 </div>
 <!--body wrapper end-->
 @stop
+
+@section('js_section')
+@include('slicklab.partials.seo-update-section')
+@stop
