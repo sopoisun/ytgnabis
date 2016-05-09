@@ -11,6 +11,7 @@ class ProductCategory extends SeoModel
     protected $fillable = ['name', 'seo_id', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
 
+    /* Relation */
     public function seo()
     {
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
@@ -20,7 +21,9 @@ class ProductCategory extends SeoModel
     {
         return $this->hasMany(BusinessProduct::class);
     }
+    /* End Relation */
 
+    /* Seo Override */
     public static function seoIdAttribute()
     {
         return "PCAT-".Carbon::now()->format('dmyhis').str_random(5);
@@ -35,4 +38,5 @@ class ProductCategory extends SeoModel
     {
         return "index";
     }
+    /* end Seo Override */
 }

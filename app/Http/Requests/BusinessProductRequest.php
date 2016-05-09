@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
+use App\Http\Requests\SeoRequest;
 
-class BusinessProductRequest extends Request
+class BusinessProductRequest extends SeoRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,12 +34,14 @@ class BusinessProductRequest extends Request
             $rules['image'] = 'required|image|mimes:jpeg,png';
         }
 
+        $rules += $this->seoRules();
+
         return $rules;
     }
 
     public function messages()
     {
-        return [
+        $messages = [
             'business_id.required'  => 'Nama bisnis tidak boleh kosong.',
             'business_id.exists'    => 'Bisnis tidak ada dalam database.',
             'name.required'         => 'Nama produk tidak boleh kosong',
@@ -49,5 +51,9 @@ class BusinessProductRequest extends Request
             'image.image'           => 'Image harus gambar.',
             'image.mimes'           => 'Image harus format jpg atau png',
         ];
+
+        $messages += $this->seoMessages();
+
+        return $messages;
     }
 }

@@ -99,6 +99,14 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('/product/category/{id}/edit', 'ProductCategoryController@update');
             Route::get('/product/category/{id}/delete', 'ProductCategoryController@destroy');
 
+            // Page
+            Route::get('/page', 'PageController@index');
+            Route::get('/page/add', 'PageController@create');
+            Route::post('/page/add', 'PageController@store');
+            Route::get('/page/{id}/edit', 'PageController@edit');
+            Route::post('/page/{id}/edit', 'PageController@update');
+            Route::get('/page/{id}/delete', 'PageController@destroy');
+
             // User Application
             Route::get('/user', 'UserController@index');
             Route::get('/user/add', 'UserController@create');

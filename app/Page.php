@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\SeoModel;
+use App\Seo;
 use Carbon\Carbon;
 
 class Page extends SeoModel
@@ -11,9 +12,41 @@ class Page extends SeoModel
     protected $fillable = ['page_title', 'seo_id', 'isi', 'show_in_menu', 'sort', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
 
+    /* Relation */
     public function seo()
     {
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
+    }
+    /* end Relation */
+
+    /* Seo Override */
+    public static function simpan( $request )
+    {
+        $inputs             = $request->all();
+        $seo_id             = isset ( $inputs['seo_id'] ) ? $inputs['seo_id'] : self::seoIdAttribute();
+        $inputs['seo_id']   = $seo_id;
+
+        // get last sort number
+        $lastSortIdx    = self::select('sort')->orderBy('sort', 'desc')->first();
+        $inputs['sort'] = ( $lastSortIdx ) ? $lastSortIdx->sort + 1 : 1;
+
+        $result = self::create( $inputs );
+
+        if ( $result ) {
+
+            $inputs['seo']['relation_id']   = $result->id;
+            $inputs['seo']['seo_id']        = $seo_id;
+            $inputs['seo']['controller']    = isset ( $inputs['seo']['controller'] ) ?
+                                              $inputs['seo']['controller'] : self::controllerAttribute();
+            $inputs['seo']['function']      = isset ( $inputs['seo']['function'] ) ?
+                                              $inputs['seo']['function'] : self::functionAttribute();
+
+            if( Seo::create( $inputs['seo'] ) ){
+                return $result;
+            }
+        }
+
+        return false;
     }
 
     public static function seoIdAttribute()
@@ -30,4 +63,5 @@ class Page extends SeoModel
     {
         return "index";
     }
+    /* end Seo Override */
 }

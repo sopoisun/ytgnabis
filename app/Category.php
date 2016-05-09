@@ -11,11 +11,14 @@ class Category extends SeoModel
     protected $fillable = ['name', 'seo_id', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
 
+    /* Relation */
     public function seo()
     {
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
     }
+    /* end Relation */
 
+    /* Seo override */
     public static function seoIdAttribute()
     {
         return "CAT-".Carbon::now()->format('dmyhis').str_random(5);
@@ -30,4 +33,5 @@ class Category extends SeoModel
     {
         return "index";
     }
+    /* end Seo override */
 }

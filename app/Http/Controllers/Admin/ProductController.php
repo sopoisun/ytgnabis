@@ -64,23 +64,13 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BusinessProductRequest $request)
+    public function store(Request $request)
     {
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
-                $ext    = $request->file('image')->getClientOriginalExtension();
-                $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
-                $request->file('image')->move(public_path().'/files/products', $imgUrl);
-
-                $inputs = $request->only([
-                    'business_id', 'name', 'price', 'product_category_id'
-                ]) + [
-                    'image_url' => $imgUrl,
-                ];
-
-                $product = BusinessProduct::create($inputs);
-
-                return redirect('/backend/product')->with('success', 'Sukses simpan data produk.');
+                if( BusinessProduct::simpan($request) ){
+                    return redirect('/backend/product')->with('success', 'Sukses simpan data produk.');
+                }
             }
         }
 
@@ -113,7 +103,7 @@ class ProductController extends Controller
         }
 
         $data = [
-            'product'       => $product,
+            'product'       => $product->load('seo'),
             'businesses'    => Business::where('active', 1)->lists('name', 'id'),
             'categories'    => ProductCategory::where('active', 1)->lists('name', 'id'),
         ];
@@ -130,24 +120,7 @@ class ProductController extends Controller
      */
     public function update(BusinessProductRequest $request, $id)
     {
-        $inputs = $request->only([
-            'business_id', 'name', 'price', 'product_category_id'
-        ]);
-
-        $product = BusinessProduct::find($id);
-
-        if ($request->hasFile('image')) {
-            if ($request->file('image')->isValid()) {
-                unlink(public_path().'/files/products/'.$product->image_url);
-                $ext    = $request->file('image')->getClientOriginalExtension();
-                $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
-                $request->file('image')->move(public_path().'/files/products', $imgUrl);
-
-                $inputs += [ 'image_url' => $imgUrl ];
-            }
-        }
-
-        if( $product->update($inputs) ){
+        if( BusinessProduct::ubah($id, $request) ){
             return redirect('/backend/product')->with('success', 'Sukses ubah data produk.');
         }
 
@@ -162,9 +135,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = BusinessProduct::find($id);
+        $product = BusinessProduct::hapus($id);
 
-        if( $product && $product->update(['active' => 0]) ){
+        if( $product ){
             return redirect()->back()->with('success', 'Sukses hapus data '.$product->name.'.');
         }
 

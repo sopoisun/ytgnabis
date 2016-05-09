@@ -10,7 +10,7 @@
     <div class="col-lg-9">
         {{--*/
             $opts = ['class' => 'form-control', 'id' => 'permalink'];
-            if( isset($kategori) ){ $opts += ['disabled' => 'disabled'];
+            if( isset($business) ){ $opts += ['disabled' => 'disabled'];
             }else{ $opts += ['readonly' => 'readonly']; }
         /*--}}
         {{ Form::text('seo[permalink]', null, $opts) }}

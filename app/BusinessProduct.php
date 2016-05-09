@@ -12,6 +12,7 @@ class BusinessProduct extends SeoModel
                                 'counter', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
 
+    /* Relation */
     public function seo()
     {
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
@@ -25,6 +26,75 @@ class BusinessProduct extends SeoModel
     public function category()
     {
     	return $this->belongsTo(ProductCategory::class, 'product_category_id', 'id');
+    }
+    /* end Rellation */
+
+    /* Seo Override */
+    public static function simpan( $request )
+    {
+        // Upload image
+        $ext    = $request->file('image')->getClientOriginalExtension();
+        $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
+        $request->file('image')->move(public_path().'/files/products', $imgUrl);
+
+        // for database
+        $inputs             = $request->only([
+                                    'business_id', 'name', 'price', 'product_category_id', 'seo'
+                                ]) + [
+                                    'image_url' => $imgUrl,
+                                ];
+        $seo_id             = isset ( $inputs['seo_id'] ) ? $inputs['seo_id'] : self::seoIdAttribute();
+        $inputs['seo_id']   = $seo_id;
+
+        $result = self::create( $inputs );
+
+        if ( $result ) {
+
+            $inputs['seo']['relation_id']   = $result->id;
+            $inputs['seo']['seo_id']        = $seo_id;
+            $inputs['seo']['controller']    = isset ( $inputs['seo']['controller'] ) ?
+                                              $inputs['seo']['controller'] : self::controllerAttribute();
+            $inputs['seo']['function']      = isset ( $inputs['seo']['function'] ) ?
+                                              $inputs['seo']['function'] : self::functionAttribute();
+
+            if( Seo::create( $inputs['seo'] ) ){
+                return $result;
+            }
+        }
+
+        return false;
+    }
+
+    public static function ubah( $id, $request, $custom_fields = [] )
+    {
+        $inputs = $request->only([
+            'business_id', 'name', 'price', 'product_category_id'
+        ]);
+
+        $current = self::find( $id );
+
+        // check if input has photo, and do upload
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                unlink(public_path().'/files/products/'.$current->image_url);
+                $ext    = $request->file('image')->getClientOriginalExtension();
+                $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
+                $request->file('image')->move(public_path().'/files/products', $imgUrl);
+
+                $inputs += [ 'image_url' => $imgUrl ];
+            }
+        }
+
+        if (  $current->update( $inputs ) ) {
+            $fields     = ['seo.site_title', 'seo.description', 'seo.keywords'];
+            $fields     = array_merge($fields, $custom_fields);
+            $seoInputs  = $request->only( $fields );
+            if( Seo::where('seo_id', $current->seo_id)->update( $seoInputs['seo'] ) ){
+                return $current;
+            }
+        }
+
+        return false;
     }
 
     public static function seoIdAttribute()
@@ -41,4 +111,5 @@ class BusinessProduct extends SeoModel
     {
         return "index";
     }
+    /* end Seo Override */
 }
