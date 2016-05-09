@@ -4,7 +4,7 @@
 <link href="{{ url('/assets/'.config('app.backend_template')) }}/css/select2.css" rel="stylesheet">
 <link href="{{ url('/assets/'.config('app.backend_template')) }}/css/select2-bootstrap.css" rel="stylesheet">
 
-<!--  summernote -->
+<!--  wysihtml5 -->
 <link href="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet">
 @stop
 

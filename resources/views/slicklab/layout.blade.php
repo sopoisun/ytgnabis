@@ -89,6 +89,27 @@
                             <li class="{{ set_active('backend/product') }}"><a href="{{ url('/backend/product') }}"> Daftar Produk</a></li>
                         </ul>
                     </li>
+                    <li class="menu-list {{ set_active('backend/post/category*', 'nav-active') }}">
+                        <a href=""><i class="fa fa-leaf"></i>  <span>Kategori Post</span></a>
+                        <ul class="child-list">
+                            <li class="{{ set_active('backend/post/category/add') }}"><a href="{{ url('/backend/post/category/add') }}"> Tambah Kategori Post</a></li>
+                            <li class="{{ set_active('backend/post/category') }}"><a href="{{ url('/backend/post/category') }}"> Daftar Kategori Post</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list {{ set_active('backend/post*', 'nav-active') }}">
+                        <a href=""><i class="fa fa-magnet"></i>  <span>Produk</span></a>
+                        <ul class="child-list">
+                            <li class="{{ set_active('backend/post/add') }}"><a href="{{ url('/backend/post/add') }}"> Tambah Post</a></li>
+                            <li class="{{ set_active('backend/post') }}"><a href="{{ url('/backend/post') }}"> Daftar Post</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list {{ set_active('backend/page*', 'nav-active') }}">
+                        <a href=""><i class="fa fa-file"></i>  <span>Page</span></a>
+                        <ul class="child-list">
+                            <li class="{{ set_active('backend/page/add') }}"><a href="{{ url('/backend/page/add') }}"> Tambah Page</a></li>
+                            <li class="{{ set_active('backend/page') }}"><a href="{{ url('/backend/page') }}"> Daftar Page</a></li>
+                        </ul>
+                    </li>
                     <li class="menu-list {{ set_active('backend/user*', 'nav-active') }}">
                         <a href=""><i class="fa fa-user"></i>  <span>User</span></a>
                         <ul class="child-list">
@@ -110,7 +131,9 @@
                             <li class="{{ set_active('backend/role') }}"><a href="{{ url('/backend/role') }}"> Daftar Role</a></li>
                         </ul>
                     </li>
-
+                    <li class="{{ set_active('backend/setting*') }}">
+                        <a href=""><i class="fa fa-cogs"></i>  <span>Setting</span></a>
+                    </li>
                 </ul>
                 <!--sidebar nav end-->
 

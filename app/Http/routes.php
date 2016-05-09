@@ -99,6 +99,22 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('/product/category/{id}/edit', 'ProductCategoryController@update');
             Route::get('/product/category/{id}/delete', 'ProductCategoryController@destroy');
 
+            // Post
+            Route::get('/post', 'PostController@index');
+            Route::get('/post/add', 'PostController@create');
+            Route::post('/post/add', 'PostController@store');
+            Route::get('/post/{id}/edit', 'PostController@edit');
+            Route::post('/post/{id}/edit', 'PostController@update');
+            Route::get('/post/{id}/delete', 'PostController@destroy');
+
+            // Post category
+            Route::get('/post/category', 'PostCategoryController@index');
+            Route::get('/post/category/add', 'PostCategoryController@create');
+            Route::post('/post/category/add', 'PostCategoryController@store');
+            Route::get('/post/category/{id}/edit', 'PostCategoryController@edit');
+            Route::post('/post/category/{id}/edit', 'PostCategoryController@update');
+            Route::get('/post/category/{id}/delete', 'PostCategoryController@destroy');
+
             // Page
             Route::get('/page', 'PageController@index');
             Route::get('/page/add', 'PageController@create');
@@ -136,6 +152,10 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/role/{id}/edit', 'RoleController@edit');
             Route::post('/role/{id}/edit', 'RoleController@update');
             Route::get('/role/{id}/delete', 'RoleController@destroy');
+
+            // Setting
+            Route::get('/setting', 'SettingController@index');
+            Route::post('/setting', 'SettingController@save');
         });
     });
 

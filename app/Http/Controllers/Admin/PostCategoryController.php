@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Requests\PageRequest;
+use App\Http\Requests\PostCategoryRequest;
 use App\Http\Controllers\Controller;
-use App\Page;
+use App\PostCategory;
 
-class PageController extends Controller
+class PostCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +18,13 @@ class PageController extends Controller
      */
     public function index()
     {
+        $categories = PostCategory::where('active', 1)->orderBy('name')->get();
+
         $data = [
-            'pages' => Page::where('active', 1)->orderBy('sort')->get(),
+            'categories' => $categories,
         ];
 
-        return view(config('app.backend_template').'.page.table', $data);
+        return view(config('app.backend_template').'.post-category.table', $data);
     }
 
     /**
@@ -32,7 +34,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view(config('app.backend_template').'.page.create');
+        return view(config('app.backend_template').'.post-category.create');
     }
 
     /**
@@ -41,13 +43,13 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PageRequest $request)
+    public function store(PostCategoryRequest $request)
     {
-        if( Page::simpan($request) ){
-            return redirect('/backend/page')->with('success', 'Sukses simpan data page.');
+        if( PostCategory::simpan($request) ){
+            return redirect('/backend/post/category')->with('success', 'Sukses simpan data kategori post.');
         }
 
-        return redirect()->back()->withErrors(['failed' => 'Gagal simpan data page.']);
+        return redirect()->back()->withErrors(['failed' => 'Gagal simpan data kategori post.']);
     }
 
     /**
@@ -69,17 +71,14 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-        $page = Page::find($id);
+        $kategori = PostCategory::find($id);
 
-        if( !$page ){
+        if( !$kategori ){
             return view(config('app.backend_template').'.error.404');
         }
 
-        $data = [
-            'page' => $page->load('seo'),
-        ];
-
-        return view(config('app.backend_template').'.page.update', $data);
+        $data = ['kategori' => $kategori->load('seo')];
+        return view(config('app.backend_template').'.post-category.update', $data);
     }
 
     /**
@@ -89,13 +88,13 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostCategoryRequest $request, $id)
     {
-        if( Page::ubah($id, $request, ['seo.controller', 'seo.function']) ){
-            return redirect('/backend/page')->with('success', 'Sukses ubah data page.');
+        if( PostCategory::ubah($id, $request) ){
+            return redirect('/backend/post/category')->with('success', 'Sukses ubah data kategori post.');
         }
 
-        return redirect()->back()->withErrors(['failed' => 'Gagal ubah data page.']);
+        return redirect()->back()->withErrors(['failed' => 'Gagal ubah data kategori post.']);
     }
 
     /**
@@ -106,12 +105,12 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        $page = Page::hapus($id);
+        $category = PostCategory::hapus($id);
 
-        if( $page ){
-            return redirect()->back()->with('success', 'Sukses hapus data '.$page->page_title.'.');
+        if( $category ){
+            return redirect()->back()->with('success', 'Sukses hapus data '.$category->name.'.');
         }
 
-        return redirect()->back()->withErrors(['failed' => 'Gagal hapus data bisnis.']);
+        return redirect()->back()->withErrors(['failed' => 'Gagal hapus data kategori post.']);
     }
 }
