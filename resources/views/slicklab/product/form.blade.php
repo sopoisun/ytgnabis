@@ -27,7 +27,7 @@
 <div class="form-group @if($errors->has('business_id')) has-error @endif">
     <label for="business_id" class="col-lg-3 col-sm-3 control-label">Business name</label>
     <div class="col-lg-9">
-        {{ Form::select('business_id', $businesses, [], ['id' => 'business_id', 'class' => 'form-control select2']) }}
+        {{ Form::select('business_id', $businesses, null, ['id' => 'business_id', 'class' => 'form-control select2']) }}
         @if($errors->has('business_id'))<span class="help-block">{{ $errors->first('business_id') }}</span>@endif
     </div>
 </div>
@@ -41,7 +41,7 @@
 <div class="form-group @if($errors->has('product_category_id')) has-error @endif">
     <label for="product_category_id" class="col-lg-3 col-sm-3 control-label">Kategori</label>
     <div class="col-lg-9">
-        {{ Form::select('product_category_id', $categories, [], ['id' => 'product_category_id', 'class' => 'form-control select2']) }}
+        {{ Form::select('product_category_id', $categories, null, ['id' => 'product_category_id', 'class' => 'form-control select2']) }}
         @if($errors->has('product_category_id'))<span class="help-block">{{ $errors->first('product_category_id') }}</span>@endif
     </div>
 </div>

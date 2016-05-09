@@ -27,14 +27,14 @@
 <div class="form-group @if($errors->has('publish')) has-error @endif">
     <label for="publish" class="col-lg-3 col-sm-3 control-label">State</label>
     <div class="col-lg-4">
-        {{ Form::select('publish', [1 => 'Publish', 0 => 'Draft'], [], ['id' => 'publish', 'class' => 'form-control select2']) }}
+        {{ Form::select('publish', [1 => 'Publish', 0 => 'Draft'], null, ['id' => 'publish', 'class' => 'form-control select2']) }}
         @if($errors->has('publish'))<span class="help-block">{{ $errors->first('publish') }}</span>@endif
     </div>
 </div>
 <div class="form-group @if($errors->has('post_category_id')) has-error @endif">
     <label for="post_category_id" class="col-lg-3 col-sm-3 control-label">Kategori</label>
     <div class="col-lg-4">
-        {{ Form::select('post_category_id', $categories, [], ['id' => 'post_category_id', 'class' => 'form-control select2']) }}
+        {{ Form::select('post_category_id', $categories, null, ['id' => 'post_category_id', 'class' => 'form-control select2']) }}
         @if($errors->has('post_category_id'))<span class="help-block">{{ $errors->first('post_category_id') }}</span>@endif
     </div>
 </div>

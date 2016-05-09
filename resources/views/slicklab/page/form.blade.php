@@ -27,7 +27,7 @@
 <div class="form-group @if($errors->has('show_in_menu')) has-error @endif">
     <label for="show_in_menu" class="col-lg-3 col-sm-3 control-label">Show in menu</label>
     <div class="col-lg-4">
-        {{ Form::select('show_in_menu', [1 => 'Yes', 0 => 'No'], [], ['id' => 'show_in_menu', 'class' => 'form-control select2']) }}
+        {{ Form::select('show_in_menu', [1 => 'Yes', 0 => 'No'], null, ['id' => 'show_in_menu', 'class' => 'form-control select2']) }}
         @if($errors->has('show_in_menu'))<span class="help-block">{{ $errors->first('show_in_menu') }}</span>@endif
     </div>
 </div>

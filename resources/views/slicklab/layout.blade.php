@@ -97,7 +97,7 @@
                         </ul>
                     </li>
                     <li class="menu-list {{ set_active('backend/post*', 'nav-active') }}">
-                        <a href=""><i class="fa fa-magnet"></i>  <span>Produk</span></a>
+                        <a href=""><i class="fa fa-magnet"></i>  <span>Post</span></a>
                         <ul class="child-list">
                             <li class="{{ set_active('backend/post/add') }}"><a href="{{ url('/backend/post/add') }}"> Tambah Post</a></li>
                             <li class="{{ set_active('backend/post') }}"><a href="{{ url('/backend/post') }}"> Daftar Post</a></li>
