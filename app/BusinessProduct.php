@@ -33,9 +33,15 @@ class BusinessProduct extends SeoModel
     public static function simpan( $request )
     {
         // Upload image
-        $ext    = $request->file('image')->getClientOriginalExtension();
-        $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
-        $request->file('image')->move(public_path().'/files/products', $imgUrl);
+        $imgUrl = str_random(40).'.jpg';
+        if( $request->hasFile('image') ){
+            if( $request->file('image')->isValid() )
+            {
+                $ext    = $request->file('image')->getClientOriginalExtension();
+                $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
+                $request->file('image')->move(public_path().'/files/products', $imgUrl);
+            }
+        }
 
         // for database
         $inputs             = $request->only([

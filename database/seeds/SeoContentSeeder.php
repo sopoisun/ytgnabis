@@ -54,9 +54,11 @@ class SeoContentSeeder extends Seeder
                 'permalink' => 'restoran-bajak-laut',
                 'site_title' => 'Restoran Bajak Laut',
             ],
+            'categories' => [
+                $restoran->id,
+            ]
     	]);
-    	$bajakLaut = \App\Business::simpan($r) ;
-    	$bajakLaut->addCategory($restoran);
+    	$bajakLaut = \App\Business::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'name' 		=> 'Smile Every Day (SE)',
@@ -68,9 +70,11 @@ class SeoContentSeeder extends Seeder
                 'permalink' => 'smile-every-day-se',
                 'site_title' => 'Smile Every Day (SE)',
             ],
+            'categories' => [
+                $cafe->id,
+            ]
     	]);
-    	$se = \App\Business::simpan($r) ;
-    	$se->addCategory($cafe);
+    	$se = \App\Business::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'name' 		=> 'Cak Wang',
@@ -82,9 +86,11 @@ class SeoContentSeeder extends Seeder
                 'permalink' => 'cak-wang',
                 'site_title' => 'Cak Wang',
             ],
+            'categories' => [
+                $cafe->id,
+            ]
     	]);
-    	$cakWang = \App\Business::simpan($r) ;
-    	$cakWang->addCategory($cafe);
+    	$cakWang = \App\Business::simpan($r);
 
         $r = request()->create('/', 'GET', [
             'name' 		=> 'Hotel Slamet',
@@ -96,15 +102,17 @@ class SeoContentSeeder extends Seeder
                 'permalink' => 'hotel-slamet',
                 'site_title' => 'Hotel Slamet',
             ],
+            'categories' => [
+                $hotel->id,
+                $restoran->id,
+                $cafe->id,
+            ]
     	]);
-    	$hotelSlamet = \App\Business::simpan($r) ;
-    	$hotelSlamet->addCategory($hotel);
-    	$hotelSlamet->addCategory($restoran);
-    	$hotelSlamet->addCategory($cafe);
+    	$hotelSlamet = \App\Business::simpan($r);
 
     	# ProductCategory
         $r = request()->create('/', 'GET', [
-            'name' => 'Makanan'
+            'name' => 'Makanan',
             'seo' => [
                 'permalink' => 'makanan',
                 'site_title' => 'Makanan',
@@ -113,7 +121,7 @@ class SeoContentSeeder extends Seeder
     	$makanan = \App\ProductCategory::simpan($r);
 
         $r = request()->create('/', 'GET', [
-            'name' => 'Minuman'
+            'name' => 'Minuman',
             'seo' => [
                 'permalink' => 'minuman',
                 'site_title' => 'Minuman',
@@ -122,7 +130,7 @@ class SeoContentSeeder extends Seeder
     	$minuman = \App\ProductCategory::simpan($r);
 
         $r = request()->create('/', 'GET', [
-            'name' => 'Snack'
+            'name' => 'Snack',
             'seo' => [
                 'permalink' => 'snack',
                 'site_title' => 'Snack',
@@ -131,7 +139,7 @@ class SeoContentSeeder extends Seeder
     	$snack = \App\ProductCategory::simpan($r);
 
         $r = request()->create('/', 'GET', [
-            'name' => 'Kamar Hotel'
+            'name' => 'Kamar Hotel',
             'seo' => [
                 'permalink' => 'kamar-hotel',
                 'site_title' => 'Kamar Hotel',
