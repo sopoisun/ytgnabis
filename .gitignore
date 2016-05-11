@@ -2,6 +2,8 @@
 /node_modules
 /public/storage
 /public/assets
+/public/jseditor
+/public/files
 Homestead.yaml
 Homestead.json
 .env

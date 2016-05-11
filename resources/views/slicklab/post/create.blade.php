@@ -3,9 +3,6 @@
 @section('css_assets')
 <link href="{{ url('/assets/'.config('app.backend_template')) }}/css/select2.css" rel="stylesheet">
 <link href="{{ url('/assets/'.config('app.backend_template')) }}/css/select2-bootstrap.css" rel="stylesheet">
-
-<!--  wysihtml5 -->
-<link href="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet">
 @stop
 
 @section('content')
@@ -53,9 +50,8 @@
 <!-- Select2 --->
 <script src="{{ url('/assets/'.config('app.backend_template')) }}/js/select2.js"></script>
 
-<!--bootstrap-wysihtml5-->
-<script src="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
-<script type="text/javascript" src="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+<!-- CKEditor -->
+<script src="{{ url('/jseditor') }}/ckeditor/ckeditor.js"></script>
 @stop
 
 @section('js_section')
@@ -65,7 +61,14 @@
         placeholder: placeholder
     });
 
-    $('.wysihtml5').wysihtml5();
+    CKEDITOR.replace('isi', {
+        filebrowserBrowseUrl: '{{ url("/jseditor/kcfinder/browse.php?type=files") }}',
+        filebrowserImageBrowseUrl: '{{ url("/jseditor/kcfinder/browse.php?type=images") }}',
+        filebrowserFlashBrowseUrl: '{{ url("/jseditor/kcfinder/browse.php?type=flash") }}',
+        filebrowserUploadUrl: '{{ url("/jseditor/kcfinder/upload.php?type=files") }}',
+        filebrowserImageUploadUrl: '{{ ("/jseditor/kcfinder/upload.php?type=images") }}',
+        filebrowserFlashUploadUrl: '{{ url("/jseditor/kcfinder/upload.php?type=flash") }}'
+    });
 </script>
 @include('slicklab.partials.seo-create-section', ['mainComponent' => 'post_title'])
 @stop
