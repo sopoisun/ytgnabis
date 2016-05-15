@@ -148,3 +148,7 @@ Route::group(['prefix' => 'backend'], function(){
 
 // has login routes
 Route::get('/home', 'HomeController@index');
+
+Route::group(['prefix' => 'permalink'], function(){
+    Route::get('{permalink?}', 'PermalinkController@index');
+});

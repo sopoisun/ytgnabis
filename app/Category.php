@@ -16,6 +16,11 @@ class Category extends SeoModel
     {
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
     }
+
+    public function businesses()
+    {
+        return $this->belongsToMany(Business::class);
+    }
     /* end Relation */
 
     /* Seo override */
@@ -26,7 +31,7 @@ class Category extends SeoModel
 
     public static function controllerAttribute()
     {
-        return "CategoryController";
+        return "BusinessCategoryController";
     }
 
     public static function functionAttribute()
