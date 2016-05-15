@@ -11,6 +11,6 @@ class HomeController extends SiteController
 {
     public function index()
     {
-        return "Home Controller";
+        return view(config('app.frontend_template').'.home', $this->values);
     }
 }

@@ -3,7 +3,7 @@
 return [
 
     'backend_template' => env('BACKEND_TEMPLATE', 'slicklab'),
-    'frontend_template' => env('FRONTEND_TEMPLATE', 'sibangty'),
+    'frontend_template' => env('FRONTEND_TEMPLATE', 'zoner'),
 
     /*
     |--------------------------------------------------------------------------
