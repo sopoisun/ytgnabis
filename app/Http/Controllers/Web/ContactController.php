@@ -11,6 +11,6 @@ class ContactController extends SiteController
 {
     public function index()
     {
-        return "Contact Controller";
+        return view(config('app.frontend_template').'.contact.contact', $this->values);
     }
 }

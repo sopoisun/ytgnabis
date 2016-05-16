@@ -23,7 +23,7 @@
 
 </head>
 
-@yield('html_tag')
+<body @yield('html_tag_attr')>
 <!-- Wrapper -->
 <div class="wrapper">
 
@@ -140,12 +140,6 @@
             </header><!-- /.navbar -->
         </div><!-- /.container -->
     </div><!-- /.navigation -->
-
-    <div class="container">
-        <div class="geo-location-wrapper">
-            <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
-        </div>
-    </div>
 
     @yield('content')
 

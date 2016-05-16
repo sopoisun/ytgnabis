@@ -1,10 +1,14 @@
 @extends('zoner.layout')
 
-@section('html_tag')
-<body class="page-homepage navigation-fixed-top map-google" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
-@stop
+@section('html_tag_attr') class="page-homepage navigation-fixed-top map-google" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90" @stop
 
 @section('content')
+<div class="container">
+    <div class="geo-location-wrapper">
+        <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
+    </div>
+</div>
+
 <!-- Map -->
 <div id="map" class="has-parallax"></div>
 <!-- end Map -->

@@ -4,9 +4,7 @@
 <link rel="stylesheet" href="{{ url('/') }}/assets/zoner/css/magnific-popup.css" type="text/css">
 @stop
 
-@section('html_tag')
-<body class="page-sub-page page-listing page-grid page-search-results" id="page-top">
-@stop
+@section('html_tag_attr') class="page-sub-page page-listing page-grid page-search-results" id="page-top" @stop
 
 @section('content')
 <!-- Page Content -->
@@ -31,7 +29,7 @@
                                 <span class="search-count">28</span>
                                 <div class="sorting">
                                     <div class="form-group">
-                                        <select name="sorting">
+                                        <select name="sorting" class="fc">
                                             <option value="">Sort By</option>
                                             <option value="1">Lowest price first</option>
                                             <option value="2">Highest price first</option>
@@ -611,14 +609,14 @@
                             <header><h3>Search Properties</h3></header>
                             <form role="form" id="form-sidebar" class="form-search" action="properties-listing.html">
                                 <div class="form-group">
-                                    <select name="type">
+                                    <select name="type" class="fc">
                                         <option value="">Status</option>
                                         <option value="1">Rent</option>
                                         <option value="2">Sale</option>
                                     </select>
                                 </div><!-- /.form-group -->
                                 <div class="form-group">
-                                    <select name="country">
+                                    <select name="country" class="fc">
                                         <option value="">Country</option>
                                         <option value="1">France</option>
                                         <option value="2">Great Britain</option>
@@ -628,7 +626,7 @@
                                     </select>
                                 </div><!-- /.form-group -->
                                 <div class="form-group">
-                                    <select name="city">
+                                    <select name="city" class="fc">
                                         <option value="">City</option>
                                         <option value="1">New York</option>
                                         <option value="2">Los Angeles</option>
@@ -638,7 +636,7 @@
                                     </select>
                                 </div><!-- /.form-group -->
                                 <div class="form-group">
-                                    <select name="district">
+                                    <select name="district" class="fc">
                                         <option value="">District</option>
                                         <option value="1">Manhattan</option>
                                         <option value="2">The Bronx</option>
@@ -648,7 +646,7 @@
                                     </select>
                                 </div><!-- /.form-group -->
                                 <div class="form-group">
-                                    <select name="property-type">
+                                    <select name="property-type" class="fc">
                                         <option value="">Property Type</option>
                                         <option value="1">Apartment</option>
                                         <option value="2">Condominium</option>

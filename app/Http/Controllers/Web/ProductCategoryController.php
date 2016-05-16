@@ -12,7 +12,11 @@ class ProductCategoryController extends SiteController
 {
     public function index()
     {
-        return view(config('app.frontend_template').'.products-grid');
+        $style  = request()->get('style') ? request()->get('style') : "grid";
+        $style  = in_array($style, ['grid', 'list']) ? $style : 'grid';
+
+
+        return view(config('app.frontend_template').'.products.products-'.$style);
 
         return BusinessProduct::with(['seo', 'business'])
                 ->where('product_category_id', $this->values['relation_id'])

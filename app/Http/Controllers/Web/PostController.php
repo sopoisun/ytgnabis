@@ -12,6 +12,8 @@ class PostController extends SiteController
 {
     public function index()
     {
+        return view(config('app.frontend_template').'.posts.post');
+
         return Post::with(['seo', 'user', 'category'])
                 ->find($this->values['relation_id']);
     }
