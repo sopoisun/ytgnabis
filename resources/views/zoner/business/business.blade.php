@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ url('/') }}/assets/zoner/css/magnific-popup.css" type="text/css">
 @stop
 
-@section('html_tag_attr') class="page-sub-page page-blog-listing" id="page-top" @stop
+@section('html_tag_attr') class="page-sub-page page-agency-detail" id="page-top" @stop
 
 @section('content')
 <!-- Page Content -->
@@ -24,51 +24,61 @@
                 <!-- Agent Detail -->
                 <div class="col-md-9 col-sm-9">
                     <section id="agent-detail">
-                        <header><h1>Robert Farley</h1></header>
+                        <header><h1>{{ $data->name }}</h1></header>
                         <section id="agent-info">
                             <div class="row">
                                 <div class="col-md-3 col-sm-3">
                                     <figure class="agent-image"><img alt="" src="{{ url('assets/zoner') }}/img/agent-01.jpg"></figure>
                                 </div><!-- /.col-md-3 -->
                                 <div class="col-md-5 col-sm-5">
-                                    <h3>Contact Info</h3>
+                                    <h3>Info Bisnis</h3>
+                                    <address>
+                                        <a href="#" class="show-on-map" style="z-index:9;"><i class="fa fa-map-marker"></i><figure>Map</figure></a>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <strong>Alamat</strong>
+                                                <br /><br />
+                                                {{ $data->address }}
+                                            </div>
+                                        </div>
+                                    </address>
                                     <dl>
-                                        <dt>Phone:</dt>
-                                        <dd>(123) 456 789</dd>
-                                        <dt>Mobile:</dt>
-                                        <dd>888 123 456 789</dd>
-                                        <dt>Email:</dt>
-                                        <dd><a href="mailto:#">john.doe@example.com</a></dd>
-                                        <dt>Skype:</dt>
-                                        <dd>john.doe</dd>
+                                        <dt>Kategori:</dt>
+                                        <dd>{{ implode(', ', $data->categories->lists('name')->toArray()) }}</dd>
+
+                                        <dt>Rating:</dt>
+                                        <dd>
+                                            <div class="rating rating-overall" data-score="4"></div>
+                                            <div class="clearfix"></div>
+                                        </dd>
                                     </dl>
+                                    <div class="clearfix" style="margin-bottom:10px;"></div>
+                                    <div class="row">
+                                        <div class="col-md-5 col-xs-5">
+                                            <!--<a href="" class="btn btn-warning btn-sm">Order Sekarang</a>-->
+                                            <h4 style="font-weight:bold;">Rating Dari Anda:</h4>
+                                        </div>
+                                        <div class="col-md-7 col-xs-7">
+                                            <aside class="pull-right">
+                                                <div class="rating rating-user">
+                                                    <div class="inner"></div>
+                                                </div>
+                                            </aside>
+                                        </div>
+                                    </div>
                                 </div><!-- /.col-md-5 -->
                                 <div class="col-md-4 col-sm-4">
-                                    <h3>Shortly About Me</h3>
+                                    <h3>Sekilas Tentang Bisnis</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et dui vestibulum,
                                         bibendum purus sit amet, vulputate mauris. Ut adipiscing gravida tincidunt.
                                         Duis euismod placerat rhoncus. Phasellus mollis imperdiet placerat.
                                     </p>
                                 </div><!-- /.col-md-4 -->
                             </div><!-- /.row -->
-                            <div class="row">
-                                <div class="col-md-offset-3 col-md-5 col-sm-offset-3 col-sm-5">
-                                    <h3>Agency</h3>
-                                    <a href="agency-detail.html" class="agency-logo"><img alt="" src="{{ url('assets/zoner') }}/img/agency-logo-01.png"></a>
-                                </div><!-- /.col-md-5 -->
-                                <div class="col-md-4 col-sm-4">
-                                    <h3>My Social Profiles</h3>
-                                    <div class="agent-social">
-                                        <a href="#" class="fa fa-twitter btn btn-grey-dark"></a>
-                                        <a href="#" class="fa fa-facebook btn btn-grey-dark"></a>
-                                        <a href="#" class="fa fa-linkedin btn btn-grey-dark"></a>
-                                    </div>
-                                </div><!-- /.col-md-4 -->
-                            </div><!-- /.row -->
                         </section><!-- /#agent-info -->
                         <hr class="thick">
                         <section id="agent-properties">
-                            <header><h3>My Properties (24)</h3></header>
+                            <header><h3>Daftar Produk</h3></header>
                             <div class="layout-expandable">
                                 <div class="row">
                                     <div class="col-md-4 col-sm-4">
@@ -491,71 +501,7 @@
                                 <span class="show-all">Show All Properties</span>
                             </div>
                         </section><!-- /#agent-properties -->
-                        <hr class="thick">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <section id="agent-testimonials">
-                                    <h3>What Other Said About Me</h3>
-                                    <div class="owl-carousel testimonials-carousel small">
-                                        <blockquote class="testimonial">
-                                            <figure>
-                                                <div class="image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/client-01.jpg">
-                                                </div>
-                                            </figure>
-                                            <aside class="cite">
-                                                <p>Fusce risus metus, placerat in consectetur eu, porttitor a est sed sed dolor lorem cras adipiscing</p>
-                                                <footer>Natalie Jenkins</footer>
-                                            </aside>
-                                        </blockquote>
-                                        <blockquote class="testimonial">
-                                            <figure>
-                                                <div class="image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/client-01.jpg">
-                                                </div>
-                                            </figure>
-                                            <aside class="cite">
-                                                <p>Fusce risus metus, placerat in consectetur eu, porttitor a est sed sed dolor lorem cras adipiscing</p>
-                                                <footer>Natalie Jenkins</footer>
-                                            </aside>
-                                        </blockquote>
-                                    </div><!-- /.testimonials-carousel -->
-                                </section><!-- /#agent-testimonial -->
-                            </div><!-- /.col-md-5 -->
-                            <div class="col-md-7">
-                                <h3>Send Me a Message</h3>
-                                <div class="agent-form">
-                                    <form role="form" id="form-contact-agent" method="post"  class="clearfix">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="form-contact-agent-name">Your Name<em>*</em></label>
-                                                    <input type="text" class="form-control" id="form-contact-agent-name" name="form-contact-agent-name" required>
-                                                </div><!-- /.form-group -->
-                                            </div><!-- /.col-md-6 -->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="form-contact-agent-email">Your Email<em>*</em></label>
-                                                    <input type="email" class="form-control" id="form-contact-agent-email" name="form-contact-agent-email" required>
-                                                </div><!-- /.form-group -->
-                                            </div><!-- /.col-md-6 -->
-                                        </div><!-- /.row -->
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="form-contact-agent-message">Your Message<em>*</em></label>
-                                                    <textarea class="form-control" id="form-contact-agent-message" rows="5" name="form-contact-agent-message" required></textarea>
-                                                </div><!-- /.form-group -->
-                                            </div><!-- /.col-md-12 -->
-                                        </div><!-- /.row -->
-                                        <div class="form-group clearfix">
-                                            <button type="submit" class="btn pull-right btn-default" id="form-contact-agent-submit">Send a Message</button>
-                                        </div><!-- /.form-group -->
-                                        <div id="form-rating-status"></div>
-                                    </form><!-- /#form-contact -->
-                                </div><!-- /.rating-form -->
-                            </div>
-                        </div><!-- /.row -->
+
                     </section><!-- /#agent-detail -->
                 </div><!-- /.col-md-9 -->
                 <!-- end Agent Detail -->
@@ -688,6 +634,7 @@
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/icheck.min.js"></script>
+<script type="text/javascript" src="{{ url('/') }}/assets/zoner/js/jquery.raty.min.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jshashtable-2.1_src.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jquery.numberformatter-1.2.3.js"></script>

@@ -12,8 +12,11 @@ class BusinessController extends SiteController
 {
     public function index()
     {
-        return view(config('app.frontend_template').'.business.business');
+        $this->values['data'] = Business::with(['seo', 'categories', 'products' => function($query){
+                                        $query->limit(6);
+                                    }])
+                                    ->find($this->values['relation_id']);
 
-        return Business::with('seo')->find($this->values['relation_id']);
+        return view(config('app.frontend_template').'.business.business', $this->values);
     }
 }

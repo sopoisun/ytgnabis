@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ url('/') }}/assets/zoner/css/magnific-popup.css" type="text/css">
 @stop
 
-@section('html_tag_attr') class="page-sub-page page-blog-listing" id="page-top" @stop
+@section('html_tag_attr') class="page-sub-page page-contact" id="page-top" @stop
 
 @section('content')
 <!-- Page Content -->

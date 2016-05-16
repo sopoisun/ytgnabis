@@ -12,7 +12,9 @@ class ProductController extends SiteController
 {
     public function index()
     {
-        return BusinessProduct::with(['seo', 'business', 'category'])
-                ->find($this->values['relation_id']);
+        $this->values["data"] = BusinessProduct::with(['seo', 'business', 'category'])
+                                ->find($this->values['relation_id']);
+
+        return view(config('app.frontend_template').'.products.product', $this->values);
     }
 }

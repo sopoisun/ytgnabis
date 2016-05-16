@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ url('/') }}/assets/zoner/css/magnific-popup.css" type="text/css">
 @stop
 
-@section('html_tag_attr') class="page-sub-page page-blog-listing" id="page-top" @stop
+@section('html_tag_attr') class="page-sub-page page-agents-listing" id="page-top" @stop
 
 @section('content')
 <!-- Page Content -->
@@ -24,134 +24,41 @@
                 <!-- Agent Detail -->
                 <div class="col-md-9 col-sm-9">
                     <section id="agents-listing">
-                        <header><h1>Agents Listing</h1></header>
+                        <header><h1>Daftar {{ $seo->businessCategory->name }}</h1></header>
+                        @if( $data->count() )
                         <div class="row">
+                            @foreach($data as $d)
                             <div class="col-md-12 col-lg-6">
                                 <div class="agent">
                                     <a href="agent-detail.html" class="agent-image"><img alt="" src="{{ url('assets/zoner') }}/img/agent-01.jpg"></a>
                                     <div class="wrapper">
-                                        <header><a href="agent-detail.html"><h2>Robert Farley</h2></a></header>
-                                        <aside>23 Properties</aside>
+                                        <header><a href="agent-detail.html"><h2>{{ $d->name }}</h2></a></header>
+                                        <aside>{{ implode(', ', $d->categories->lists('name')->toArray()) }}</aside>
                                         <dl>
-                                            <dt>Phone:</dt>
-                                            <dd>(123) 456 789</dd>
-                                            <dt>Mobile:</dt>
-                                            <dd>888 123 456 789</dd>
-                                            <dt>Email:</dt>
-                                            <dd><a href="mailto:#">john.doe@example.com</a></dd>
-                                            <dt>Skype:</dt>
-                                            <dd>john.doe</dd>
+                                            <dt>Alamat:</dt>
+                                            <dd>{{ str_limit($d->address, 50) }}</dd>
+
+                                            <dt>Kategori:</dt>
+                                            <dd>Ashole</dd>
+
+                                            <dt>Rating:</dt>
+                                            <dd>
+                                                <div class="rating rating-overall" data-score="4"></div>
+                                                <div class="clearfix"></div>
+                                            </dd>
                                         </dl>
                                     </div>
                                 </div><!-- /.agent -->
                             </div><!-- /.col-md-12 -->
-                            <div class="col-md-12 col-lg-6">
-                                <div class="agent">
-                                    <a href="agent-detail.html" class="agent-image"><img alt="" src="{{ url('assets/zoner') }}/img/member-01.jpg"></a>
-                                    <div class="wrapper">
-                                        <header><a href="agent-detail.html"><h2>Erika Green</h2></a></header>
-                                        <aside>12 Properties</aside>
-                                        <dl>
-                                            <dt>Phone:</dt>
-                                            <dd>(123) 456 789</dd>
-                                            <dt>Mobile:</dt>
-                                            <dd>888 123 456 789</dd>
-                                            <dt>Email:</dt>
-                                            <dd><a href="mailto:#">john.doe@example.com</a></dd>
-                                            <dt>Skype:</dt>
-                                            <dd>john.doe</dd>
-                                        </dl>
-                                    </div>
-                                </div><!-- /.agent -->
-                            </div><!-- /.col-md-12 -->
-                            <div class="col-md-12 col-lg-6">
-                                <div class="agent">
-                                    <a href="agent-detail.html" class="agent-image"><img alt="" src="{{ url('assets/zoner') }}/img/member-03.jpg"></a>
-                                    <div class="wrapper">
-                                        <header><a href="agent-detail.html"><h2>Russell G. Nowicki</h2></a></header>
-                                        <aside>30 Properties</aside>
-                                        <dl>
-                                            <dt>Phone:</dt>
-                                            <dd>(123) 456 789</dd>
-                                            <dt>Mobile:</dt>
-                                            <dd>888 123 456 789</dd>
-                                            <dt>Email:</dt>
-                                            <dd><a href="mailto:#">john.doe@example.com</a></dd>
-                                            <dt>Skype:</dt>
-                                            <dd>john.doe</dd>
-                                        </dl>
-                                    </div>
-                                </div><!-- /.agent -->
-                            </div><!-- /.col-md-12 -->
-                            <div class="col-md-12 col-lg-6">
-                                <div class="agent">
-                                    <a href="agent-detail.html" class="agent-image"><img alt="" src="{{ url('assets/zoner') }}/img/member-04.jpg"></a>
-                                    <div class="wrapper">
-                                        <header><a href="agent-detail.html"><h2>Mary A. Parrish</h2></a></header>
-                                        <aside>14 Properties</aside>
-                                        <dl>
-                                            <dt>Phone:</dt>
-                                            <dd>(123) 456 789</dd>
-                                            <dt>Mobile:</dt>
-                                            <dd>888 123 456 789</dd>
-                                            <dt>Email:</dt>
-                                            <dd><a href="mailto:#">john.doe@example.com</a></dd>
-                                            <dt>Skype:</dt>
-                                            <dd>john.doe</dd>
-                                        </dl>
-                                    </div>
-                                </div><!-- /.agent -->
-                            </div><!-- /.col-md-12 -->
-                            <div class="col-md-12 col-lg-6">
-                                <div class="agent">
-                                    <a href="agent-detail.html" class="agent-image"><img alt="" src="{{ url('assets/zoner') }}/img/member-02.jpg"></a>
-                                    <div class="wrapper">
-                                        <header><a href="agent-detail.html"><h2>Kristine Hicks</h2></a></header>
-                                        <aside>6 Properties</aside>
-                                        <dl>
-                                            <dt>Phone:</dt>
-                                            <dd>(123) 456 789</dd>
-                                            <dt>Mobile:</dt>
-                                            <dd>888 123 456 789</dd>
-                                            <dt>Email:</dt>
-                                            <dd><a href="mailto:#">john.doe@example.com</a></dd>
-                                            <dt>Skype:</dt>
-                                            <dd>john.doe</dd>
-                                        </dl>
-                                    </div>
-                                </div><!-- /.agent -->
-                            </div><!-- /.col-md-12 -->
-                            <div class="col-md-12 col-lg-6">
-                                <div class="agent">
-                                    <a href="agent-detail.html" class="agent-image"><img alt="" src="{{ url('assets/zoner') }}/img/client-01.jpg"></a>
-                                    <div class="wrapper">
-                                        <header><a href="agent-detail.html"><h2>Carolyn Sloan</h2></a></header>
-                                        <aside>42 Properties</aside>
-                                        <dl>
-                                            <dt>Phone:</dt>
-                                            <dd>(123) 456 789</dd>
-                                            <dt>Mobile:</dt>
-                                            <dd>888 123 456 789</dd>
-                                            <dt>Email:</dt>
-                                            <dd><a href="mailto:#">john.doe@example.com</a></dd>
-                                            <dt>Skype:</dt>
-                                            <dd>john.doe</dd>
-                                        </dl>
-                                    </div>
-                                </div><!-- /.agent -->
-                            </div><!-- /.col-md-12 -->
+                            @endforeach
                         </div><!-- /.row -->
+                        @else
+                        <div class="alert alert-info" role="alert">{!! $no_data !!}</div>
+                        @endif
                     </section><!-- /#agents-listing -->
                     <!-- Pagination -->
-                    <div class="center">
-                        <ul class="pagination">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                        </ul><!-- /.pagination-->
-                    </div><!-- /.center-->
+                    @include('zoner.paginator', ['paginator' => $data])
+                    <!-- /.pagination-->
                 </div><!-- /.col-md-9 -->
                 <!-- end Agent Detail -->
 
@@ -283,6 +190,7 @@
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/icheck.min.js"></script>
+<script type="text/javascript" src="{{ url('/') }}/assets/zoner/js/jquery.raty.min.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jshashtable-2.1_src.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jquery.numberformatter-1.2.3.js"></script>
