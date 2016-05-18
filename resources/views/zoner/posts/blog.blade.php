@@ -4,6 +4,17 @@
 <link rel="stylesheet" href="{{ url('/') }}/assets/zoner/css/magnific-popup.css" type="text/css">
 @stop
 
+@section('css_section')
+<style>
+.alert{
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+}
+</style>
+@stop
+
 @section('html_tag_attr') class="page-sub-page page-blog-listing" id="page-top" @stop
 
 @section('content')
@@ -23,103 +34,28 @@
                 <!-- Content -->
                 <div class="col-md-9 col-sm-9">
                     <section id="content">
-                        <header><h1>Blog Listing</h1></header>
+                        <header><h1>{{ isset($seo->postCategory) ? 'Post '.$seo->postCategory->name : 'Blog' }}</h1></header>
+                        @if( $data->count() )
+                        @foreach( $data as $d )
                         <article class="blog-post">
-                            <a href="blog-detail.html"><img src="{{ url('/') }}/assets/zoner/img/properties/property-detail-02.jpg"></a>
-                            <header><a href="blog-detail.html"><h2>Vivamus porta orci eu turpis vulputate ornare fusce hendrerit arcu risu</h2></a></header>
+                            <header><a href="blog-detail.html"><h2>{{ $d->post_title }}</h2></a></header>
                             <figure class="meta">
-                                <a href="#" class="link-icon"><i class="fa fa-user"></i>Admin</a>
-                                <a href="#" class="link-icon"><i class="fa fa-calendar"></i>06/04/2014</a>
-                                <div class="tags">
-                                    <a href="#" class="tag article">Architecture</a>
-                                    <a href="#" class="tag article">Design</a>
-                                    <a href="#" class="tag article">Trend</a>
-                                </div>
+                                <a href="#" class="link-icon"><i class="fa fa-user"></i>{{ $d->user->name }}</a>
+                                <a href="#" class="link-icon"><i class="fa fa-calendar"></i>{{ $d->created_at->format('d M Y') }}</a>
+                                <a href="#" class="link-icon"><i class="fa fa-tag"></i>{{ $d->category->name }}</a>
                             </figure>
-                            <p>Fusce quis nulla volutpat, rhoncus ligula ut, pulvinar nisi. In dapibus urna sit amet accumsan
-                                tristique. Donec odio ligula, luctus venenatis varius id, tincidunt ac ipsum. Cras commodo,
-                                velit nec aliquam dictum, tortor velit dictum ipsum, sed ornare nunc leo nec ipsum. Vestibulum
-                                sagittis sapien vitae tristique mollis. Aliquam hendrerit nulla semper, viverra mi et,
-                                hendrerit mauris. Maecenas hendrerit congue ultrices. In laoreet erat blandit eros aliquet,
-                                in malesuada sem rutrum. In placerat porta egestas.
-                            </p>
+                            <p>{{ limit_post($d->isi) }}</p>
                             <a href="blog-detail.html" class="link-arrow">Read More</a>
                         </article><!-- /.blog-post -->
-                        <article class="blog-post">
-                            <header><a href="blog-detail.html"><h2>Nulla sapien leo, placerat sed lacinia nec, rutrum quis</h2></a></header>
-                            <figure class="meta">
-                                <a href="#" class="link-icon"><i class="fa fa-user"></i>Admin</a>
-                                <a href="#" class="link-icon"><i class="fa fa-calendar"></i>06/04/2014</a>
-                                <div class="tags">
-                                    <a href="#" class="tag article">Interior</a>
-                                    <a href="#" class="tag article">New Living</a>
-                                </div>
-                            </figure>
-                            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                                Donec rutrum imperdiet ligula in bibendum. Aenean vulputate rutrum lobortis. Nullam non
-                                mi ac dui egestas venenatis. Etiam venenatis fermentum accumsan. Lorem ipsum dolor
-                                sit amet, consectetur adipiscing elit. Donec at lacus sapien.
-                            </p>
-                            <a href="blog-detail.html" class="link-arrow">Read More</a>
-                        </article><!-- /.blog-post -->
-                        <article class="blog-post">
-                            <header><a href="blog-detail.html"><h2>SoundCloud Audio Post</h2></a></header>
-                            <iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/71654970&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_artwork=true&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
-                            <figure class="meta">
-                                <a href="#" class="link-icon"><i class="fa fa-user"></i>Admin</a>
-                                <a href="#" class="link-icon"><i class="fa fa-calendar"></i>06/04/2014</a>
-                                <div class="tags">
-                                    <a href="#" class="tag article">Audio</a>
-                                    <a href="#" class="tag article">SoundCloud</a>
-                                </div>
-                            </figure>
-                            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                                Donec rutrum imperdiet ligula in bibendum. Aenean vulputate rutrum lobortis. Nullam non
-                                mi ac dui egestas venenatis. Etiam venenatis fermentum accumsan. Lorem ipsum dolor
-                                sit amet, consectetur adipiscing elit. Donec at lacus sapien.
-                            </p>
-                            <a href="blog-detail.html" class="link-arrow">Read More</a>
-                        </article><!-- /.blog-post -->
-                        <article class="blog-post">
-                            <header><a href="blog-detail.html"><h2>Cras commodo, velit nec aliquam dictum, tortor velit
-                                dictum ipsum, sed ornare nunc leo nec ipsum. Vestibulum sagittis sapien vitae tristique mollis.</h2></a></header>
-                            <figure class="meta">
-                                <a href="#" class="link-icon"><i class="fa fa-user"></i>Admin</a>
-                                <a href="#" class="link-icon"><i class="fa fa-calendar"></i>06/04/2014</a>
-                                <div class="tags">
-                                    <a href="#" class="tag article">Interior</a>
-                                    <a href="#" class="tag article">New Living</a>
-                                </div>
-                            </figure>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sit amet commodo mauris,
-                                sit amet commodo turpis. Duis consequat placerat lacus, in sagittis metus pretium vel.
-                                In luctus justo venenatis, accumsan justo sit amet, volutpat dolor. Pellentesque quis nulla
-                                nec nisi tempor scelerisque. Nam nec scelerisque sapien. Donec eleifend purus id neque pretium,
-                                at sollicitudin erat vestibulum. Donec ac tempus tellus, ac dignissim sapien. Fusce et
-                                elementum arcu. Maecenas sit amet tincidunt lorem.
-                            </p>
-                            <p>Vivamus porta orci eu turpis vulputate ornare. Fusce hendrerit arcu risus, sed commodo
-                                lacus viverra in. Donec eget ligula in risus rutrum pretium id a elit. Nullam ut tristique
-                                arcu. Nam quis nunc ac eros accumsan tincidunt vel sit amet lorem. Sed euismod, turpis
-                                et facilisis vestibulum, leo lectus consectetur velit, sed lobortis ante dolor nec leo.
-                                Praesent congue tellus eu dui consectetur commodo. Sed quam ante, elementum sodales felis
-                                quis, rutrum tincidunt dolor. Etiam nec metus iaculis arcu cursus pulvinar. Nunc interdum
-                                eros a neque elementum lobortis. Nulla mattis quis risus vel molestie. Mauris id urna ac
-                                metus blandit lobortis in et odio.
-                            </p>
-                            <a href="blog-detail.html" class="link-arrow">Read More</a>
-                        </article><!-- /.blog-post -->
+                        @endforeach
+                        @else
+                        <div class="alert alert-info" role="alert">{!! $no_data !!}</div>
+                        @endif
 
                         <!-- Pagination -->
-                        <div class="center">
-                            <ul class="pagination">
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                            </ul><!-- /.pagination-->
-                        </div><!-- /.center-->
+                        @include('zoner.paginator', ['paginator' => $data])
+                        <!-- /.pagination-->
+
                     </section><!-- /#content -->
                 </div><!-- /.col-md-9 -->
                 <!-- end Content -->

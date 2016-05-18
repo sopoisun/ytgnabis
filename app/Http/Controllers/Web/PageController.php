@@ -11,8 +11,9 @@ class PageController extends SiteController
 {
     public function index()
     {
-        return view(config('app.frontend_template').'.page.page', $this->values);
+        $this->values['seo']    = $this->values['seo']->load('page');
+        $this->values['data']   = $this->values['seo']->page;
 
-        return $this->values['seo']->load('page');
+        return view(config('app.frontend_template').'.page.page', $this->values);
     }
 }

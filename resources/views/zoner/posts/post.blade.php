@@ -25,51 +25,13 @@
                     <section id="content">
                         <header><h1>Article Detail</h1></header>
                         <article class="blog-post">
-                            <a href="blog-detail.html"><img src="{{ url('/') }}/assets/zoner/img/properties/property-detail-02.jpg"></a>
-                            <header><a href="blog-detail.html"><h2>Vivamus porta orci eu turpis vulputate ornare fusce hendrerit arcu risu</h2></a></header>
+                            <header><a href="blog-detail.html"><h2>{{ $data->post_title }}</h2></a></header>
                             <figure class="meta">
-                                <a href="#" class="link-icon"><i class="fa fa-user"></i>Admin</a>
-                                <a href="#" class="link-icon"><i class="fa fa-calendar"></i>06/04/2014</a>
-                                <div class="tags">
-                                    <a href="#" class="tag article">Architecture</a>
-                                    <a href="#" class="tag article">Design</a>
-                                    <a href="#" class="tag article">Trend</a>
-                                </div>
+                                <a href="#" class="link-icon"><i class="fa fa-user"></i>{{ $data->user->name }}</a>
+                                <a href="#" class="link-icon"><i class="fa fa-calendar"></i>{{ $data->created_at->format('d M Y') }}</a>
+                                <a href="#" class="link-icon"><i class="fa fa-tag"></i>{{ $data->category->name }}</a>
                             </figure>
-                            <p>Fusce quis nulla volutpat, rhoncus ligula ut, pulvinar nisi. In dapibus urna sit amet accumsan
-                                tristique. Donec odio ligula, luctus venenatis varius id, tincidunt ac ipsum. Cras commodo,
-                                velit nec aliquam dictum, tortor velit dictum ipsum, sed ornare nunc leo nec ipsum. Vestibulum
-                                sagittis sapien vitae tristique mollis. Aliquam hendrerit nulla semper, viverra mi et,
-                                hendrerit mauris. Maecenas hendrerit congue ultrices. In laoreet erat blandit eros aliquet,
-                                in malesuada sem rutrum. In placerat porta egestas.
-                            </p>
-                            <h3>Parahraph Headline</h3>
-                            <p>
-                                Phasellus metus ipsum, sollicitudin lacinia turpis in, pellentesque pulvinar diam.
-                                Cras ultricies augue sapien, aliquam hendrerit mi suscipit at. Suspendisse vulputate felis eget
-                                felis convallis fermentum et eu nulla. Donec sagittis sit amet erat non eleifend. Mauris at convallis
-                                magna. Quisque pellentesque id mauris vitae placerat. Mauris facilisis odio nec metus cursus commodo.
-                                Integer vel libero nunc. Donec ac lorem commodo, laoreet elit eget, tempus ante. Quisque eu nunc blandit
-                                erat rutrum feugiat ac sed arcu. In nisi risus, molestie a sem adipiscing, porta volutpat velit.
-                                Pellentesque nec felis sit amet nunc porta tincidunt sit amet et justo.
-                            </p>
-                            <h3>Audio Object</h3>
-                            <iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/71654970&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_artwork=true&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
-                            <h3>Parahraph Headline</h3>
-                            <p>
-                                Phasellus metus ipsum, sollicitudin lacinia turpis in, pellentesque pulvinar diam.
-                                Cras ultricies augue sapien, aliquam hendrerit mi suscipit at. Suspendisse vulputate felis eget
-                                felis convallis fermentum et eu nulla. Donec sagittis sit amet erat non eleifend. Mauris at convallis
-                                magna. Quisque pellentesque id mauris vitae placerat.
-                            </p>
-                            <h4>List Headline</h4>
-                            <ul>
-                                <li>Phasellus metus ipsum, sollicitudin</li>
-                                <li>Quisque pellentesque id mauris</li>
-                                <li>Donec ac lorem commodo</li>
-                                <li>In nisi risus, molestie a sem adipiscing</li>
-                                <li>Pellentesque nec felis sit amet nunc</li>
-                            </ul>
+                            <p>{!! $data->isi !!}</p>
                         </article><!-- /.blog-post-listing -->
                         <section id="about-author">
                             <header><h3>About the Author</h3></header>

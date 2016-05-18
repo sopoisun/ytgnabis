@@ -4,6 +4,17 @@
 <link rel="stylesheet" href="{{ url('/') }}/assets/zoner/css/magnific-popup.css" type="text/css">
 @stop
 
+@section('css_section')
+<style>
+.alert{
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+}
+</style>
+@stop
+
 @section('html_tag_attr') class="page-sub-page page-agents-listing" id="page-top" @stop
 
 @section('content')
