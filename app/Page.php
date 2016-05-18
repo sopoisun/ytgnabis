@@ -33,9 +33,13 @@ class Page extends SeoModel
         $seo_id             = isset ( $inputs['seo_id'] ) ? $inputs['seo_id'] : self::seoIdAttribute();
         $inputs['seo_id']   = $seo_id;
 
-        // get last sort number
-        $lastSortIdx    = self::select('sort')->orderBy('sort', 'desc')->first();
-        $inputs['sort'] = ( $lastSortIdx ) ? $lastSortIdx->sort + 1 : 1;
+        if( $request->get('show_in_menu') == 1 ){
+            // get last sort number
+            $lastSortIdx    = self::select('sort')->orderBy('sort', 'desc')->first();
+            $inputs['sort'] = ( $lastSortIdx ) ? $lastSortIdx->sort + 1 : 1;
+        }else{
+            $inputs['sort'] = 0;
+        }
 
         $result = self::create( $inputs );
 

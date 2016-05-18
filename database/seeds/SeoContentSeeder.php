@@ -528,55 +528,5 @@ class SeoContentSeeder extends Seeder
             ],
     	]);
     	\App\BusinessProduct::simpan($r);
-
-        # Page
-        $r = request()->create('/', 'GET', [
-            'page_title' => 'Home',
-            'show_in_menu' => 1,
-            'seo' => [
-                'permalink' => '/',
-                'site_title' => 'Home',
-                'controller' => 'HomeController',
-                'function' => 'index',
-            ],
-        ]);
-        \App\Page::simpan($r);
-
-        $r = request()->create('/blog', 'GET', [
-            'page_title' => 'Blog',
-            'show_in_menu' => 1,
-            'seo' => [
-                'permalink' => 'blog',
-                'site_title' => 'Blog',
-                'controller' => 'BlogController',
-                'function' => 'index',
-            ],
-        ]);
-        \App\Page::simpan($r);
-
-        $r = request()->create('/', 'GET', [
-            'page_title' => 'Contact',
-            'show_in_menu' => 1,
-            'seo' => [
-                'permalink' => 'contact',
-                'site_title' => 'Contact',
-                'controller' => 'ContactController',
-                'function' => 'index',
-            ],
-        ]);
-        \App\Page::simpan($r);
-
-        $r = request()->create('/', 'GET', [
-            'page_title' => 'Disclaimer',
-            'isi' => '<p>Ini isi disclaimer</p>',
-            'show_in_menu' => 1,
-            'seo' => [
-                'permalink' => 'disclaimer',
-                'site_title' => 'Disclaimer',
-                'controller' => 'PageController',
-                'function' => 'index',
-            ],
-        ]);
-        \App\Page::simpan($r);
     }
 }
