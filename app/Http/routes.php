@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/tes', function(){
     return "Test";
 });
@@ -146,9 +142,5 @@ Route::group(['prefix' => 'backend'], function(){
     });
 });
 
-// has login routes
-Route::get('/home', 'HomeController@index');
 
-Route::group(['prefix' => 'permalink'], function(){
-    Route::get('{permalink?}', 'PermalinkController@index');
-});
+Route::get('{permalink?}', 'PermalinkController@index');

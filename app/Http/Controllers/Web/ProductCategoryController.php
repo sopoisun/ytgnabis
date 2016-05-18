@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\SiteController;
 use App\BusinessProduct;
+use App\ProductCategory;
 
 class ProductCategoryController extends SiteController
 {
@@ -15,15 +15,29 @@ class ProductCategoryController extends SiteController
         $style  = request()->get('style') ? request()->get('style') : "grid";
         $style  = in_array($style, ['grid', 'list']) ? $style : 'grid';
 
-        $this->values['seo'] = $this->values['seo']->load('productCategory');
+        $orderBys = [
+            'name'          => ['key' => 'business_products.name', 'value' => 'asc', 'text' => 'Urutkan Dari'],
+            'harga-murah'   => ['key' => 'business_products.price', 'value' => 'asc', 'text' => 'Harga Termurah'],
+            'harga-mahal'   => ['key' => 'business_products.price', 'value' => 'desc', 'text' => 'Harga Termahal'],
+        ];
+        $this->values['orderBys'] = $orderBys;
+
+        $sort = request()->get('sort') ? request()->get('sort') : "name";
+        $orderBy = in_array($sort, array_keys($orderBys)) ? $orderBys[$sort] : $orderBys['name'];
+
+        $categories = ProductCategory::with('seo')->where('active', 1)->get();
+        $this->values['categories'] = $categories;
+
+        $this->values['seo']['product'] = $categories->where('seo_id', $this->values['seo_id'])->first();
 
         $data = BusinessProduct::with(['seo', 'business'])
                 ->where('product_category_id', $this->values['relation_id'])
-                ->where('active', 1)->orderBy('name')->paginate(9)
-                ->setPath(url('permalink/'.$this->permalink))
+                ->where('active', 1)->orderBy($orderBy['key'], $orderBy['value'])->paginate(9)
+                ->setPath(url($this->permalink))
                 ->appends(request()->all());
 
-        $this->values['data'] = $data;
+        $this->values['data']   = $data;
+        $this->values['params'] = request()->all();
 
         if( !$data->count() )
         {

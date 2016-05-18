@@ -17,7 +17,7 @@ class CreateTableBusinessProducts extends Migration
             $table->string('seo_id');
             $table->string('business_id');
             $table->string('name');
-            $table->string('price');
+            $table->integer('price');
             $table->string('image_url');
             $table->string('product_category_id');
             $table->integer('counter')->default(0);

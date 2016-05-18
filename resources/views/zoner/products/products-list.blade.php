@@ -34,18 +34,23 @@
                 <!-- Results -->
                 <div class="col-md-9 col-sm-9">
                     <section id="results">
-                        <header><h1>Daftar {{ isset($seo->productCategory) ? $seo->productCategory->name : 'Produk' }}</h1></header>
+                        <header><h1>Daftar {{ isset($seo['product']) ? $seo['product']->name : 'Produk' }}</h1></header>
                         @if( $data->count() )
                         <section id="search-filter">
                             <figure><h3><i class="fa fa-search"></i>Search Results:</h3>
                                 <span class="search-count">Page {{ $data->currentPage() }} / {{ $data->lastPage() }}</span>
                                 <div class="sorting">
                                     <div class="form-group">
-                                        <select name="sorting" class="fc">
-                                            <option value="">Sort By</option>
-                                            <option value="1">Lowest price first</option>
-                                            <option value="2">Highest price first</option>
-                                            <option value="3">Date added</option>
+                                        <select name="sorting" class="fc" id="sortby">
+                                            @foreach($orderBys as $key => $val)
+                                            {{--*/
+                                                $txt = "";
+                                                if(isset($params['sort']) && $params['sort'] == $key){
+                                                    $txt = 'selected="selected"';
+                                                }
+                                            /*--}}
+                                            <option value="{{ $key }}" {!! $txt !!}>{{ $val['text'] }}</option>
+                                            @endforeach
                                         </select>
                                     </div><!-- /.form-group -->
                                 </div>
@@ -58,13 +63,13 @@
                                 <!--<figure class="type" title="Apartment"><img src="{{ url('/') }}/assets/zoner/img/property-types/apartment.png" alt=""></figure>-->
                                 <div class="property-image">
                                     <!--<figure class="ribbon">In Hold</figure>-->
-                                    <a href="property-detail.html">
+                                    <a href="{{ url($d->seo->permalink) }}">
                                         <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-01.jpg">
                                     </a>
                                 </div>
                                 <div class="info">
                                     <header>
-                                        <a href="property-detail.html"><h3>{{ $d->name }}</h3></a>
+                                        <a href="{{ url($d->seo->permalink) }}"><h3>{{ $d->name }}</h3></a>
                                         <figure>{{ $d->business->name }}</figure>
                                     </header>
                                     <div class="tag price">Rp. {{ number_format($d->price, 0, ',', '.') }}</div>
@@ -73,7 +78,7 @@
                                             bibendum purus sit amet, vulputate mauris. Ut adipiscing gravida tincidunt...
                                         </p>
                                     </div>
-                                    <a href="property-detail.html" class="link-arrow">Read More</a>
+                                    <a href="{{ url($d->seo->permalink) }}" class="link-arrow">Read More</a>
                                 </div>
                             </div><!-- /.property -->
                             @endforeach
@@ -91,66 +96,15 @@
                 <!-- sidebar -->
                 <div class="col-md-3 col-sm-3">
                     <section id="sidebar">
-                        <aside id="edit-search">
-                            <header><h3>Search Properties</h3></header>
-                            <form role="form" id="form-sidebar" class="form-search" action="properties-listing.html">
-                                <div class="form-group">
-                                    <select name="type" class="fc">
-                                        <option value="">Status</option>
-                                        <option value="1">Rent</option>
-                                        <option value="2">Sale</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <select name="country" class="fc">
-                                        <option value="">Country</option>
-                                        <option value="1">France</option>
-                                        <option value="2">Great Britain</option>
-                                        <option value="3">Spain</option>
-                                        <option value="4">Russia</option>
-                                        <option value="5">United States</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <select name="city" class="fc">
-                                        <option value="">City</option>
-                                        <option value="1">New York</option>
-                                        <option value="2">Los Angeles</option>
-                                        <option value="3">Chicago</option>
-                                        <option value="4">Houston</option>
-                                        <option value="5">Philadelphia</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <select name="district" class="fc">
-                                        <option value="">District</option>
-                                        <option value="1">Manhattan</option>
-                                        <option value="2">The Bronx</option>
-                                        <option value="3">Brooklyn</option>
-                                        <option value="4">Queens</option>
-                                        <option value="5">Staten Island</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <select name="property-type" class="fc">
-                                        <option value="">Property Type</option>
-                                        <option value="1">Apartment</option>
-                                        <option value="2">Condominium</option>
-                                        <option value="3">Cottage</option>
-                                        <option value="4">Flat</option>
-                                        <option value="5">House</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <div class="price-range">
-                                        <input id="price-input" type="text" name="price" value="1000;299000">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-default">Search Now</button>
-                                </div><!-- /.form-group -->
-                            </form><!-- /#form-map -->
-                        </aside><!-- /#edit-search -->
+                        <aside id="categories">
+                            <header><h3>Kategori Produk</h3></header>
+                            <ul class="list-links">
+                                @foreach($categories as $category)
+                                <li><a href="{{ url($category->seo->permalink) }}">{{ $category->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </aside><!-- /#categories -->
+
                         <aside id="featured-properties">
                             <header><h3>Featured Properties</h3></header>
                             <div class="property small">
@@ -222,4 +176,8 @@
 <script type="text/javascript" src="{{ url('/') }}/assets/zoner/js/jquery.dependClass-0.1.js"></script>
 <script type="text/javascript" src="{{ url('/') }}/assets/zoner/js/draggable-0.1.js"></script>
 <script type="text/javascript" src="{{ url('/') }}/assets/zoner/js/jquery.slider.js"></script>
+@stop
+
+@section('js_section')
+@include('zoner.products.products-js')
 @stop
