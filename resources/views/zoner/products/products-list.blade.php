@@ -34,7 +34,7 @@
                 <!-- Results -->
                 <div class="col-md-9 col-sm-9">
                     <section id="results">
-                        <header><h1>Daftar {{ $seo->productCategory->name }}</h1></header>
+                        <header><h1>Daftar {{ isset($seo->productCategory) ? $seo->productCategory->name : 'Produk' }}</h1></header>
                         @if( $data->count() )
                         <section id="search-filter">
                             <figure><h3><i class="fa fa-search"></i>Search Results:</h3>

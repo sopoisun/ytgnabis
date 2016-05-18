@@ -24,7 +24,7 @@
                 <!-- Agent Detail -->
                 <div class="col-md-9 col-sm-9">
                     <section id="agents-listing">
-                        <header><h1>Daftar {{ $seo->businessCategory->name }}</h1></header>
+                        <header><h1>Daftar {{ isset($seo->businessCategory) ? $seo->businessCategory->name : 'Bisnis' }}</h1></header>
                         @if( $data->count() )
                         <div class="row">
                             @foreach($data as $d)
