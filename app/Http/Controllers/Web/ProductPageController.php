@@ -31,7 +31,14 @@ class ProductPageController extends SiteController
         $this->values['seo']['product'] = $categories->where('seo_id', $this->values['seo_id'])->first();
 
         $data = BusinessProduct::with(['seo', 'business'])
-                ->where('active', 1)->orderBy($orderBy['key'], $orderBy['value'])->paginate(9)
+                ->where('active', 1);
+
+        if( request()->get('cari') ){
+            $cari =  str_replace('-', ' ', request()->get('cari'));
+            $data->where('name', 'like', '%'.$cari.'%');
+        }
+
+        $data = $data->orderBy($orderBy['key'], $orderBy['value'])->paginate(9)
                 ->setPath(url($this->permalink))
                 ->appends(request()->all());
 

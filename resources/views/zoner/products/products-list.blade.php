@@ -96,6 +96,15 @@
                 <!-- sidebar -->
                 <div class="col-md-3 col-sm-3">
                     <section id="sidebar">
+                        <aside id="search">
+                            <header><h3>Cari Produk</h3></header>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="txtSearch" placeholder="Masukan Nama Produk">
+                                <input type="hidden" id="urlSearch" value="produk" />
+                                <span class="input-group-btn"><button class="btn btn-default search" type="button" id="btnSearch"><i class="fa fa-search"></i></button></span>
+                            </div><!-- /input-group -->
+                        </aside>
+
                         <aside id="categories">
                             <header><h3>Kategori Produk</h3></header>
                             <ul class="list-links">
@@ -180,4 +189,5 @@
 
 @section('js_section')
 @include('zoner.products.products-js')
+@include('zoner.search-js')
 @stop

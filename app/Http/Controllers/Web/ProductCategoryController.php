@@ -41,7 +41,7 @@ class ProductCategoryController extends SiteController
 
         if( !$data->count() )
         {
-            $category = $this->values['seo']['productCategory']['name'];
+            $category = $this->values['seo']['product']['name'];
             $this->values['no_data'] = "<p>Tidak ada produk dengan kategori &quot;<b>".$category."</b>&quot;</p>";
         }
 

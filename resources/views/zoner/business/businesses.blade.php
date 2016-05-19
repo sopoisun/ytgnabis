@@ -35,15 +35,15 @@
                 <!-- Agent Detail -->
                 <div class="col-md-9 col-sm-9">
                     <section id="agents-listing">
-                        <header><h1>Daftar {{ isset($seo->businessCategory) ? $seo->businessCategory->name : 'Bisnis' }}</h1></header>
+                        <header><h1>Daftar {{ isset($seo['business']) ? $seo['business']->name : 'Bisnis' }}</h1></header>
                         @if( $data->count() )
                         <div class="row">
                             @foreach($data as $d)
                             <div class="col-md-12 col-lg-6">
                                 <div class="agent">
-                                    <a href="agent-detail.html" class="agent-image"><img alt="" src="{{ url('assets/zoner') }}/img/agent-01.jpg"></a>
+                                    <a href="{{ url($d->seo->permalink) }}" class="agent-image"><img alt="" src="{{ url('assets/zoner') }}/img/agent-01.jpg"></a>
                                     <div class="wrapper">
-                                        <header><a href="agent-detail.html"><h2>{{ $d->name }}</h2></a></header>
+                                        <header><a href="{{ url($d->seo->permalink) }}"><h2>{{ $d->name }}</h2></a></header>
                                         <aside>{{ implode(', ', $d->categories->lists('name')->toArray()) }}</aside>
                                         <dl>
                                             <dt>Alamat:</dt>
@@ -76,6 +76,24 @@
                 <!-- sidebar -->
                 <div class="col-md-3 col-sm-3">
                     <section id="sidebar">
+                        <aside id="search">
+                            <header><h3>Cari Bisnis</h3></header>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="txtSearch" placeholder="Masukan Nama Bisnis">
+                                <input type="hidden" id="urlSearch" value="bisnis" />
+                                <span class="input-group-btn"><button class="btn btn-default search" type="button" id="btnSearch"><i class="fa fa-search"></i></button></span>
+                            </div><!-- /input-group -->
+                        </aside>
+
+                        <aside id="categories">
+                            <header><h3>Kategori Bisnis</h3></header>
+                            <ul class="list-links">
+                                @foreach($categories as $category)
+                                <li><a href="{{ url($category->seo->permalink) }}">{{ $category->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </aside><!-- /#categories -->
+
                         <aside id="edit-search">
                             <header><h3>Search Properties</h3></header>
                             <form role="form" id="form-sidebar" class="form-search" action="properties-listing.html">
@@ -209,4 +227,8 @@
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jquery.dependClass-0.1.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/draggable-0.1.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/jquery.slider.js"></script>
+@stop
+
+@section('js_section')
+@include('zoner.search-js')
 @stop
