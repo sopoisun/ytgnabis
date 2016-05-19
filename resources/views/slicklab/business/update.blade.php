@@ -104,8 +104,8 @@
     $('.wysihtml5').wysihtml5();
 
     // Default to blambangan location
-    var defLat  = {{ $business->map_lat }};
-    var defLong = {{ $business->map_long }};
+    var defLat  = {{ old('map_lat') ? old('map_lat') : $business->map_lat }};
+    var defLong = {{ old('map_long') ? old('map_long') : $business->map_long }};
 
     var map = new GMaps({
         div: '#map',

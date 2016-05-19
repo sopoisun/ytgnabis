@@ -151,8 +151,8 @@
     $('.wysihtml5').wysihtml5();
 
     // Default to blambangan location
-    var defLat  = {{ $setting->map_latitude }};
-    var defLong = {{ $setting->map_longitude }};
+    var defLat  = {{ old('map_latitude') ? old('map_latitude') : $setting->map_latitude }};
+    var defLong = {{ old('map_longitude') ? old('map_longitude') : $setting->map_longitude }};
 
     var map = new GMaps({
         div: '#map',
@@ -162,7 +162,7 @@
     });
 
     map.setCenter(defLat, defLong);
-    
+
     map.addMarker({
         lat: defLat,
         lng: defLong,

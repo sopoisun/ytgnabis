@@ -101,8 +101,8 @@
     $('.wysihtml5').wysihtml5();
 
     // Default to blambangan location
-    var defLat  = -8.212292045017827;
-    var defLong = 114.37672555446625;
+    var defLat  = {{ old('map_lat') ? old('map_lat') : -8.212292045017827 }};
+    var defLong = {{ old('map_long') ? old('map_long') : 114.37672555446625 }};
 
     var map = new GMaps({
         div: '#map',
@@ -113,9 +113,11 @@
 
     GMaps.geolocate({
         success: function(position) {
+            @if( !old('map_lat') )
             defLat  = position.coords.latitude;
             defLong = position.coords.longitude;
             map.setCenter(position.coords.latitude, position.coords.longitude);
+            @endif
         },
         error: function(error) {
             // set to blambangan location
