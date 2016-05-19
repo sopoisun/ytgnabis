@@ -58,13 +58,13 @@
                         </section>
                         <section id="properties" class="display-lines">
                             @foreach($data as $d)
-                            <div class="property">
+                            <div class="property" style="min-height:230px;">
                                 <!--<figure class="tag status">For Sale</figure>-->
                                 <!--<figure class="type" title="Apartment"><img src="{{ url('/') }}/assets/zoner/img/property-types/apartment.png" alt=""></figure>-->
                                 <div class="property-image">
                                     <!--<figure class="ribbon">In Hold</figure>-->
                                     <a href="{{ url($d->seo->permalink) }}">
-                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-01.jpg">
+                                        <img alt="" src="{{ url('/files/products/'.( $d->image_url != NULL ? $d->image_url : 'no-image.png' )) }}">
                                     </a>
                                 </div>
                                 <div class="info">
@@ -74,9 +74,7 @@
                                     </header>
                                     <div class="tag price">Rp. {{ number_format($d->price, 0, ',', '.') }}</div>
                                     <div style="margin:10px 0px 30px;">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et dui vestibulum,
-                                            bibendum purus sit amet, vulputate mauris. Ut adipiscing gravida tincidunt...
-                                        </p>
+                                        <p>{!! $d->about !!}</p>
                                     </div>
                                     <a href="{{ url($d->seo->permalink) }}" class="link-arrow">Read More</a>
                                 </div>
@@ -113,59 +111,6 @@
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->
-
-                        <aside id="featured-properties">
-                            <header><h3>Featured Properties</h3></header>
-                            <div class="property small">
-                                <a href="property-detail.html">
-                                    <div class="property-image">
-                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-06.jpg">
-                                    </div>
-                                </a>
-                                <div class="info">
-                                    <a href="property-detail.html"><h4>2186 Rinehart Road</h4></a>
-                                    <figure>Doral, FL 33178 </figure>
-                                    <div class="tag price">$ 72,000</div>
-                                </div>
-                            </div><!-- /.property -->
-                            <div class="property small">
-                                <a href="property-detail.html">
-                                    <div class="property-image">
-                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-09.jpg">
-                                    </div>
-                                </a>
-                                <div class="info">
-                                    <a href="property-detail.html"><h4>2479 Murphy Court</h4></a>
-                                    <figure>Minneapolis, MN 55402</figure>
-                                    <div class="tag price">$ 36,000</div>
-                                </div>
-                            </div><!-- /.property -->
-                            <div class="property small">
-                                <a href="property-detail.html">
-                                    <div class="property-image">
-                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-03.jpg">
-                                    </div>
-                                </a>
-                                <div class="info">
-                                    <a href="property-detail.html"><h4>1949 Tennessee Avenue</h4></a>
-                                    <figure>Minneapolis, MN 55402</figure>
-                                    <div class="tag price">$ 128,600</div>
-                                </div>
-                            </div><!-- /.property -->
-                        </aside><!-- /#featured-properties -->
-                        <aside id="our-guides">
-                            <header><h3>Our Guides</h3></header>
-                            <a href="#" class="universal-button">
-                                <figure class="fa fa-home"></figure>
-                                <span>Buying Guide</span>
-                                <span class="arrow fa fa-angle-right"></span>
-                            </a><!-- /.universal-button -->
-                            <a href="#" class="universal-button">
-                                <figure class="fa fa-umbrella"></figure>
-                                <span>Right Insurance for You</span>
-                                <span class="arrow fa fa-angle-right"></span>
-                            </a><!-- /.universal-button -->
-                        </aside><!-- /#our-guide -->
                     </section><!-- /#sidebar -->
                 </div><!-- /.col-md-3 -->
                 <!-- end Sidebar -->

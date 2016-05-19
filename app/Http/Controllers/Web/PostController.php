@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\SiteController;
 use App\Post;
+use App\PostCategory;
 
 class PostController extends SiteController
 {
     public function index()
     {
+        $categories = PostCategory::with('seo')->where('active', 1)->get();
+        $this->values['categories'] = $categories;
+
         $this->values['data'] = Post::with(['seo', 'user', 'category'])
                                 ->find($this->values['relation_id']);
 
