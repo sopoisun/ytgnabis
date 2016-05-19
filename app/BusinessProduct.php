@@ -33,7 +33,7 @@ class BusinessProduct extends SeoModel
     public static function simpan( $request )
     {
         // for database
-        $inputs = $request->only(['business_id', 'name', 'price', 'product_category_id', 'seo']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id', 'seo']);
 
         // Upload image
         if( $request->hasFile('image') ){
@@ -71,14 +71,17 @@ class BusinessProduct extends SeoModel
 
     public static function ubah( $id, $request, $custom_fields = [] )
     {
-        $inputs = $request->only(['business_id', 'name', 'price', 'product_category_id']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id']);
 
         $current = self::find( $id );
 
         // Upload Image
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
-                unlink(public_path().'/files/products/'.$current->image_url);
+                if( $current->image_url != NULL )
+                {
+                    unlink(public_path().'/files/products/'.$current->image_url);
+                }
                 $ext    = $request->file('image')->getClientOriginalExtension();
                 $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
                 $request->file('image')->move(public_path().'/files/products', $imgUrl);

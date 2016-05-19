@@ -96,7 +96,7 @@
                         <div class="col-md-6 col-sm-6">
                             <article>
                                 <h3>About Us</h3>
-                                {!! $setting->about_us !!}
+                                <p>{!! $setting->about_us !!}</p>
                                 <hr>
                                 <a href="{{ url('/disclaimer') }}" class="link-arrow">Read More</a>
                             </article>

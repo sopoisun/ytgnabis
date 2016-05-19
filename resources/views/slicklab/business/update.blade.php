@@ -39,7 +39,7 @@
                     Add new business
                 </header>
                 <div class="panel-body">
-                    {!! Form::model($business, ['role' => 'form', 'class' => 'form-horizontal']) !!}
+                    {!! Form::model($business, ['role' => 'form', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data', 'accept' => 'image/*']) !!}
                         @include('slicklab.business.form')
                     {!! Form::close() !!}
                 </div>
