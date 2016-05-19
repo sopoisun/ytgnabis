@@ -132,7 +132,7 @@
                         </ul>
                     </li>
                     <li class="{{ set_active('backend/setting*') }}">
-                        <a href=""><i class="fa fa-cogs"></i>  <span>Setting</span></a>
+                        <a href="{{ url('/backend/setting') }}"><i class="fa fa-cogs"></i>  <span>Setting</span></a>
                     </li>
                 </ul>
                 <!--sidebar nav end-->

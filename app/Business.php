@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class Business extends SeoModel
 {
-    protected $fillable = ['name', 'seo_id', 'address', 'map_lat', 'map_long', 'phone', 'counter', 'active'];
+    protected $fillable = ['name', 'seo_id', 'address', 'map_lat', 'map_long', 'phone', 'image_url', 'about', 'counter', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
 
     /* Relation */
@@ -52,7 +52,20 @@ class Business extends SeoModel
     /* Seo Override */
     public static function simpan( $request )
     {
-        $inputs             = $request->all();
+        $inputs = $request->all();
+
+        // Upload image
+        if( $request->hasFile('image') ){
+            if( $request->file('image')->isValid() )
+            {
+                $ext    = $request->file('image')->getClientOriginalExtension();
+                $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
+                $request->file('image')->move(public_path().'/files/businesses', $imgUrl);
+
+                $inputs  += [ 'image_url' => $imgUrl ];
+            }
+        }
+
         $seo_id             = isset ( $inputs['seo_id'] ) ? $inputs['seo_id'] : self::seoIdAttribute();
         $inputs['seo_id']   = $seo_id;
 
@@ -78,10 +91,26 @@ class Business extends SeoModel
 
     public static function ubah( $id, $request, $custom_fields = [] )
     {
+        $inputs = $request->all();
+
         $current = self::with('categories')->find( $id );
         $oldCategories  = json_decode($current->categories->lists('id'), true);
 
-        if (  $current->update( $request->all() ) ) {
+        // Upload Image
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                if( $current->image_url != NULL ){
+                    unlink(public_path().'/files/businesses/'.$current->image_url);
+                }
+                $ext    = $request->file('image')->getClientOriginalExtension();
+                $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
+                $request->file('image')->move(public_path().'/files/businesses', $imgUrl);
+
+                $inputs += [ 'image_url' => $imgUrl ];
+            }
+        }
+
+        if (  $current->update( $inputs ) ) {
 
             $newCategories = array_diff($request->get('categories'), $oldCategories);
             if( count($newCategories) ){

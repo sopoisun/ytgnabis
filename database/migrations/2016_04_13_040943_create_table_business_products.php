@@ -18,7 +18,8 @@ class CreateTableBusinessProducts extends Migration
             $table->string('business_id');
             $table->string('name');
             $table->integer('price');
-            $table->string('image_url');
+            $table->string('image_url')->nullable();
+            $table->text('about');
             $table->string('product_category_id');
             $table->integer('counter')->default(0);
             $table->enum('active', [1, 0])->default(1);

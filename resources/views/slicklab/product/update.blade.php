@@ -6,6 +6,9 @@
 
 <!--bootstrap-fileinput-master-->
 <link rel="stylesheet" type="text/css" href="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-fileinput-master/css/fileinput.css" />
+
+<!--  wysihtml5 -->
+<link href="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet">
 @stop
 
 @section('content')
@@ -56,6 +59,10 @@
 <!--bootstrap-fileinput-master-->
 <script type="text/javascript" src="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-fileinput-master/js/fileinput.js"></script>
 <!--<script type="text/javascript" src="{{ url('/assets/'.config('app.backend_template')) }}/js/file-input-init.js"></script>-->
+
+<!--bootstrap-wysihtml5-->
+<script src="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+<script type="text/javascript" src="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
 @stop
 
 @section('js_section')
@@ -73,6 +80,8 @@
         ],
         'allowedFileExtensions' : ['jpg', 'png','gif'],
     });
+
+    $('.wysihtml5').wysihtml5();
 </script>
 @include('slicklab.partials.seo-update-section')
 @stop

@@ -64,14 +64,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BusinessProductRequest $request)
     {
-        if ($request->hasFile('image')) {
-            if ($request->file('image')->isValid()) {
-                if( BusinessProduct::simpan($request) ){
-                    return redirect('/backend/product')->with('success', 'Sukses simpan data produk.');
-                }
-            }
+        if( BusinessProduct::simpan($request) ){
+            return redirect('/backend/product')->with('success', 'Sukses simpan data produk.');
         }
 
         return redirect()->back()->withErrors(['failed' => 'Gagal simpan data produk.']);

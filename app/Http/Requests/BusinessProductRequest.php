@@ -30,10 +30,6 @@ class BusinessProductRequest extends SeoRequest
             'image'         => 'image|mimes:jpeg,png',
         ];
 
-        if( $this->get('state') == 'new' ){
-            $rules['image'] = 'required|image|mimes:jpeg,png';
-        }
-
         $rules += $this->seoRules();
 
         return $rules;
@@ -49,7 +45,7 @@ class BusinessProductRequest extends SeoRequest
             'price.integer'         => 'Harga harus angka',
             'image.required'        => 'Image tidak boleh kosong.',
             'image.image'           => 'Image harus gambar.',
-            'image.mimes'           => 'Image harus format jpg atau png',
+            'image.mimes'           => 'Image harus format jpg atau png.',
         ];
 
         $messages += $this->seoMessages();

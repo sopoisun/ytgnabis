@@ -66,6 +66,13 @@
         @if($errors->has('seo.keywords'))<span class="help-block">{{ $errors->first('seo.keywords') }}</span>@endif
     </div>
 </div>
+<div class="form-group @if($errors->has('about')) has-error @endif">
+    <label for="seo[keywords]" class="col-lg-3 col-sm-3 control-label">Product Desc</label>
+    <div class="col-lg-9">
+        {{ Form::textarea('about', null, ['class' => 'form-control wysihtml5', 'id' => 'about', 'rows' => 3, 'placeholder' => 'Enter business description']) }}
+        @if($errors->has('about'))<span class="help-block">{{ $errors->first('about') }}</span>@endif
+    </div>
+</div>
 <div class="form-group">
     <div class="col-lg-offset-3 col-lg-9">
         {{ Form::hidden('state', isset($product) ? 'old' : 'new') }}

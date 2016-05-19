@@ -30,6 +30,7 @@ class BusinessRequest extends SeoRequest
             'map_long'  => 'required',
             'phone'     => 'required',
             'categories'=> 'required',
+            'image'     => 'image|mimes:jpeg,png',
         ];
 
         $rules += $this->seoRules();
@@ -46,6 +47,8 @@ class BusinessRequest extends SeoRequest
             'map_long.required' => 'Bujur peta tidak boleh kosong.',
             'phone.required'    => 'Telpon tidak boleh kosong.',
             'categories.required'=> 'Kategori tidak boleh kosong.',
+            'image.image'        => 'Image harus gambar.',
+            'image.mimes'        => 'Image harus format jpg atau png.',
         ];
 
         $messages += $this->seoMessages();
