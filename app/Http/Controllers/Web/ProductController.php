@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\SiteController;
+use App\Http\Controllers\ProductBaseController;
 
-class ProductController extends SiteController
+class ProductController extends ProductBaseController
 {
     public function index()
     {
-        $categories = $this->front->ProductCategories()->get();
-        $this->values['categories'] = $categories;
-
         $this->values["data"] = $this->front->Products()
             ->where('business_products.id', $this->values['relation_id'])->first();
 

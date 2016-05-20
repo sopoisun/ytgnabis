@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\SiteController;
+use App\Http\Controllers\PostBaseController;
 
-class BlogController extends SiteController
+class BlogController extends PostBaseController
 {
     public function index()
     {
@@ -21,9 +21,6 @@ class BlogController extends SiteController
         $data = $data->orderBy('posts.created_at', 'desc')->paginate(5);
 
         $this->values['data'] = $data;
-
-        $categories = $this->front->PostCategories()->get();
-        $this->values['categories'] = $categories;
 
         if( !$data->count() )
         {

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\SiteController;
+use App\Http\Controllers\ProductBaseController;
 
-class ProductPageController extends SiteController
+class ProductPageController extends ProductBaseController
 {
     public function index()
     {
@@ -23,10 +23,7 @@ class ProductPageController extends SiteController
         $sort = request()->get('sort') ? request()->get('sort') : "name";
         $orderBy = in_array($sort, array_keys($orderBys)) ? $orderBys[$sort] : $orderBys['name'];
 
-        $categories = $this->front->ProductCategories()->get();
-        $this->values['categories'] = $categories;
-
-        $this->values['seo']['product'] = $categories->where('seo_id', $this->values['seo_id'])->first();
+        $this->values['seo']['product'] = $this->values['categories']->where('seo_id', $this->values['seo_id'])->first();
 
         $data = $this->front->Products();
 

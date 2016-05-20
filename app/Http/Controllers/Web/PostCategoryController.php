@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\SiteController;
+use App\Http\Controllers\PostBaseController;
 
-class PostCategoryController extends SiteController
+class PostCategoryController extends PostBaseController
 {
     public function index()
     {
@@ -18,10 +18,7 @@ class PostCategoryController extends SiteController
 
         $this->values['data'] = $data;
 
-        $categories = $this->front->PostCategories()->get();
-        $this->values['categories'] = $categories;
-
-        $this->values['seo']['post'] = $categories->where('seo_id', $this->values['seo_id'])->first();
+        $this->values['seo']['post'] = $this->values['categories']->where('seo_id', $this->values['seo_id'])->first();
 
         if( !$data->count() )
         {

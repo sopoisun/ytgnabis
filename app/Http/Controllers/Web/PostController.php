@@ -5,16 +5,12 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\SiteController;
-use App\Front;
+use App\Http\Controllers\PostBaseController;
 
-class PostController extends SiteController
+class PostController extends PostBaseController
 {
     public function index()
     {
-        $categories = $this->front->PostCategories()->get();
-        $this->values['categories'] = $categories;
-
         $this->values['data'] = $this->front->Posts()
                 ->where('posts.id', $this->values['relation_id'])->first();
 

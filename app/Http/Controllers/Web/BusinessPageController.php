@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\SiteController;
+use App\Http\Controllers\BusinessBaseController;
 
-class BusinessPageController extends SiteController
+class BusinessPageController extends BusinessBaseController
 {
     public function index()
     {
@@ -21,9 +21,6 @@ class BusinessPageController extends SiteController
         $data = $data->orderBy('businesses.name')->paginate(8);
 
         $this->values['data'] = $data;
-
-        $categories = $this->front->BusinessCategories()->get();
-        $this->values['categories'] = $categories;
 
         if( !$data->count() )
         {

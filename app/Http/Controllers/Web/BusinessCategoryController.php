@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\SiteController;
+use App\Http\Controllers\BusinessBaseController;
 
-class BusinessCategoryController extends SiteController
+class BusinessCategoryController extends BusinessBaseController
 {
     public function index()
     {
@@ -16,10 +16,7 @@ class BusinessCategoryController extends SiteController
 
         $this->values['data'] = $data;
 
-        $categories = $this->front->BusinessCategories()->get();
-        $this->values['categories'] = $categories;
-
-        $this->values['seo']['business'] = $categories->where('seo_id', $this->values['seo_id'])->first();
+        $this->values['seo']['business'] = $this->values['categories']->where('seo_id', $this->values['seo_id'])->first();
 
         if( !$data->count() )
         {
