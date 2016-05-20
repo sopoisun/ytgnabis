@@ -114,4 +114,38 @@ class Front
                 DB::raw('SUBSTRING(created_at, 1, 7)tanggal'),
             ])->get();
     }
+
+    public function Map()
+    {
+        if( request()->get('q') && request()->get('lat') && request()->get('lng') ){
+            $q      = request()->get('q');
+            $lat    = request()->get('lat');
+            $lng    = request()->get('lng');
+
+            $businessLoaded = request()->session()->has('businesses_loaded') ?
+                request()->session()->get('businesses_loaded') : [];
+
+            $businesses = Business::join('business_products', 'businesses.id', '=', 'business_products.business_id')
+                ->join('seos', 'businesses.seo_id', '=', 'seos.seo_id')
+                ->whereNotIn('businesses.id', $businessLoaded)
+                ->where('business_products.name', 'like', '%'.$q.'%')
+                ->groupBy('businesses.id')
+                ->select([
+                    'businesses.id', 'businesses.name', 'businesses.map_lat',
+                    'businesses.map_long', 'seos.permalink',
+                    DB::raw("(6371 * ACOS(COS(RADIANS($lat)) * COS(RADIANS(businesses.map_lat)) * COS(
+                            RADIANS(businesses.map_long) - RADIANS($lng)) + SIN(RADIANS($lat)) *
+                            SIN(RADIANS(businesses.map_lat)))) AS distance "),
+                ])
+                ->having('distance', '<', '1')
+                ->get();
+
+            $businessLoaded = array_merge($businessLoaded, array_column($businesses->toArray(), 'id'));
+            request()->session()->put('businesses_loaded', $businessLoaded);
+
+            return $businesses;
+        }
+
+        return [];
+    }
 }

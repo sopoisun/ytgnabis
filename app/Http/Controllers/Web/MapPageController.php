@@ -11,6 +11,11 @@ class MapPageController extends SiteController
 {
     public function index()
     {
+        if( request()->get('q') && request()->get('lat') && request()->get('lng') ){
+            $this->values['data']   = $this->front->Map();
+            $this->values['params'] = request()->all();
+        }
+
         return view(config('app.frontend_template').'.map.map', $this->values);
     }
 }

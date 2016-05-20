@@ -23,7 +23,10 @@
                         <form role="form" id="form-map" class="form-map form-search">
                             <h2>Cari Produk / Jasa</h2>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="txtSearch" placeholder="Kata Kunci" />
+                                <input type="text" class="form-control" id="txtSearch"
+                                    value="{{ isset($params) ? $params['q'] : '' }}"
+                                        {{ isset($params) ? "disabled='disabled'" : '' }}
+                                            placeholder="Kata Kunci" />
                             </div>
                             <div class="form-group">
                                 <div class="row">
@@ -75,6 +78,12 @@
         initializeOwl(false);
     });*/
 
+    @if(isset($params))
+    $("#txtSearch").val({{ $params['q'] }});
+    $("#txtSearch").attr('readonly', 'readonly');
+    
+    @endif
+
     $("#form-map").submit(function(e){
         if( $("#txtSearch").val() != "" ){
             $("#txtSearch").attr('readonly', 'readonly');
@@ -103,6 +112,14 @@
         lat: defLat,
         lng: defLong,
         zoom: 16,
+        dragend: function(e) {
+            /*var location = {
+                lat: e.center.lat(),
+                long: e.center.lng()
+            };*/
+            //var center = e.getCenter();
+            console.log(e);
+        }
     });
 
     map.addStyle({
