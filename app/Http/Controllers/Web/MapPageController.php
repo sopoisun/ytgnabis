@@ -11,6 +11,6 @@ class MapPageController extends SiteController
 {
     public function index()
     {
-        return "Map Page";
+        return view(config('app.frontend_template').'.map.map', $this->values);
     }
 }

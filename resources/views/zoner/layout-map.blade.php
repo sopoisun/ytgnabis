@@ -78,69 +78,12 @@
                         @endforeach
                     </ul>
                 </nav><!-- /.navbar collapse-->
-                <!--<div class="add-your-property">
-                    <a href="submit.html" class="btn btn-default"><i class="fa fa-plus"></i><span class="text">Add Your Property</span></a>
-                </div>-->
             </header><!-- /.navbar -->
         </div><!-- /.container -->
     </div><!-- /.navigation -->
 
     @yield('content')
 
-    <!-- Page Footer -->
-    <footer id="page-footer">
-        <div class="inner">
-            <aside id="footer-main">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <article>
-                                <h3>About Us</h3>
-                                <p>{!! $setting->about_us !!}</p>
-                                <hr>
-                                <a href="{{ url('/disclaimer') }}" class="link-arrow">Read More</a>
-                            </article>
-                        </div><!-- /.col-sm-6 -->
-                        <div class="col-md-3 col-sm-3">
-                            <article>
-                                <h3>Contact</h3>
-                                <address>
-                                    <strong>{{ $setting->business_name }}</strong><br>
-                                    {!! $setting->alamat !!}
-                                </address>
-                                {{ $setting->phone }}<br>
-                                <a href="mailto:{{ $setting->email }}">{{ $setting->email }}</a>
-                            </article>
-                        </div><!-- /.col-sm-3 -->
-                        <div class="col-md-3 col-sm-3">
-                            <article>
-                                <h3>Facebook Fans Page</h3>
-                                <div class="fb-page" data-href="{{ $setting->facebook }}"
-                                    data-small-header="false" data-adapt-container-width="true"
-                                        data-hide-cover="false" data-show-facepile="true">
-                                    <div class="fb-xfbml-parse-ignore">
-                                        <blockquote cite="{{ $setting->facebook }}">
-                                            <a href="{{ $setting->facebook }}">
-                                                Nuruttauhid Banyuwangi
-                                            </a>
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </article>
-                        </div><!-- /.col-sm-3 -->
-                    </div><!-- /.row -->
-                </div><!-- /.container -->
-            </aside><!-- /#footer-main -->
-            <aside id="footer-thumbnails" class="footer-thumbnails"></aside><!-- /#footer-thumbnails -->
-            <aside id="footer-copyright">
-                <div class="container">
-                    <span>Copyright © 2016. All Rights Reserved.</span>
-                    <span class="pull-right"><a href="#page-top" class="roll">Go to top</a></span>
-                </div>
-            </aside>
-        </div><!-- /.inner -->
-    </footer>
-    <!-- end Page Footer -->
 </div>
 <script>
     var base_url = "{{ url('/') }}";
