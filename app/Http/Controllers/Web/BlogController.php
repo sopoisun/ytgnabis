@@ -6,13 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\SiteController;
-use App\Front;
 
 class BlogController extends SiteController
 {
     public function index()
     {
-        $data = Front::Posts();
+        $data = $this->front->Posts();
 
         if( request()->get('cari') ){
             $cari =  str_replace('-', ' ', request()->get('cari'));
@@ -23,7 +22,7 @@ class BlogController extends SiteController
 
         $this->values['data'] = $data;
 
-        $categories = Front::PostCategories()->get();
+        $categories = $this->front->PostCategories()->get();
         $this->values['categories'] = $categories;
 
         if( !$data->count() )

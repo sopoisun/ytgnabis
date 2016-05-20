@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Repositories\Front as newFront;
 use App\Front;
 use App\Setting;
 
 class SiteController extends Controller
 {
     public $values = [];
+    protected $front;
 
     public function __construct()
     {
-        $this->values['menu'] = Front::showInMenu();
-        $this->values['setting']  = Setting::first();
+        $this->front = new newFront;
+
+        $this->values['menu'] = $this->front->showInMenu();
+        $this->values['setting']  = $this->front->setting();
     }
 
     public function __set($name, $value)

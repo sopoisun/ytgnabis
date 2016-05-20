@@ -6,13 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\SiteController;
-use App\Front;
 
 class BusinessPageController extends SiteController
 {
     public function index()
     {
-        $data = Front::Businesses();
+        $data = $this->front->Businesses();
 
         if( request()->get('cari') ){
             $cari =  str_replace('-', ' ', request()->get('cari'));
@@ -23,7 +22,7 @@ class BusinessPageController extends SiteController
 
         $this->values['data'] = $data;
 
-        $categories = Front::BusinessCategories()->get();
+        $categories = $this->front->BusinessCategories()->get();
         $this->values['categories'] = $categories;
 
         if( !$data->count() )

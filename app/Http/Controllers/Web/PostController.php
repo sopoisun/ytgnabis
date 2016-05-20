@@ -12,10 +12,10 @@ class PostController extends SiteController
 {
     public function index()
     {
-        $categories = Front::PostCategories()->get();
+        $categories = $this->front->PostCategories()->get();
         $this->values['categories'] = $categories;
 
-        $this->values['data'] = Front::Posts()
+        $this->values['data'] = $this->front->Posts()
                 ->where('posts.id', $this->values['relation_id'])->first();
 
         return view(config('app.frontend_template').'.posts.post', $this->values);
