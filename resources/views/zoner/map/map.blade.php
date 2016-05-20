@@ -23,15 +23,15 @@
                         <form role="form" id="form-map" class="form-map form-search">
                             <h2>Cari Produk / Jasa</h2>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="search-box-property-id" placeholder="Kata Kunci" />
+                                <input type="text" class="form-control" id="txtSearch" placeholder="Kata Kunci" />
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
-                                        <button type="submit" class="btn btn-default">Cari Sekarang</button>
+                                        <button type="submit" class="btn btn-default" id="btnSearch">Cari Sekarang</button>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
-                                        <button type="button" class="btn btn-warning" disabled="disabled">Reset</button>
+                                        <button type="button" class="btn btn-warning"  id="btnReset" disabled="disabled">Reset</button>
                                     </div>
                                 </div>
                             </div><!-- /.form-group -->
@@ -47,6 +47,7 @@
 
 @section('js_assets')
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="{{ url('assets/gmaps/gmaps.js') }}"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/markerwithlabel_packed.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/infobox.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/owl.carousel.min.js"></script>
@@ -74,10 +75,84 @@
         initializeOwl(false);
     });*/
 
+    $("#form-map").submit(function(e){
+        if( $("#txtSearch").val() != "" ){
+            $("#txtSearch").attr('readonly', 'readonly');
+            $("#btnSearch").attr('disabled', 'disabled');
+            $("#btnReset").removeAttr('disabled');
+        }else{
+            toastr.options.closeButton = true;
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.warning('Mohon isi dulu keywordnya...');
+        }
+
+        e.preventDefault();
+    });
+
+    $("#btnReset").click(function(){
+        $(this).attr('disabled', 'disabled');
+        $("#btnSearch").removeAttr('disabled');
+        $("#txtSearch").val("").removeAttr('readonly');
+    });
+
     var defLat  = {{ $setting->map_latitude }};
     var defLong = {{ $setting->map_longitude }};
 
-    var map = new google.maps.Map(document.getElementById('map'), {
+    var map = new GMaps({
+        div: '#map',
+        lat: defLat,
+        lng: defLong,
+        zoom: 16,
+    });
+
+    map.addStyle({
+        styledMapName:"Styled Map",
+        styles: mapStyles,
+        mapTypeId: "bluestyle"
+    });
+
+    map.setStyle("bluestyle");
+
+    GMaps.geolocate({
+        success: function(position) {
+            defLat  = position.coords.latitude;
+            defLong = position.coords.longitude;
+            map.setCenter(position.coords.latitude, position.coords.longitude);
+        },
+        error: function(error) {
+            // set to blambangan location
+            // map.setCenter(defLat, defLong);
+            // alert('Geolocation failed: '+error.message);
+            toastr.options.closeButton = true;
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.error("Some thing is wrong");
+        },
+        not_supported: function() {
+            toastr.options.closeButton = true;
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.error("Your browser does not support geolocation");
+        },
+        always: function() {
+            var pictureLabel = document.createElement("img");
+            pictureLabel.src = base_url+'/'+"assets/zoner/img/property-types/apartment.png";
+            map.addMarker({
+                title: "Lokasi kamu",
+                lat: defLat,
+                lng: defLong,
+                draggable: true,
+                icon: base_url+'/assets/yellowmarker.png',
+                dragend: function(e) {
+                    var location = {
+                        lat: e.latLng.lat(),
+                        long: e.latLng.lng()
+                    };
+                    //console.log(location);
+                }
+            });
+        }
+    });
+
+    /*var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 16,
         scrollwheel: false,
         center: new google.maps.LatLng(defLat, defLong),
@@ -114,7 +189,7 @@
     } else {
         // Browser doesn't support Geolocation
         error('Geo Location is not supported');
-    }
+    }*/
 
 
 </script>

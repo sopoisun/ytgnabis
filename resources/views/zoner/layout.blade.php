@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ url('assets/zoner') }}/css/bootstrap-select.min.css" type="text/css">
     <link rel="stylesheet" href="{{ url('assets/zoner') }}/css/jquery.slider.min.css" type="text/css">
     <link rel="stylesheet" href="{{ url('assets/zoner') }}/css/owl.carousel.css" type="text/css">
+    <link rel="stylesheet" href="{{ url('assets/toastr') }}/toastr.css" type="text/css">
     <link rel="stylesheet" href="{{ url('assets/zoner') }}/css/style.css" type="text/css">
 
     @yield('css_assets')
@@ -150,6 +151,7 @@
 <script type="text/javascript" src="{{ url('assets/zoner') }}/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/smoothscroll.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/retina-1.1.0.min.js"></script>
+<script type="text/javascript" src="{{ url('assets/toastr') }}/toastr.js"></script>
 @yield('js_assets')
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/custom.js"></script>
 <!--[if gt IE 8]>
