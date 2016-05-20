@@ -66,7 +66,7 @@
                                 <div class="property equal-height">
                                     <!--<figure class="tag status">For Sale</figure>-->
                                     <!--<figure class="type" title="Apartment"><img src="{{ url('/') }}/assets/zoner/img/property-types/apartment.png" alt=""></figure>-->
-                                    <a href="{{ url($d->seo->permalink) }}">
+                                    <a href="{{ url($d->permalink) }}">
                                         <div class="property-image">
                                             <img alt="" src="{{ url('/files/products/'.( $d->image_url != NULL ? $d->image_url : 'no-image.png' )) }}">
                                         </div>
@@ -74,7 +74,7 @@
                                             <div class="info">
                                                 <div class="tag price">Rp. {{ number_format($d->price, 0, ',', '.') }}</div>
                                                 <h3>{{ $d->name }}</h3>
-                                                <figure>{{ $d->business->name }}</figure>
+                                                <figure>{{ $d->business }}</figure>
                                             </div>
 
                                             <ul class="additional-info">
@@ -129,7 +129,7 @@
                             <header><h3>Kategori Produk</h3></header>
                             <ul class="list-links">
                                 @foreach($categories as $category)
-                                <li><a href="{{ url($category->seo->permalink) }}">{{ $category->name }}</a></li>
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->

@@ -6,25 +6,24 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\SiteController;
-use App\Business;
-use App\Category;
+use App\Front;
 
 class BusinessPageController extends SiteController
 {
     public function index()
     {
-        $data = Business::with(['seo', 'categories'])->where('active', 1);
+        $data = Front::Businesses();
 
         if( request()->get('cari') ){
             $cari =  str_replace('-', ' ', request()->get('cari'));
-            $data->where('name', 'like', '%'.$cari.'%');
+            $data->where('businesses.name', 'like', '%'.$cari.'%');
         }
 
-        $data = $data->orderBy('name')->paginate(8);
+        $data = $data->orderBy('businesses.name')->paginate(8);
 
         $this->values['data'] = $data;
 
-        $categories = Category::with('seo')->where('active', 1)->get();
+        $categories = Front::BusinessCategories()->get();
         $this->values['categories'] = $categories;
 
         if( !$data->count() )

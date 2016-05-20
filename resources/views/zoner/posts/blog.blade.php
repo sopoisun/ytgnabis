@@ -38,14 +38,14 @@
                         @if( $data->count() )
                         @foreach( $data as $d )
                         <article class="blog-post">
-                            <header><a href="{{ url($d->seo->permalink) }}"><h2>{{ $d->post_title }}</h2></a></header>
+                            <header><a href="{{ url($d->permalink) }}"><h2>{{ $d->post_title }}</h2></a></header>
                             <figure class="meta">
-                                <a href="#" class="link-icon"><i class="fa fa-user"></i>{{ $d->user->name }}</a>
+                                <a href="#" class="link-icon"><i class="fa fa-user"></i>{{ $d->user_name }}</a>
                                 <a href="#" class="link-icon"><i class="fa fa-calendar"></i>{{ $d->created_at->format('d M Y') }}</a>
-                                <a href="#" class="link-icon"><i class="fa fa-tag"></i>{{ $d->category->name }}</a>
+                                <a href="#" class="link-icon"><i class="fa fa-tag"></i>{{ $d->category }}</a>
                             </figure>
                             <p>{{ limit_post($d->isi) }}</p>
-                            <a href="{{ url($d->seo->permalink) }}" class="link-arrow">Read More</a>
+                            <a href="{{ url($d->permalink) }}" class="link-arrow">Read More</a>
                         </article><!-- /.blog-post -->
                         @endforeach
                         @else
@@ -76,7 +76,7 @@
                             <header><h3>Kategori Post</h3></header>
                             <ul class="list-links">
                                 @foreach($categories as $category)
-                                <li><a href="{{ url($category->seo->permalink) }}">{{ $category->name }}</a></li>
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->

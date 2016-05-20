@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Page;
+use App\Front;
 use App\Setting;
 
 class SiteController extends Controller
@@ -13,7 +13,7 @@ class SiteController extends Controller
 
     public function __construct()
     {
-        $this->values['menu'] = Page::showInMenu();
+        $this->values['menu'] = Front::showInMenu();
         $this->values['setting']  = Setting::first();
     }
 

@@ -63,20 +63,20 @@
                                 <!--<figure class="type" title="Apartment"><img src="{{ url('/') }}/assets/zoner/img/property-types/apartment.png" alt=""></figure>-->
                                 <div class="property-image">
                                     <!--<figure class="ribbon">In Hold</figure>-->
-                                    <a href="{{ url($d->seo->permalink) }}">
+                                    <a href="{{ url($d->permalink) }}">
                                         <img alt="" src="{{ url('/files/products/'.( $d->image_url != NULL ? $d->image_url : 'no-image.png' )) }}">
                                     </a>
                                 </div>
                                 <div class="info">
                                     <header>
-                                        <a href="{{ url($d->seo->permalink) }}"><h3>{{ $d->name }}</h3></a>
-                                        <figure>{{ $d->business->name }}</figure>
+                                        <a href="{{ url($d->permalink) }}"><h3>{{ $d->name }}</h3></a>
+                                        <figure>{{ $d->business }}</figure>
                                     </header>
                                     <div class="tag price">Rp. {{ number_format($d->price, 0, ',', '.') }}</div>
                                     <div style="margin:10px 0px 30px;">
                                         <p>{!! $d->about !!}</p>
                                     </div>
-                                    <a href="{{ url($d->seo->permalink) }}" class="link-arrow">Read More</a>
+                                    <a href="{{ url($d->permalink) }}" class="link-arrow">Read More</a>
                                 </div>
                             </div><!-- /.property -->
                             @endforeach
@@ -107,7 +107,7 @@
                             <header><h3>Kategori Produk</h3></header>
                             <ul class="list-links">
                                 @foreach($categories as $category)
-                                <li><a href="{{ url($category->seo->permalink) }}">{{ $category->name }}</a></li>
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->

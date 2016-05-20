@@ -6,20 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\SiteController;
-use App\Business;
-use App\Category;
+use App\Front;
 
 class BusinessCategoryController extends SiteController
 {
     public function index()
     {
-        $data = Business::with(['seo', 'categories'])->whereHas('categories', function($query) {
-            $query->where('id', $this->values['relation_id']);
-        })->where('active', 1)->orderBy('name')->paginate(8);
+        $data = Front::Businesses()->where('business_category.category_id', $this->values['relation_id'])
+                ->orderBy('businesses.name')->paginate(8);
 
         $this->values['data'] = $data;
 
-        $categories = Category::with('seo')->where('active', 1)->get();
+        $categories = Front::BusinessCategories()->get();
         $this->values['categories'] = $categories;
 
         $this->values['seo']['business'] = $categories->where('seo_id', $this->values['seo_id'])->first();

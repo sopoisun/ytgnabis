@@ -6,25 +6,24 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\SiteController;
-use App\Post;
-use App\PostCategory;
+use App\Front;
 
 class BlogController extends SiteController
 {
     public function index()
     {
-        $data = Post::with(['seo', 'user'])->where('active', 1);
+        $data = Front::Posts();
 
         if( request()->get('cari') ){
             $cari =  str_replace('-', ' ', request()->get('cari'));
-            $data->where('post_title', 'like', '%'.$cari.'%');
+            $data->where('posts.post_title', 'like', '%'.$cari.'%');
         }
 
-        $data = $data->orderBy('created_at', 'desc')->paginate(5);
+        $data = $data->orderBy('posts.created_at', 'desc')->paginate(5);
 
         $this->values['data'] = $data;
 
-        $categories = PostCategory::with('seo')->where('active', 1)->get();
+        $categories = Front::PostCategories()->get();
         $this->values['categories'] = $categories;
 
         if( !$data->count() )

@@ -12,13 +12,6 @@ class Page extends SeoModel
     protected $fillable = ['page_title', 'seo_id', 'isi', 'show_in_menu', 'sort', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
 
-    public static function showInMenu()
-    {
-        return self::join('seos', 'pages.seo_id', '=', 'seos.seo_id')
-            ->where('pages.active', 1)->where('show_in_menu', 1)->orderBy('sort')
-            ->select(['pages.page_title', 'seos.permalink'])->get();
-    }
-
     /* Relation */
     public function seo()
     {

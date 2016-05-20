@@ -41,16 +41,16 @@
                             @foreach($data as $d)
                             <div class="col-md-12 col-lg-6">
                                 <div class="agent">
-                                    <a href="{{ url($d->seo->permalink) }}" class="agent-image"><img alt="" src="{{ url('/files/businesses/'.( $d->image_url != NULL ? $d->image_url : 'no-image.jpg' )) }}"></a>
+                                    <a href="{{ url($d->permalink) }}" class="agent-image"><img alt="" src="{{ url('/files/businesses/'.( $d->image_url != NULL ? $d->image_url : 'no-image.jpg' )) }}"></a>
                                     <div class="wrapper">
-                                        <header><a href="{{ url($d->seo->permalink) }}"><h2>{{ $d->name }}</h2></a></header>
-                                        <aside>{{ implode(', ', $d->categories->lists('name')->toArray()) }}</aside>
+                                        <header><a href="{{ url($d->permalink) }}"><h2>{{ $d->name }}</h2></a></header>
+                                        <aside>{{ $d->categories }}</aside>
                                         <dl>
                                             <dt>Alamat:</dt>
                                             <dd>{{ str_limit($d->address, 50) }}</dd>
 
                                             <dt>Kategori:</dt>
-                                            <dd>{{ implode(', ', $d->categories->lists('name')->toArray()) }}</dd>
+                                            <dd>{{ $d->categories }}</dd>
 
                                             <dt>Rating:</dt>
                                             <dd>
@@ -89,7 +89,7 @@
                             <header><h3>Kategori Bisnis</h3></header>
                             <ul class="list-links">
                                 @foreach($categories as $category)
-                                <li><a href="{{ url($category->seo->permalink) }}">{{ $category->name }}</a></li>
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->

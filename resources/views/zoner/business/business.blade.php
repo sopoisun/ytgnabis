@@ -44,7 +44,7 @@
                                     </address>
                                     <dl>
                                         <dt>Kategori:</dt>
-                                        <dd>{{ implode(', ', $data->categories->lists('name')->toArray()) }}</dd>
+                                        <dd>{{ $data->categories }}</dd>
 
                                         <dt>Rating:</dt>
                                         <dd>
@@ -519,7 +519,7 @@
                             <header><h3>Kategori Bisnis</h3></header>
                             <ul class="list-links">
                                 @foreach($categories as $category)
-                                <li><a href="{{ url($category->seo->permalink) }}">{{ $category->name }}</a></li>
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->

@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\SiteController;
-use App\BusinessProduct;
-use App\ProductCategory;
+use App\Front;
 
 class ProductPageController extends SiteController
 {
@@ -25,17 +24,16 @@ class ProductPageController extends SiteController
         $sort = request()->get('sort') ? request()->get('sort') : "name";
         $orderBy = in_array($sort, array_keys($orderBys)) ? $orderBys[$sort] : $orderBys['name'];
 
-        $categories = ProductCategory::with('seo')->where('active', 1)->get();
+        $categories = Front::ProductCategories()->get();
         $this->values['categories'] = $categories;
 
         $this->values['seo']['product'] = $categories->where('seo_id', $this->values['seo_id'])->first();
 
-        $data = BusinessProduct::with(['seo', 'business'])
-                ->where('active', 1);
+        $data = Front::Products();
 
         if( request()->get('cari') ){
             $cari =  str_replace('-', ' ', request()->get('cari'));
-            $data->where('name', 'like', '%'.$cari.'%');
+            $data->where('business_products.name', 'like', '%'.$cari.'%');
         }
 
         $data = $data->orderBy($orderBy['key'], $orderBy['value'])->paginate(9)

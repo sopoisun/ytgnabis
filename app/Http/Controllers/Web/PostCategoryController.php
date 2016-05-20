@@ -6,21 +6,20 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\SiteController;
-use App\Post;
-use App\PostCategory;
+use App\Front;
 
 class PostCategoryController extends SiteController
 {
     public function index()
     {
-        $data = Post::with(['seo', 'user'])
+        $data = Front::Posts()
                 ->where('post_category_id', $this->values['relation_id'])
-                ->where('active', 1)->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
 
         $this->values['data'] = $data;
 
-        $categories = PostCategory::with('seo')->where('active', 1)->get();
+        $categories = Front::PostCategories()->get();
         $this->values['categories'] = $categories;
 
         $this->values['seo']['post'] = $categories->where('seo_id', $this->values['seo_id'])->first();

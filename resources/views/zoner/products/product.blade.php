@@ -25,7 +25,7 @@
                     <section id="property-detail">
                         <header class="property-title">
                             <h1>{{ $data->name }}</h1>
-                            <figure>{{ $data->business->name }}</figure>
+                            <figure>{{ $data->business }}</figure>
                             <span class="actions">
                                 <!--<a href="#" class="fa fa-print"></a>
                                 <a href="#" class="bookmark" data-bookmark-state="empty"><span class="title-add">Add to bookmark</span><span class="title-added">Added</span></a>-->
@@ -37,14 +37,14 @@
                                     <figure class="agency-image"><img alt="" src="{{ url('/files/products/'.( $data->image_url != NULL ? $data->image_url : 'no-image.png' )) }}"></figure>
                                 </div><!-- /.col-md-6 -->
                                 <div class="col-md-6 col-sm-6">
-                                    <h3>Info {{ $data->category->name }}</h3>
+                                    <h3>Info {{ $data->category }}</h3>
                                     <address>
                                         <a href="#" class="show-on-map" style="z-index:9;"><i class="fa fa-map-marker"></i><figure>Map</figure></a>
                                         <div class="row">
                                             <div class="col-md-11">
-                                                <strong>{{ $data->business->name }}</strong>
+                                                <strong>{{ $data->business }}</strong>
                                                 <br /><br />
-                                                {{ $data->business->address }}
+                                                {{ $data->busines }}
                                             </div>
                                         </div>
                                     </address>
@@ -82,13 +82,13 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <section id="description">
-                                    <header><h2>Deskripsi {{ $data->category->name }}</h2></header>
+                                    <header><h2>Deskripsi {{ $data->category }}</h2></header>
                                     <p>{!! $data->about !!}</p>
                                 </section><!-- /#description -->
                             </div><!-- /.col-md-8 -->
                             <div class="col-md-12 col-sm-12">
                                 <section id="similar-properties">
-                                    <header><h2 class="no-border">{{ $data->category->name }} Serupa</h2></header>
+                                    <header><h2 class="no-border">{{ $data->category }} Serupa</h2></header>
                                     <div class="row">
                                         <div class="col-md-4 col-sm-6">
                                             <div class="property">
@@ -282,7 +282,7 @@
                             <header><h3>Kategori Produk</h3></header>
                             <ul class="list-links">
                                 @foreach($categories as $category)
-                                <li><a href="{{ url($category->seo->permalink) }}">{{ $category->name }}</a></li>
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->

@@ -27,9 +27,9 @@
                         <article class="blog-post">
                             <!--<header><a href="blog-detail.html"><h2>{{ $data->post_title }}</h2></a></header>-->
                             <figure class="meta">
-                                <a href="#" class="link-icon"><i class="fa fa-user"></i>{{ $data->user->name }}</a>
+                                <a href="#" class="link-icon"><i class="fa fa-user"></i>{{ $data->user_name }}</a>
                                 <a href="#" class="link-icon"><i class="fa fa-calendar"></i>{{ $data->created_at->format('d M Y') }}</a>
-                                <a href="#" class="link-icon"><i class="fa fa-tag"></i>{{ $data->category->name }}</a>
+                                <a href="#" class="link-icon"><i class="fa fa-tag"></i>{{ $data->category }}</a>
                             </figure>
                             <p>{!! $data->isi !!}</p>
                         </article><!-- /.blog-post-listing -->
@@ -159,7 +159,7 @@
                             <header><h3>Kategori Post</h3></header>
                             <ul class="list-links">
                                 @foreach($categories as $category)
-                                <li><a href="{{ url($category->seo->permalink) }}">{{ $category->name }}</a></li>
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->
