@@ -90,17 +90,18 @@
                                 <section id="similar-properties">
                                     <header><h2 class="no-border">{{ $data->category }} Serupa</h2></header>
                                     <div class="row">
+                                        @foreach($sames as $same)
                                         <div class="col-md-4 col-sm-6">
                                             <div class="property">
                                                 <a href="property-detail.html">
                                                     <div class="property-image">
-                                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-06.jpg">
+                                                        <img alt="" src="{{ url('/files/products/'.( $same->image_url != NULL ? $same->image_url : 'no-image.png' )) }}">
                                                     </div>
                                                     <div class="overlay">
                                                         <div class="info">
-                                                            <div class="tag price">$ 11,000</div>
-                                                            <h3>3398 Lodgeville Road</h3>
-                                                            <figure>Golden Valley, MN 55427</figure>
+                                                            <div class="tag price">{{ number_format($same->price, 0, ',', '.') }}</div>
+                                                            <h3>{{ $same->name }}</h3>
+                                                            <figure>{{ $same->business }}</figure>
                                                         </div>
                                                         <ul class="additional-info">
                                                             <li>
@@ -124,141 +125,13 @@
                                                 </a>
                                             </div><!-- /.property -->
                                         </div><!-- /.col-md-3 -->
-                                        <div class="col-md-4 col-sm-6">
-                                            <div class="property">
-                                                <a href="property-detail.html">
-                                                    <div class="property-image">
-                                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-04.jpg">
-                                                    </div>
-                                                    <div class="overlay">
-                                                        <div class="info">
-                                                            <div class="tag price">$ 38,000</div>
-                                                            <h3>2186 Rinehart Road</h3>
-                                                            <figure>Doral, FL 33178 </figure>
-                                                        </div>
-                                                        <ul class="additional-info">
-                                                            <li>
-                                                                <header>Area:</header>
-                                                                <figure>240m<sup>2</sup></figure>
-                                                            </li>
-                                                            <li>
-                                                                <header>Beds:</header>
-                                                                <figure>3</figure>
-                                                            </li>
-                                                            <li>
-                                                                <header>Baths:</header>
-                                                                <figure>1</figure>
-                                                            </li>
-                                                            <li>
-                                                                <header>Garages:</header>
-                                                                <figure>1</figure>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </a>
-                                            </div><!-- /.property -->
-                                        </div><!-- /.col-md-3 -->
-                                        <div class="col-md-4 col-sm-6">
-                                            <div class="property">
-                                                <a href="property-detail.html">
-                                                    <div class="property-image">
-                                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-07.jpg">
-                                                    </div>
-                                                    <div class="overlay">
-                                                        <div class="info">
-                                                            <div class="tag price">$ 325,000</div>
-                                                            <h3>3705 Brighton Circle Road</h3>
-                                                            <figure>Glenwood, MN 56334</figure>
-                                                        </div>
-                                                        <ul class="additional-info">
-                                                            <li>
-                                                                <header>Area:</header>
-                                                                <figure>240m<sup>2</sup></figure>
-                                                            </li>
-                                                            <li>
-                                                                <header>Beds:</header>
-                                                                <figure>3</figure>
-                                                            </li>
-                                                            <li>
-                                                                <header>Baths:</header>
-                                                                <figure>1</figure>
-                                                            </li>
-                                                            <li>
-                                                                <header>Garages:</header>
-                                                                <figure>1</figure>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </a>
-                                            </div><!-- /.property -->
-                                        </div><!-- /.col-md-3 -->
+                                        @endforeach
                                     </div><!-- /.row-->
                                 </section><!-- /#similar-properties -->
                                 <hr class="thick">
                                 <section id="comments">
                                     <header><h2 class="no-border">Comments</h2></header>
-                                    <ul class="comments">
-                                        <li class="comment">
-                                            <figure>
-                                                <div class="image">
-                                                    <img alt="" src="{{ url('/') }}/assets/zoner/img/client-01.jpg">
-                                                </div>
-                                            </figure>
-                                            <div class="comment-wrapper">
-                                                <div class="name pull-left">Catherine Brown</div>
-                                                <span class="date pull-right"><span class="fa fa-calendar"></span>12.05.2014</span>
-                                                <div class="rating rating-individual" data-score="4"></div>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum, sem ut sollicitudin consectetur,
-                                                    augue diam ornare massa, ac vehicula leo turpis eget purus. Nunc pellentesque vestibulum mauris, eget suscipit
-                                                    mauris imperdiet vel. Nulla et massa metus. Nam porttitor quam eget ante elementum consectetur. Aenean ac nisl
-                                                    et nulla placerat suscipit eu a mauris. Curabitur quis augue condimentum, varius mi in, ultricies velit.
-                                                    Suspendisse potenti.
-                                                </p>
-                                                <a href="#" class="reply"><span class="fa fa-reply"></span>Reply</a>
-                                                <hr>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <ul class="comments-child">
-                                                <li class="comment">
-                                                    <figure>
-                                                        <div class="image">
-                                                            <img alt="" src="{{ url('/') }}/assets/zoner/img/agent-01.jpg">
-                                                        </div>
-                                                    </figure>
-                                                    <div class="comment-wrapper">
-                                                        <div class="name">John Doe</div>
-                                                        <span class="date"><span class="fa fa-calendar"></span>24.06.2014</span>
-                                                        <div class="rating rating-individual" data-score="3"></div>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum, sem ut sollicitudin consectetur,
-                                                            augue diam ornare massa, ac vehicula leo turpis eget purus. Nunc pellentesque vestibulum mauris, eget suscipit
-                                                            mauris.
-                                                        </p>
-                                                        <a href="#" class="reply"><span class="fa fa-reply"></span>Reply</a>
-                                                        <hr>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="comment">
-                                            <figure>
-                                                <div class="image">
-                                                    <img alt="" src="{{ url('/') }}/assets/zoner/img/user-02.jpg">
-                                                </div>
-                                            </figure>
-                                            <div class="comment-wrapper">
-                                                <div class="name">John Doe</div>
-                                                <span class="date"><span class="fa fa-calendar"></span>08.05.2014</span>
-                                                <div class="rating rating-individual" data-score="5"></div>
-                                                <p>Quisque iaculis neque at dui cursus posuere. Sed tristique pharetra orci, eu malesuada ante tempus nec.
-                                                    Phasellus enim odio, facilisis et ante vel, tempor congue sapien. Praesent eget ligula
-                                                    eu libero cursus facilisis vel non arcu. Sed vitae quam enim.
-                                                </p>
-                                                <a href="#" class="reply"><span class="fa fa-reply"></span>Reply</a>
-                                                <hr>
-                                            </div>
-                                        </li>
-                                    </ul>
+
                                 </section>
                             </div><!-- /.col-md-12 -->
                         </div><!-- /.row -->
@@ -286,6 +159,24 @@
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->
+
+                        <aside id="featured-properties">
+                            <header><h3>Produk Populer</h3></header>
+                            @foreach($productPopular as $p)
+                            <div class="property small">
+                                <a href="property-detail.html">
+                                    <div class="property-image">
+                                        <img alt="" src="{{ url('/files/products/'.( $p->image_url != NULL ? $p->image_url : 'no-image.png' )) }}">
+                                    </div>
+                                </a>
+                                <div class="info">
+                                    <a href="{{ url($p->permalink) }}"><h4>{{ $p->name }}</h4></a>
+                                    <figure>{{ $p->business }} </figure>
+                                    <div class="tag price">{{ number_format($p->price, 0, ',', '.') }}</div>
+                                </div>
+                            </div><!-- /.property -->
+                            @endforeach
+                        </aside><!-- /#featured-properties -->
                     </section><!-- /#sidebar -->
                 </div><!-- /.col-md-3 -->
                 <!-- end Sidebar -->

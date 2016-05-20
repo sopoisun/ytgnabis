@@ -133,6 +133,25 @@
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->
+
+                        <aside id="featured-properties">
+                            <header><h3>Produk Populer</h3></header>
+                            @foreach($productPopular as $p)
+                            <div class="property small">
+                                <a href="property-detail.html">
+                                    <div class="property-image">
+                                        <img alt="" src="{{ url('/files/products/'.( $p->image_url != NULL ? $p->image_url : 'no-image.png' )) }}">
+                                    </div>
+                                </a>
+                                <div class="info">
+                                    <a href="{{ url($p->permalink) }}"><h4>{{ $p->name }}</h4></a>
+                                    <figure>{{ $p->business }} </figure>
+                                    <div class="tag price">{{ number_format($p->price, 0, ',', '.') }}</div>
+                                </div>
+                            </div><!-- /.property -->
+                            @endforeach
+                        </aside><!-- /#featured-properties -->
+
                     </section><!-- /#sidebar -->
                 </div><!-- /.col-md-3 -->
                 <!-- end Sidebar -->

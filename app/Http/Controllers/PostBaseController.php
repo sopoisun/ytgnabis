@@ -12,7 +12,7 @@ class PostBaseController extends SiteController
     {
         parent::__construct();
 
-        $categories = $this->front->PostCategories()->get();
-        $this->values['categories'] = $categories;
+        $this->values['categories'] = $this->front->PostCategories()->get();
+        $this->values['archives']   = $this->front->PostArchives();
     }
 }

@@ -62,9 +62,29 @@ class Front
             ->where('business_products.active', 1)->select([
                 'business_products.name', 'business_products.price', 'business_products.image_url',
                 'business_products.about', 'business_products.counter',
+                DB::raw('business_products.product_category_id as category_id'),
                 'seos.permalink', DB::raw('product_categories.name as category'),
                 DB::raw('businesses.name as business'), DB::raw('businesses.address as address'),
             ]);
+    }
+
+    public function ProductPopular()
+    {
+        return $this->Products()->orderBy('business_products.counter', 'desc')->limit(4)->get();
+    }
+
+    public function ProductSame($category_id, $name, $current_id)
+    {
+        $keys = explode(' ', $name);
+
+        return $this->Products()->where('business_products.product_category_id', $category_id)
+            ->where('business_products.id', '!=', $current_id)
+            ->where(function($query) use ($keys) {
+                foreach ($keys as $key) {
+                    $query->OrWhere('business_products.name', 'like', '%'.$key.'%');
+                }
+            })
+            ->orderBy(DB::raw('RAND()'))->limit(3)->get();
     }
 
     public function PostCategories()
@@ -84,5 +104,14 @@ class Front
                 'posts.post_title', DB::raw('users.name as user_name'), 'posts.isi', 'posts.counter',
                 'seos.permalink', DB::raw('post_categories.name as category'), 'posts.created_at',
             ]);
+    }
+
+    public function PostArchives()
+    {
+        return Post::where('active', 1)->groupBy(DB::raw('SUBSTRING(created_at, 1, 7)'))
+            ->orderBy('created_at', 'desc')->limit(10)
+            ->select([
+                DB::raw('SUBSTRING(created_at, 1, 7)tanggal'),
+            ])->get();
     }
 }

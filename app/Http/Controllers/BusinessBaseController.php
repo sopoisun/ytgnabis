@@ -12,7 +12,7 @@ class BusinessBaseController extends SiteController
     {
         parent::__construct();
 
-        $categories = $this->front->BusinessCategories()->get();
-        $this->values['categories'] = $categories;
+        $this->values['categories']     = $this->front->BusinessCategories()->get();
+        $this->values['productPopular'] = $this->front->ProductPopular();
     }
 }

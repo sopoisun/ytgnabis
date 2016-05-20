@@ -13,6 +13,12 @@ class ProductController extends ProductBaseController
         $this->values["data"] = $this->front->Products()
             ->where('business_products.id', $this->values['relation_id'])->first();
 
+        $this->values['sames'] = $this->front->ProductSame(
+            $this->values['data']['category_id'],
+            $this->values['data']['name'],
+            $this->values['relation_id']
+        );
+
         return view(config('app.frontend_template').'.products.product', $this->values);
     }
 }

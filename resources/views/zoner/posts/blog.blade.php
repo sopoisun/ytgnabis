@@ -80,6 +80,19 @@
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->
+
+                        <aside id="post-archive">
+                            <header><h3>Post Archive</h3></header>
+                            <ul class="list-links">
+                                @foreach($archives as $archive)
+                                <li>
+                                    <a href="{{ url('/archive?bulan='.$archive->tanggal) }}">
+                                        {{ \Carbon\Carbon::createFromFormat('Y-m', $archive->tanggal)->format('M Y') }}
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </aside><!-- /#post-archive -->
                     </section><!-- /#sidebar -->
                 </div><!-- /.col-md-3 -->
                 <!-- end Sidebar -->

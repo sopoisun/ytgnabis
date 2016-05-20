@@ -76,429 +76,63 @@
                         <hr class="thick">
                         <section id="agent-properties">
                             <header><h3>Daftar Produk</h3></header>
-                            <div class="layout-expandable">
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-09.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 11,000</div>
-                                                        <h3>3398 Lodgeville Road</h3>
-                                                        <figure>Golden Valley, MN 55427</figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>240m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>2</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>2</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>0</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-4 -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-03.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 38,000</div>
-                                                        <h3>2186 Rinehart Road</h3>
-                                                        <figure>Doral, FL 33178 </figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>240m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>3</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-4 -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-06.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 325,000</div>
-                                                        <h3>3705 Brighton Circle Road</h3>
-                                                        <figure>Glenwood, MN 56334</figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>240m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>3</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-4 -->
-                                </div><!-- /.row-->
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-02.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 18,000</div>
-                                                        <h3>2506 B Street</h3>
-                                                        <figure>New Brighton, MN 55112</figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>280m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>3</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>2</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-4 -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-12.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 136,000</div>
-                                                        <h3>3990 Late Avenue</h3>
-                                                        <figure>Kingfisher, OK 73750</figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>30m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>0</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-4 -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-05.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 12,680</div>
-                                                        <h3>297 Marie Street</h3>
-                                                        <figure>Towson, MD 21204 </figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>240m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>3</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-4 -->
-                                </div><!-- /.row-->
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-13.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 13,000</div>
-                                                        <h3>2663 West Side Avenue</h3>
-                                                        <figure>Fort Lee, NJ 07024</figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>280m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>3</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>2</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-3 -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-04.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 189,000</div>
-                                                        <h3>1821 Pursglove Court</h3>
-                                                        <figure>Dayton, OH 45429 </figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>30m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>0</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-3 -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-07.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 45,730</div>
-                                                        <h3>1380 Sundown Lane</h3>
-                                                        <figure>Austin, TX 78748</figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>240m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>3</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-3 -->
-                                </div><!-- /.row-->
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-08.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 38,000</div>
-                                                        <h3>4862 Palmer Road</h3>
-                                                        <figure>Worthington, OH 43085</figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>280m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>3</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>2</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-3 -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-11.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 103,000</div>
-                                                        <h3>1453 Calvin Street</h3>
-                                                        <figure>Bel Air, MD 21014</figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>30m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>0</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-3 -->
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="property">
-                                            <a href="property-detail.html">
-                                                <div class="property-image">
-                                                    <img alt="" src="{{ url('assets/zoner') }}/img/properties/property-10.jpg">
-                                                </div>
-                                                <div class="overlay">
-                                                    <div class="info">
-                                                        <div class="tag price">$ 9,380</div>
-                                                        <h3>2323 Park Street</h3>
-                                                        <figure>Martinez, CA 94553 </figure>
-                                                    </div>
-                                                    <ul class="additional-info">
-                                                        <li>
-                                                            <header>Area:</header>
-                                                            <figure>240m<sup>2</sup></figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Beds:</header>
-                                                            <figure>3</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Baths:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                        <li>
-                                                            <header>Garages:</header>
-                                                            <figure>1</figure>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </a>
-                                        </div><!-- /.property -->
-                                    </div><!-- /.col-md-3 -->
-                                </div><!-- /.row-->
-                            </div>
-                            <div class="center">
-                                <span class="show-all">Show All Properties</span>
-                            </div>
-                        </section><!-- /#agent-properties -->
+                            @if( $products->count() )
 
+                            {{--*/ $dPage = ceil($products->count()/3); /*--}}
+                            @for( $i = 0; $i<$dPage; $i++ )
+                            {{--*/ $display = $products->forPage(($i+1), 3); /*--}}
+                            <div class="row">
+                                @foreach($display as $d)
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="property equal-height">
+                                        <!--<figure class="tag status">For Sale</figure>-->
+                                        <!--<figure class="type" title="Apartment"><img src="{{ url('/') }}/assets/zoner/img/property-types/apartment.png" alt=""></figure>-->
+                                        <a href="{{ url($d->permalink) }}">
+                                            <div class="property-image">
+                                                <img alt="" src="{{ url('/files/products/'.( $d->image_url != NULL ? $d->image_url : 'no-image.png' )) }}">
+                                            </div>
+                                            <div class="overlay">
+                                                <div class="info">
+                                                    <div class="tag price">Rp. {{ number_format($d->price, 0, ',', '.') }}</div>
+                                                    <h3>{{ $d->name }}</h3>
+                                                    <figure>{{ $d->business }}</figure>
+                                                </div>
+
+                                                <ul class="additional-info">
+                                                    <li>
+                                                        <header>Area:</header>
+                                                        <figure>240m<sup>2</sup></figure>
+                                                    </li>
+                                                    <li>
+                                                        <header>Beds:</header>
+                                                        <figure>2</figure>
+                                                    </li>
+                                                    <li>
+                                                        <header>Baths:</header>
+                                                        <figure>2</figure>
+                                                    </li>
+                                                    <li>
+                                                        <header>Garages:</header>
+                                                        <figure>0</figure>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </a>
+                                    </div><!-- /.property -->
+                                </div><!-- /.col-md-3 -->
+                                @endforeach
+                            </div><!-- /.row-->
+                            @endfor
+
+                            @else
+                            <div class="alert alert-info" role="alert"><p><b>{{ $data->name }}</b> Tidak memiliki produk.</p></div>
+                            @endif
+                        </section><!-- /#agent-properties -->
+                        <hr class="thick">
+                        <section id="comments">
+                            <header><h2 class="no-border">Comments</h2></header>
+
+                        </section>
                     </section><!-- /#agent-detail -->
                 </div><!-- /.col-md-9 -->
                 <!-- end Agent Detail -->
@@ -523,6 +157,25 @@
                                 @endforeach
                             </ul>
                         </aside><!-- /#categories -->
+
+                        <aside id="featured-properties">
+                            <header><h3>Produk Populer</h3></header>
+                            @foreach($productPopular as $p)
+                            <div class="property small">
+                                <a href="property-detail.html">
+                                    <div class="property-image">
+                                        <img alt="" src="{{ url('/files/products/'.( $p->image_url != NULL ? $p->image_url : 'no-image.png' )) }}">
+                                    </div>
+                                </a>
+                                <div class="info">
+                                    <a href="{{ url($p->permalink) }}"><h4>{{ $p->name }}</h4></a>
+                                    <figure>{{ $p->business }} </figure>
+                                    <div class="tag price">{{ number_format($p->price, 0, ',', '.') }}</div>
+                                </div>
+                            </div><!-- /.property -->
+                            @endforeach
+                        </aside><!-- /#featured-properties -->
+
                     </section><!-- /#sidebar -->
                 </div><!-- /.col-md-3 -->
                 <!-- end Sidebar -->

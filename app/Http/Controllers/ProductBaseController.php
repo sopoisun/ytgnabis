@@ -12,7 +12,7 @@ class ProductBaseController extends SiteController
     {
         parent::__construct();
 
-        $categories = $this->front->ProductCategories()->get();
-        $this->values['categories'] = $categories;
+        $this->values['categories']     = $this->front->ProductCategories()->get();
+        $this->values['productPopular'] = $this->front->ProductPopular();
     }
 }
