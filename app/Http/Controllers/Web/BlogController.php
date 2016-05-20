@@ -14,8 +14,15 @@ class BlogController extends PostBaseController
         $data = $this->front->Posts();
 
         if( request()->get('cari') ){
-            $cari =  str_replace('-', ' ', request()->get('cari'));
-            $data->where('posts.post_title', 'like', '%'.$cari.'%');
+            //$cari = str_replace('-', ' ', request()->get('cari'));
+            //$data->where('posts.post_title', 'like', '%'.$cari.'%');
+
+            $keys = explode('-', request()->get('cari'));
+            $data->where(function($query) use ($keys) {
+                foreach ($keys as $key) {
+                    $query->OrWhere('posts.post_title', 'like', '%'.$key.'%');
+                }
+            });
         }
 
         $data = $data->orderBy('posts.created_at', 'desc')->paginate(5);

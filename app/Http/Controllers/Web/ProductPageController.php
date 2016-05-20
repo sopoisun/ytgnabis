@@ -28,8 +28,15 @@ class ProductPageController extends ProductBaseController
         $data = $this->front->Products();
 
         if( request()->get('cari') ){
-            $cari =  str_replace('-', ' ', request()->get('cari'));
-            $data->where('business_products.name', 'like', '%'.$cari.'%');
+            //$cari = str_replace('-', ' ', request()->get('cari'));
+            //$data->where('business_products.name', 'like', '%'.$cari.'%');
+
+            $keys = explode('-', request()->get('cari'));
+            $data->where(function($query) use ($keys) {
+                foreach ($keys as $key) {
+                    $query->OrWhere('business_products.name', 'like', '%'.$key.'%');
+                }
+            });
         }
 
         $data = $data->orderBy($orderBy['key'], $orderBy['value'])->paginate(9)

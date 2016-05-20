@@ -14,8 +14,15 @@ class BusinessPageController extends BusinessBaseController
         $data = $this->front->Businesses();
 
         if( request()->get('cari') ){
-            $cari =  str_replace('-', ' ', request()->get('cari'));
-            $data->where('businesses.name', 'like', '%'.$cari.'%');
+            //$cari = str_replace('-', ' ', request()->get('cari'));
+            //$data->where('businesses.name', 'like', '%'.$cari.'%');
+
+            $keys = explode('-', request()->get('cari'));
+            $data->where(function($query) use ($keys) {
+                foreach ($keys as $key) {
+                    $query->OrWhere('businesses.name', 'like', '%'.$key.'%');
+                }
+            });
         }
 
         $data = $data->orderBy('businesses.name')->paginate(8);
