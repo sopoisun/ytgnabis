@@ -25,16 +25,20 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="txtSearch"
                                     value="{{ isset($params) ? $params['q'] : '' }}"
-                                        {{ isset($params) ? "disabled='disabled'" : '' }}
+                                        {!! isset($params) ? "readonly='readonly'" : '' !!}
                                             placeholder="Kata Kunci" />
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
-                                        <button type="submit" class="btn btn-default" id="btnSearch">Cari Sekarang</button>
+                                        <button type="submit" class="btn btn-default"
+                                            {!! isset($params) ? "disabled='disabled'" : '' !!}
+                                                id="btnSearch">Cari Sekarang</button>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
-                                        <button type="button" class="btn btn-warning"  id="btnReset" disabled="disabled">Reset</button>
+                                        <button type="button" class="btn btn-warning"
+                                            {!! !isset($params) ? "disabled='disabled'" : '' !!}
+                                                id="btnReset">Reset</button>
                                     </div>
                                 </div>
                             </div><!-- /.form-group -->
@@ -71,24 +75,122 @@
 
 @section('js_section')
 <script>
-    /*_latitude = 48.87;
-    _longitude = 2.29;
-    createHomepageGoogleMap(_latitude,_longitude);
-    $(window).load(function(){
-        initializeOwl(false);
-    });*/
+    var defLat  = {{ $setting->map_latitude }};
+    var defLong = {{ $setting->map_longitude }};
+    var markers = [];
 
-    @if(isset($params))
-    $("#txtSearch").val({{ $params['q'] }});
-    $("#txtSearch").attr('readonly', 'readonly');
-    
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        scrollwheel: false,
+        center: new google.maps.LatLng(defLat, defLong),
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        styles: mapStyles
+    });
+
+    TryGeoLocation();
+
+    map.addListener('dragend', function(){
+        var center = this.getCenter();
+
+        loadData(center);
+    });
+
+    @if(isset($data))
+    var businesses = {!! $data->toJson(); !!}
+    showMarkers(businesses);
     @endif
+
+    function loadData(center){
+        $.ajax({
+            url: "{{ url('/ajax/load-map') }}?q="+$("#txtSearch").val()+"&lat="+center.lat()+"&lng="+center.lng(),
+            type: "GET",
+            success: function(res){
+                showMarkers(res);
+            }
+        });
+    }
+
+    function showMarkers(data){
+        $.each(data, function(i, v){
+            var marker = new google.maps.Marker({
+                title: v.name,
+                position: new google.maps.LatLng(v.map_lat, v.map_long),
+                animation: google.maps.Animation.DROP,
+                map: map,
+                icon: base_url+'/assets/bluemarker.png',
+            });
+
+            markers.push(marker);
+        });
+    }
+
+    function TryGeoLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                map.setCenter(pos);
+
+                //defLat  = position.coords.latitude;
+                //defLong = position.coords.longitude;
+
+                var marker = new google.maps.Marker({
+                    title: "Your Location",
+                    position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                    animation: google.maps.Animation.DROP,
+                    map: map,
+                    icon: base_url+'/assets/yellowmarker.png',
+                });
+
+                markers.push(marker);
+            }, function() {
+                var pos = {
+                    lat: defLat,
+                    lng: defLong
+                };
+                map.setCenter(pos);
+
+                toastr.options.closeButton = true;
+                toastr.options.positionClass = "toast-bottom-right";
+                toastr.error("Some thing is wrong");
+            });
+        } else {
+            var pos = {
+                lat: defLat,
+                lng: defLong
+            };
+            map.setCenter(pos);
+
+            toastr.options.closeButton = true;
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.error("Your browser does not support geolocation");
+        }
+    }
+
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+
+    function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
 
     $("#form-map").submit(function(e){
         if( $("#txtSearch").val() != "" ){
             $("#txtSearch").attr('readonly', 'readonly');
             $("#btnSearch").attr('disabled', 'disabled');
             $("#btnReset").removeAttr('disabled');
+
+            loadData(map.getCenter());
         }else{
             toastr.options.closeButton = true;
             toastr.options.positionClass = "toast-bottom-right";
@@ -99,115 +201,19 @@
     });
 
     $("#btnReset").click(function(){
-        $(this).attr('disabled', 'disabled');
-        $("#btnSearch").removeAttr('disabled');
-        $("#txtSearch").val("").removeAttr('readonly');
-    });
+        $.ajax({
+            url: "{{ url('/ajax/forget-map') }}",
+            type: "GET",
+            success: function(){
+                $("#btnReset").attr('disabled', 'disabled');
+                $("#btnSearch").removeAttr('disabled');
+                $("#txtSearch").val("").removeAttr('readonly');
 
-    var defLat  = {{ $setting->map_latitude }};
-    var defLong = {{ $setting->map_longitude }};
-
-    var map = new GMaps({
-        div: '#map',
-        lat: defLat,
-        lng: defLong,
-        zoom: 16,
-        dragend: function(e) {
-            /*var location = {
-                lat: e.center.lat(),
-                long: e.center.lng()
-            };*/
-            //var center = e.getCenter();
-            console.log(e);
-        }
-    });
-
-    map.addStyle({
-        styledMapName:"Styled Map",
-        styles: mapStyles,
-        mapTypeId: "bluestyle"
-    });
-
-    map.setStyle("bluestyle");
-
-    GMaps.geolocate({
-        success: function(position) {
-            defLat  = position.coords.latitude;
-            defLong = position.coords.longitude;
-            map.setCenter(position.coords.latitude, position.coords.longitude);
-        },
-        error: function(error) {
-            // set to blambangan location
-            // map.setCenter(defLat, defLong);
-            // alert('Geolocation failed: '+error.message);
-            toastr.options.closeButton = true;
-            toastr.options.positionClass = "toast-bottom-right";
-            toastr.error("Some thing is wrong");
-        },
-        not_supported: function() {
-            toastr.options.closeButton = true;
-            toastr.options.positionClass = "toast-bottom-right";
-            toastr.error("Your browser does not support geolocation");
-        },
-        always: function() {
-            var pictureLabel = document.createElement("img");
-            pictureLabel.src = base_url+'/'+"assets/zoner/img/property-types/apartment.png";
-            map.addMarker({
-                title: "Lokasi kamu",
-                lat: defLat,
-                lng: defLong,
-                draggable: true,
-                icon: base_url+'/assets/yellowmarker.png',
-                dragend: function(e) {
-                    var location = {
-                        lat: e.latLng.lat(),
-                        long: e.latLng.lng()
-                    };
-                    //console.log(location);
-                }
-            });
-        }
-    });
-
-    /*var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        scrollwheel: false,
-        center: new google.maps.LatLng(defLat, defLong),
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        styles: mapStyles
-    });
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            map.setCenter(pos);
-
-            defLat  = position.coords.latitude;
-            defLong = position.coords.longitude;
-
-            var pictureLabel = document.createElement("img");
-            pictureLabel.src = base_url+'/'+"assets/zoner/img/property-types/apartment.png";
-            var marker = new MarkerWithLabel({
-                title: "Your Location",
-                position: new google.maps.LatLng(defLat, defLong),
-                map: map,
-                icon: base_url+'/assets/zoner/img/marker.png',
-                labelContent: pictureLabel,
-                labelAnchor: new google.maps.Point(50, 0),
-                labelClass: "marker-style"
-            });
-
-        }, function() {
-            error('Unknow Error...');
+                deleteMarkers(); // Clear markers
+                TryGeoLocation(); // Set default Location
+            }
         });
-    } else {
-        // Browser doesn't support Geolocation
-        error('Geo Location is not supported');
-    }*/
-
+    });
 
 </script>
 @stop

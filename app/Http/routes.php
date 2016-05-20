@@ -142,5 +142,11 @@ Route::group(['prefix' => 'backend'], function(){
     });
 });
 
+// Map Page Actions
+Route::group(['prefix' => 'ajax'], function(){
+    Route::get('/load-map', 'Web\MapPageController@load');
+    Route::get('/forget-map', 'Web\MapPageController@clear');
+});
+
 
 Route::get('{permalink?}', 'PermalinkController@index');
