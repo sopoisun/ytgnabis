@@ -90,9 +90,12 @@
     TryGeoLocation();
 
     map.addListener('dragend', function(){
-        var center = this.getCenter();
+        var attr = $("#btnSearch").attr('disabled');
 
-        loadData(center);
+        if (typeof attr !== typeof undefined && attr !== false) {
+            var center = this.getCenter();
+            loadData(center);
+        }
     });
 
     @if(isset($data))
