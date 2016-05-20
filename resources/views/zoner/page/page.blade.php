@@ -9,14 +9,8 @@
 @section('content')
 <!-- Page Content -->
     <div id="page-content">
-        <!-- Breadcrumb -->
-        <div class="container">
-            <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li class="active">Terms & Conditions</li>
-            </ol>
-        </div>
-        <!-- end Breadcrumb -->
+
+        @include('zoner.breadcrumbs')
 
         <div class="container">
             <div class="row">

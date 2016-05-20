@@ -14,5 +14,9 @@ class BusinessBaseController extends SiteController
 
         $this->values['categories']     = $this->front->BusinessCategories()->get();
         $this->values['productPopular'] = $this->front->ProductPopular();
+        $this->values['breadcrumbs']    = [
+                [ 'title' => "Home", 'url' => url('/') ],
+                [ 'title' => "Bisnis", 'url' => url('bisnis') ],
+        ];
     }
 }

@@ -34,6 +34,10 @@ class ProductCategoryController extends ProductBaseController
         $this->values['data']   = $data;
         $this->values['params'] = request()->all();
 
+        $this->values['breadcrumbs'] = array_merge($this->values['breadcrumbs'], [
+            [ 'title' => $this->values['seo']['product']['name'], 'url' => $this->values['permalink'] ],
+        ]);
+
         if( !$data->count() )
         {
             $category = $this->values['seo']['product']['name'];

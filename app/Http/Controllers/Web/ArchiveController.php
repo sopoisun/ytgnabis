@@ -27,6 +27,10 @@ class ArchiveController extends PostBaseController
         $this->values['data'] = $data;
         $this->values['archive'] = Carbon::createFromFormat('Y-m', $bulan);
 
+        $this->values['breadcrumbs'] = array_merge($this->values['breadcrumbs'], [
+            [ 'title' => $this->values['archive']->format('M Y'), 'url' => '' ],
+        ]);
+
         if( !$data->count() )
         {
             $this->values['no_data'] = "<p>Tidak ada post pada &quot;<b>".$this->values['archive']->format('M Y')."</b>&quot;</p>";

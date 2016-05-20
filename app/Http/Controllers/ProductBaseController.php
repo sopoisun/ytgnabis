@@ -14,5 +14,9 @@ class ProductBaseController extends SiteController
 
         $this->values['categories']     = $this->front->ProductCategories()->get();
         $this->values['productPopular'] = $this->front->ProductPopular();
+        $this->values['breadcrumbs']    = [
+                [ 'title' => "Home", 'url' => url('/') ],
+                [ 'title' => "Produk", 'url' => url('produk') ],
+        ];
     }
 }

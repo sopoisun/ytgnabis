@@ -20,6 +20,10 @@ class PostCategoryController extends PostBaseController
 
         $this->values['seo']['post'] = $this->values['categories']->where('seo_id', $this->values['seo_id'])->first();
 
+        $this->values['breadcrumbs'] = array_merge($this->values['breadcrumbs'], [
+            [ 'title' => $this->values['seo']['post']['name'], 'url' => $this->values['permalink'] ],
+        ]);
+
         if( !$data->count() )
         {
             $category = $this->values['seo']['post']['name'];

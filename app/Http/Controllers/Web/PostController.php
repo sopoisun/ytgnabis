@@ -14,6 +14,10 @@ class PostController extends PostBaseController
         $this->values['data'] = $this->front->Posts()
                 ->where('posts.id', $this->values['relation_id'])->first();
 
+        $this->values['breadcrumbs'] = array_merge($this->values['breadcrumbs'], [
+            [ 'title' => $this->values['data']['post_title'], 'url' => $this->values['permalink'] ],
+        ]);
+
         return view(config('app.frontend_template').'.posts.post', $this->values);
     }
 }

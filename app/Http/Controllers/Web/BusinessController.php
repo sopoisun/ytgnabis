@@ -19,6 +19,10 @@ class BusinessController extends BusinessBaseController
             ->orderBy('business_products.name')
             ->paginate(6);
 
+        $this->values['breadcrumbs'] = array_merge($this->values['breadcrumbs'], [
+            [ 'title' => $this->values['data']['name'], 'url' => $this->values['permalink'] ],
+        ]);
+
         return view(config('app.frontend_template').'.business.business', $this->values);
     }
 }

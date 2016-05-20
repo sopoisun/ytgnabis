@@ -18,6 +18,10 @@ class BusinessCategoryController extends BusinessBaseController
 
         $this->values['seo']['business'] = $this->values['categories']->where('seo_id', $this->values['seo_id'])->first();
 
+        $this->values['breadcrumbs'] = array_merge($this->values['breadcrumbs'], [
+            [ 'title' => $this->values['seo']['business']['name'], 'url' => $this->values['permalink'] ],
+        ]);
+
         if( !$data->count() )
         {
             $category = $this->values['seo']['business']['name'];
