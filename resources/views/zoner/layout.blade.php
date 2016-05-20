@@ -38,7 +38,7 @@
 <div class="wrapper">
 
     <div class="navigation">
-        <div class="secondary-navigation">
+        <!--<div class="secondary-navigation">
             <div class="container">
                 <div class="contact">
                     <figure><strong>Phone:</strong>+1 810-991-3842</figure>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="container">
             <header class="navbar" id="top" role="banner">
                 <div class="navbar-header">
@@ -105,12 +105,11 @@
                             <article>
                                 <h3>Contact</h3>
                                 <address>
-                                    <strong>Your Company</strong><br>
-                                    4877 Spruce Drive<br>
-                                    West Newton, PA 15089
+                                    <strong>{{ $setting->business_name }}</strong><br>
+                                    {!! $setting->alamat !!}
                                 </address>
-                                +1 (734) 123-4567<br>
-                                <a href="#">hello@example.com</a>
+                                {{ $setting->phone }}<br>
+                                <a href="mailto:{{ $setting->email }}">{{ $setting->email }}</a>
                             </article>
                         </div><!-- /.col-sm-3 -->
                         <div class="col-md-3 col-sm-3">
@@ -135,7 +134,7 @@
             <aside id="footer-thumbnails" class="footer-thumbnails"></aside><!-- /#footer-thumbnails -->
             <aside id="footer-copyright">
                 <div class="container">
-                    <span>Copyright © 2013. All Rights Reserved.</span>
+                    <span>Copyright © 2016. All Rights Reserved.</span>
                     <span class="pull-right"><a href="#page-top" class="roll">Go to top</a></span>
                 </div>
             </aside>

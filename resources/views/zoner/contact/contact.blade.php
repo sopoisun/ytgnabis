@@ -30,43 +30,41 @@
                                     <section id="address">
                                         <header><h3>Address</h3></header>
                                         <address>
-                                            <strong>Your Company</strong><br>
-                                            4877 Spruce Drive<br>
-                                            West Newton, PA 15089
+                                            <strong>{{ $setting->business_name }}</strong><br>
+                                            {!! $setting->alamat !!}
                                         </address>
-                                        +1 (734) 123-4567<br>
-                                        <a href="#">hello@example.com</a><br>
-                                        <strong>skype: </strong>your.company
+                                        {{ $setting->phone }}<br>
+                                        <a href="mailto:{{ $setting->email }}">{{ $setting->email }}</a><br>
                                     </section><!-- /#address -->
                                     <section id="social">
                                         <header><h3>Social Profiles</h3></header>
                                         <div class="agent-social">
-                                            <a href="#" class="fa fa-twitter btn btn-grey-dark"></a>
-                                            <a href="#" class="fa fa-facebook btn btn-grey-dark"></a>
-                                            <a href="#" class="fa fa-linkedin btn btn-grey-dark"></a>
+                                            <a href="{{ $setting->facebook }}" class="fa fa-twitter btn btn-grey-dark"></a>
+                                            <a href="{{ $setting->twitter }}" class="fa fa-facebook btn btn-grey-dark"></a>
+                                            <a href="{{ $setting->instagram }}" class="fa fa-instagram btn btn-grey-dark"></a>
                                         </div>
                                     </section><!-- /#social -->
                                 </div><!-- /.col-md-4 -->
                                 <div class="col-md-8 col-sm-7">
-                                    <header><h3>Where We Are</h3></header>
+                                    <header><h3>Lokasi Kantor Kami</h3></header>
                                     <div id="contact-map"></div>
                                 </div><!-- /.col-md-8 -->
                             </div><!-- /.row -->
                         </section><!-- /#agent-info -->
                         <hr class="thick">
                         <section id="form">
-                            <header><h3>Send Us a Message</h3></header>
-                            <form role="form" id="form-contact" method="post"  class="clearfix">
+                            <header><h3>Kirimi kami pesan</h3></header>
+                            <form role="form" id="form-contact" method="post" action="mailto:{{ $setting->email }}"  class="clearfix">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="form-contact-name">Your Name<em>*</em></label>
+                                            <label for="form-contact-name">Nama Anda<em>*</em></label>
                                             <input type="text" class="form-control" id="form-contact-name" name="form-contact-name" required>
                                         </div><!-- /.form-group -->
                                     </div><!-- /.col-md-6 -->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="form-contact-email">Your Email<em>*</em></label>
+                                            <label for="form-contact-email">Email Anda<em>*</em></label>
                                             <input type="email" class="form-control" id="form-contact-email" name="form-contact-email" required>
                                         </div><!-- /.form-group -->
                                     </div><!-- /.col-md-6 -->
@@ -74,7 +72,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="form-contact-message">Your Message<em>*</em></label>
+                                            <label for="form-contact-message">Isi Pesan<em>*</em></label>
                                             <textarea class="form-control" id="form-contact-message" rows="8" name="form-contact-message" required></textarea>
                                         </div><!-- /.form-group -->
                                     </div><!-- /.col-md-12 -->
@@ -92,118 +90,32 @@
                 <!-- sidebar -->
                 <div class="col-md-3 col-sm-3">
                     <section id="sidebar">
-                        <aside id="edit-search">
-                            <header><h3>Search Properties</h3></header>
-                            <form role="form" id="form-sidebar" class="form-search" action="properties-listing.html">
-                                <div class="form-group">
-                                    <select name="type" class="fc">
-                                        <option value="">Status</option>
-                                        <option value="1">Rent</option>
-                                        <option value="2">Sale</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <select name="country" class="fc">
-                                        <option value="">Country</option>
-                                        <option value="1">France</option>
-                                        <option value="2">Great Britain</option>
-                                        <option value="3">Spain</option>
-                                        <option value="4">Russia</option>
-                                        <option value="5">United States</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <select name="city" class="fc">
-                                        <option value="">City</option>
-                                        <option value="1">New York</option>
-                                        <option value="2">Los Angeles</option>
-                                        <option value="3">Chicago</option>
-                                        <option value="4">Houston</option>
-                                        <option value="5">Philadelphia</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <select name="district" class="fc">
-                                        <option value="">District</option>
-                                        <option value="1">Manhattan</option>
-                                        <option value="2">The Bronx</option>
-                                        <option value="3">Brooklyn</option>
-                                        <option value="4">Queens</option>
-                                        <option value="5">Staten Island</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <select name="property-type" class="fc">
-                                        <option value="">Property Type</option>
-                                        <option value="1">Apartment</option>
-                                        <option value="2">Condominium</option>
-                                        <option value="3">Cottage</option>
-                                        <option value="4">Flat</option>
-                                        <option value="5">House</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <div class="price-range">
-                                        <input id="price-input" type="text" name="price" value="1000;299000">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-default">Search Now</button>
-                                </div><!-- /.form-group -->
-                            </form><!-- /#form-map -->
-                        </aside><!-- /#edit-search -->
-                        <aside id="featured-properties">
-                            <header><h3>Featured Properties</h3></header>
-                            <div class="property small">
-                                <a href="property-detail.html">
-                                    <div class="property-image">
-                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-06.jpg">
-                                    </div>
-                                </a>
-                                <div class="info">
-                                    <a href="property-detail.html"><h4>2186 Rinehart Road</h4></a>
-                                    <figure>Doral, FL 33178 </figure>
-                                    <div class="tag price">$ 72,000</div>
-                                </div>
-                            </div><!-- /.property -->
-                            <div class="property small">
-                                <a href="property-detail.html">
-                                    <div class="property-image">
-                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-09.jpg">
-                                    </div>
-                                </a>
-                                <div class="info">
-                                    <a href="property-detail.html"><h4>2479 Murphy Court</h4></a>
-                                    <figure>Minneapolis, MN 55402</figure>
-                                    <div class="tag price">$ 36,000</div>
-                                </div>
-                            </div><!-- /.property -->
-                            <div class="property small">
-                                <a href="property-detail.html">
-                                    <div class="property-image">
-                                        <img alt="" src="{{ url('/') }}/assets/zoner/img/properties/property-03.jpg">
-                                    </div>
-                                </a>
-                                <div class="info">
-                                    <a href="property-detail.html"><h4>1949 Tennessee Avenue</h4></a>
-                                    <figure>Minneapolis, MN 55402</figure>
-                                    <div class="tag price">$ 128,600</div>
-                                </div>
-                            </div><!-- /.property -->
-                        </aside><!-- /#featured-properties -->
-                        <aside id="our-guides">
-                            <header><h3>Our Guides</h3></header>
-                            <a href="#" class="universal-button">
-                                <figure class="fa fa-home"></figure>
-                                <span>Buying Guide</span>
-                                <span class="arrow fa fa-angle-right"></span>
-                            </a><!-- /.universal-button -->
-                            <a href="#" class="universal-button">
-                                <figure class="fa fa-umbrella"></figure>
-                                <span>Right Insurance for You</span>
-                                <span class="arrow fa fa-angle-right"></span>
-                            </a><!-- /.universal-button -->
-                        </aside><!-- /#our-guide -->
+                        <aside id="categories">
+                            <header><h3>Kategori Produk</h3></header>
+                            <ul class="list-links">
+                                @foreach($productCategories as $category)
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </aside><!-- /#categories -->
+
+                        <aside id="categories">
+                            <header><h3>Kategori Bisnis</h3></header>
+                            <ul class="list-links">
+                                @foreach($businessCategories as $category)
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </aside><!-- /#categories -->
+
+                        <aside id="categories">
+                            <header><h3>Kategori Post</h3></header>
+                            <ul class="list-links">
+                                @foreach($postCategories as $category)
+                                <li><a href="{{ url($category->permalink) }}">{{ $category->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </aside><!-- /#categories -->
                     </section><!-- /#sidebar -->
                 </div><!-- /.col-md-3 -->
                 <!-- end Sidebar -->
@@ -230,8 +142,8 @@
 
 @section('js_section')
 <script>
-    _latitude = 48.87;
-    _longitude = 2.29;
+    _latitude   = {{ $setting->map_latitude }};
+    _longitude  = {{ $setting->map_longitude }};
     google.maps.event.addDomListener(window, 'load', contactUsMap(_latitude,_longitude));
 </script>
 @stop

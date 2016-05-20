@@ -74,6 +74,18 @@ class PageSeeder extends Seeder
         \App\Page::simpan($r);
 
         $r = request()->create('/', 'GET', [
+            'page_title' => 'Archive',
+            'show_in_menu' => 0,
+            'seo' => [
+                'permalink' => 'archive',
+                'site_title' => 'Archive',
+                'controller' => 'ArchiveController',
+                'function' => 'index',
+            ],
+        ]);
+        \App\Page::simpan($r);
+
+        $r = request()->create('/', 'GET', [
             'page_title' => 'Contact',
             'show_in_menu' => 1,
             'seo' => [

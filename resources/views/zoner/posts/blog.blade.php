@@ -34,7 +34,7 @@
                 <!-- Content -->
                 <div class="col-md-9 col-sm-9">
                     <section id="content">
-                        <header><h1>{{ isset($seo['post']) ? 'Post '.$seo['post']->name : 'Blog' }}</h1></header>
+                        <header><h1>{{ isset($seo['post']) ? 'Post '.$seo['post']->name : (isset($archive) ? 'Post '.$archive->format('M Y') : 'Blog') }}</h1></header>
                         @if( $data->count() )
                         @foreach( $data as $d )
                         <article class="blog-post">

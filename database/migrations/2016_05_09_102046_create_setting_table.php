@@ -14,6 +14,7 @@ class CreateSettingTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('business_name');
             $table->string('phone');
             $table->string('email');
             $table->string('facebook');

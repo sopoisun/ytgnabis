@@ -11,6 +11,10 @@ class ContactController extends SiteController
 {
     public function index()
     {
+        $this->values['productCategories'] = $this->front->ProductCategories()->get();
+        $this->values['businessCategories'] = $this->front->BusinessCategories()->get();
+        $this->values['postCategories'] = $this->front->PostCategories()->get();
+
         return view(config('app.frontend_template').'.contact.contact', $this->values);
     }
 }

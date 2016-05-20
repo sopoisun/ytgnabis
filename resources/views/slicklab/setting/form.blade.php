@@ -99,7 +99,7 @@
                         <div class="form-group @if($errors->has('alamat')) has-error @endif">
                             <label for="alamat" class="col-lg-3 col-sm-3 control-label">Alamat</label>
                             <div class="col-lg-6">
-                                {{ Form::textarea('alamat', null, ['class' => 'form-control', 'id' => 'alamat', 'rows' => 3, 'placeholder' => 'Enter alamat']) }}
+                                {{ Form::textarea('alamat', null, ['class' => 'form-control wysihtml5', 'id' => 'alamat', 'rows' => 3, 'placeholder' => 'Enter alamat']) }}
                                 @if($errors->has('alamat'))<span class="help-block">{{ $errors->first('alamat') }}</span>@endif
                             </div>
                         </div>

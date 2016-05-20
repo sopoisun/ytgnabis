@@ -13,6 +13,7 @@ class SettingSeeder extends Seeder
     public function run()
     {
         Setting::create([
+            'business_name' => 'Amitech',
             'phone'         => '087755925565',
             'email'         => 'reez4l.aahm3d@gmail.com',
             'facebook'      => '',
