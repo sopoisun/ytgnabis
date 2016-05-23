@@ -18,6 +18,8 @@ class PostController extends PostBaseController
             [ 'title' => $this->values['data']['post_title'], 'url' => $this->values['permalink'] ],
         ]);
 
+        $this->front->Cache('post', $this->values['relation_id']);
+
         return view(config('app.frontend_template').'.posts.post', $this->values);
     }
 }

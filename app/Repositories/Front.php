@@ -10,7 +10,9 @@ use App\Post;
 use App\PostCategory;
 use App\Page;
 use App\Setting;
+use Carbon\Carbon;
 use DB;
+use Cache;
 
 class Front
 {
@@ -46,6 +48,11 @@ class Front
             ])->groupBy('businesses.id');
     }
 
+    public function BusinessPopular($limit = 5)
+    {
+        return $this->Businesses()->orderBy('businesses.counter', 'desc')->limit($limit)->get();
+    }
+
     public function ProductCategories()
     {
         return ProductCategory::join('seos', 'product_categories.seo_id', '=', 'seos.seo_id')
@@ -68,9 +75,9 @@ class Front
             ]);
     }
 
-    public function ProductPopular()
+    public function ProductPopular($limit = 4)
     {
-        return $this->Products()->orderBy('business_products.counter', 'desc')->limit(4)->get();
+        return $this->Products()->orderBy('business_products.counter', 'desc')->limit($limit)->get();
     }
 
     public function ProductSame($category_id, $name, $current_id)
@@ -147,5 +154,33 @@ class Front
         }
 
         return [];
+    }
+
+    public function Cache($type, $id)
+    {
+        if ( !Cache::has($type.'_'.$id) ) {
+            $model = false;
+            switch ($type) {
+                case 'post':
+                    $model = Post::find($id);
+                    break;
+                case 'product':
+                    $model = Product::find($id);
+                    break;
+                case 'business':
+                    $model = Business::find($id);
+                    break;
+                default:
+                    $model = false;
+                    break;
+            }
+
+            if( $model ){
+                $model->counter = $model->counter+1;
+                if ($model->save()) {
+                    Cache::add($type.'_'.$id, $type.'_'.$id.'_chached', Carbon::now()->addDay());
+                }
+            }
+        }
     }
 }

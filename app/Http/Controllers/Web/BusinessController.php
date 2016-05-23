@@ -23,6 +23,8 @@ class BusinessController extends BusinessBaseController
             [ 'title' => $this->values['data']['name'], 'url' => $this->values['permalink'] ],
         ]);
 
+        $this->front->Cache('business', $this->values['relation_id']);
+
         return view(config('app.frontend_template').'.business.business', $this->values);
     }
 }

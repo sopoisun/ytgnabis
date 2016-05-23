@@ -23,6 +23,8 @@ class ProductController extends ProductBaseController
             [ 'title' => $this->values['data']['name'], 'url' => $this->values['permalink'] ],
         ]);
 
+        $this->front->Cache('product', $this->values['relation_id']);
+
         return view(config('app.frontend_template').'.products.product', $this->values);
     }
 }
