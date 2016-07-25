@@ -12,7 +12,45 @@
 */
 
 Route::get('/tes', function(){
-    return "Test";
+    $data = \App\BusinessProduct::with(['seo', 'business.seo'])->get();
+
+    $display = [];
+    foreach( $data as $d ){
+        $id = $d->id;
+        $display[$id] = [
+            'permalink'     => $d->seo->permalink,
+            'name'          => $d->name,
+            'price'         => $d->price,
+            'seo_id'        => $d->seo_id,
+            'business_id'   => $d->business_id,
+            'business'      => [
+                'id'        => $d->business_id,
+                'permalink' => $d->seo->permalink,
+                'name'      => $d->business->name,
+                'address'   => $d->business->address,
+                'location'  => [
+                    'lat'   => $d->business->map_lat,
+                    'lon'   => $d->business->map_long,
+                ],
+            ]
+        ];
+    }
+
+    $docs = [];
+    foreach ( $display as $key => $val ) {
+        $doc = [
+            'body'  => $val,
+            'index' => 'sibangty',
+            'type'  => 'product',
+            'id'    => $key,
+        ];
+
+        $doc = Elasticsearch::index($doc);
+
+        array_push($docs, $doc);
+    }
+
+    return $docs;
 });
 
 Route::get('/send-mail', function(){

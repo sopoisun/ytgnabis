@@ -161,6 +161,7 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Cviebrock\LaravelElasticsearch\ServiceProvider::class,
 
     ],
 
@@ -212,6 +213,7 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Uuid'      => Webpatser\Uuid\Uuid::class,
+        'Elasticsearch' => Cviebrock\LaravelElasticsearch\Facade::class,
 
     ],
 
