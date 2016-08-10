@@ -31,6 +31,7 @@
                         <tr>
                             <th>#</th>
                             <th>Business Name</th>
+                            <th>Kecamatan</th>
                             <th>Address</th>
                             <th>Action</th>
                         </tr>
@@ -43,6 +44,7 @@
                         <tr>
                             <td>{{ $no }}</td>
                             <td>{{ $business->name }}</td>
+                            <td>{{ isset($business->kecamatan->name) ? $business->kecamatan->name : '--' }}</td>
                             <td>{{ $business->address }}</td>
                             <td>
                                 <a class="btn btn-primary btn-xs" href="{{ url('/backend/business/'.$business->id.'/edit') }}"><i class="fa fa-pencil"></i></a>

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\BusinessRequest;
 use App\Business;
 use App\Category;
+use App\Kecamatan;
 use Gate;
 
 class BusinessController extends Controller
@@ -33,7 +34,7 @@ class BusinessController extends Controller
         }
 
         $data = [
-            'businesses' => $businesses,
+            'businesses' => $businesses->load('kecamatan'),
         ];
 
         return view(config('app.backend_template').'.business.table', $data);
@@ -64,7 +65,8 @@ class BusinessController extends Controller
     public function create()
     {
         $data = [
-            'categories' => Category::where('active', 1)->lists('name', 'id'),
+            'kecamatans'    => Kecamatan::where('active', 1)->orderBy('name')->lists('name', 'id'),
+            'categories'    => Category::where('active', 1)->lists('name', 'id'),
         ];
 
         return view(config('app.backend_template').'.business.create', $data);
@@ -111,8 +113,9 @@ class BusinessController extends Controller
         }
 
         $data = [
-            'business' => $business->load('seo'),
-            'categories' => Category::where('active', 1)->lists('name', 'id'),
+            'business'      => $business->load('seo'),
+            'kecamatans'    => Kecamatan::where('active', 1)->orderBy('name')->lists('name', 'id'),
+            'categories'    => Category::where('active', 1)->lists('name', 'id'),
         ];
 
         return view(config('app.backend_template').'.business.update', $data);

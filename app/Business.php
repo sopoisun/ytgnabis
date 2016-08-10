@@ -10,7 +10,8 @@ use Carbon\Carbon;
 
 class Business extends SeoModel
 {
-    protected $fillable = ['name', 'seo_id', 'address', 'map_lat', 'map_long', 'phone', 'image_url', 'about', 'counter', 'active'];
+    protected $fillable = ['name', 'seo_id', 'address', 'map_lat', 'map_long', 'phone', 'image_url', 'about',
+                            'counter', 'active', 'kecamatan_id'];
     protected $hidden   = ['created_at', 'updated_at'];
 
     /* Relation */

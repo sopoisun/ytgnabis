@@ -38,6 +38,13 @@
         @if($errors->has('categories'))<span class="help-block">{{ $errors->first('categories') }}</span>@endif
     </div>
 </div>
+<div class="form-group @if($errors->has('kecamatan_id')) has-error @endif">
+    <label for="kecamatan_id" class="col-lg-3 col-sm-3 control-label">Kecamatan</label>
+    <div class="col-lg-9">
+        {{ Form::select('kecamatan_id', $kecamatans, null, ['id' => 'kecamatan_id', 'class' => 'form-control select2']) }}
+        @if($errors->has('kecamatan_id'))<span class="help-block">{{ $errors->first('kecamatan_id') }}</span>@endif
+    </div>
+</div>
 <div class="form-group @if($errors->has('map_lat')) has-error @endif">
     <label for="map_lat" class="col-lg-3 col-sm-3 control-label">Map Latitude</label>
     <div class="col-lg-9">
