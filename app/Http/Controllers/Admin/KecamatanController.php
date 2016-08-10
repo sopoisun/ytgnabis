@@ -45,8 +45,6 @@ class KecamatanController extends Controller
      */
     public function store(KecamatanRequest $request)
     {
-        return $request->all();
-        
         if( Kecamatan::simpan($request) ){
             return redirect('/backend/kecamatan')->with('success', 'Sukses simpan data kecamatan.');
         }
