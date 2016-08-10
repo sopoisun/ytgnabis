@@ -11,7 +11,48 @@
 |
 */
 
-Route::get('/tes', function(){
+Route::get('/test', function(){
+    $kecamatans = [
+        ['kecamatan' => 'Banyuwangi'],
+        ['kecamatan' => 'Rogojampi'],
+        ['kecamatan' => 'Genteng'],
+        ['kecamatan' => 'Wongsorejo'],
+        ['kecamatan' => 'Giri'],
+        ['kecamatan' => 'Kalipuro'],
+        ['kecamatan' => 'Glagah'],
+        ['kecamatan' => 'Licin'],
+        ['kecamatan' => 'Songgon'],
+        ['kecamatan' => 'Sempu'],
+        ['kecamatan' => 'Singojuruh'],
+        ['kecamatan' => 'Kabat'],
+        ['kecamatan' => 'Srono'],
+        ['kecamatan' => 'Kalibaru'],
+        ['kecamatan' => 'Glenmore'],
+        ['kecamatan' => 'Tegalsari'],
+        ['kecamatan' => 'Gambiran'],
+        ['kecamatan' => 'Cluring'],
+        ['kecamatan' => 'Muncar'],
+        ['kecamatan' => 'Tegaldlimo'],
+        ['kecamatan' => 'Purwoharjo'],
+        ['kecamatan' => 'Bangorejo'],
+        ['kecamatan' => 'Silirangung'],
+        ['kecamatan' => 'Pesanggaran'],
+    ];
+
+    # Categories
+    foreach( $kecamatans as $k ){
+        $r = request()->create('/', 'GET', [
+            'name' => $k['kecamatan'],
+            'seo' => [
+                'permalink' => strtolower($k['kecamatan']),
+                'site_title' => $k['kecamatan'],
+            ],
+        ]);
+        $kat = \App\Kecamatan::simpan($r);
+    }
+});
+
+Route::get('/elasticsearch', function(){
     $data = \App\BusinessProduct::with(['seo', 'business.seo'])->get();
 
     $display = [];
@@ -74,6 +115,12 @@ Route::get('/cek-login', function(){
     }else{
         return "Belum login";
     }
+});
+
+Route::group(['prefix' => 'api'], function(){
+    Route::get('/kecamatans', 'Api\ApiController@kecamatans');
+    Route::get('/business-categories', 'Api\ApiController@businessCategories');
+    Route::get('/product-categories', 'Api\ApiController@productCategories');
 });
 
 Route::group(['prefix' => 'backend'], function(){
@@ -143,6 +190,14 @@ Route::group(['prefix' => 'backend'], function(){
         Route::get('/page/{id}/edit', 'PageController@edit');
         Route::post('/page/{id}/edit', 'PageController@update');
         Route::get('/page/{id}/delete', 'PageController@destroy');
+
+        // Kecamatan
+        Route::get('/kecamatan', 'KecamatanController@index');
+        Route::get('/kecamatan/add', 'KecamatanController@create');
+        Route::post('/kecamatan/add', 'KecamatanController@store');
+        Route::get('/kecamatan/{id}/edit', 'KecamatanController@edit');
+        Route::post('/kecamatan/{id}/edit', 'KecamatanController@update');
+        Route::get('/kecamatan/{id}/delete', 'KecamatanController@destroy');
 
         // User Application
         Route::get('/user', 'UserController@index');

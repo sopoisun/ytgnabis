@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\SeoModel;
 use App\Seo;
+use App\Kecamatan;
 use Carbon\Carbon;
 
 class Business extends SeoModel
@@ -26,6 +27,11 @@ class Business extends SeoModel
     public function products()
     {
         return $this->hasMany(BusinessProduct::class);
+    }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class);
     }
     /* End Relation */
 
