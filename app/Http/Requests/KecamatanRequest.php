@@ -24,7 +24,9 @@ class KecamatanRequest extends SeoRequest
     public function rules()
     {
         $rules = [
-            'name' => 'required',
+            'name'      => 'required',
+            'map_lat'   => 'required',
+            'map_long'  => 'required',
         ];
 
         $rules += $this->seoRules();
@@ -35,7 +37,9 @@ class KecamatanRequest extends SeoRequest
     public function messages()
     {
         $messages = [
-            'name.required' => 'Nama kecamatan tidak boleh kosong.',
+            'name.required'     => 'Nama kecamatan tidak boleh kosong.',
+            'map_lat.required'  => 'Map latitude tidak boleh kosong.',
+            'map_long.required' => 'Map longitude tidak boleh kosong.',
         ];
 
         $messages += $this->seoMessages();

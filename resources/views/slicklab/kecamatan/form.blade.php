@@ -28,4 +28,14 @@
     {{ Form::textarea('seo[keywords]', null, ['class' => 'form-control', 'id' => 'keywords', 'rows' => 3, 'placeholder' => 'Enter keywords districts']) }}
     @if($errors->has('seo.keywords'))<span class="help-block">{{ $errors->first('seo.keywords') }}</span>@endif
 </div>
+<div class="form-group @if($errors->has('map_lat')) has-error @endif">
+    <label for="map_lat">Map latitude</label>
+    {{ Form::text('map_lat', null, ['class' => 'form-control', 'id' => 'map_lat', 'readonly' => 'readonly', 'placeholder' => 'Enter map latitude districts']) }}
+    @if($errors->has('map_lat'))<span class="help-block">{{ $errors->first('map_lat') }}</span>@endif
+</div>
+<div class="form-group @if($errors->has('map_long')) has-error @endif">
+    <label for="map_long">Map longitude</label>
+    {{ Form::text('map_long', null, ['class' => 'form-control', 'id' => 'map_long', 'readonly' => 'readonly', 'placeholder' => 'Enter map longitude districts']) }}
+    @if($errors->has('map_long'))<span class="help-block">{{ $errors->first('map_long') }}</span>@endif
+</div>
 <button type="submit" class="btn btn-info btnSubmit">Save</button>

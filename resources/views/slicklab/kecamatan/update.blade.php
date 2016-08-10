@@ -22,7 +22,7 @@
 
     <div class="row">
 
-        <div class="col-lg-6">
+        <div class="col-lg-7">
             <section class="panel">
                 <header class="panel-heading">
                     Ubah Kecamatan
@@ -35,12 +35,65 @@
             </section>
         </div>
 
+        <div class="col-lg-5">
+            <section class="panel">
+                <header class="panel-heading">
+                    Map
+                </header>
+                <div class="panel-body">
+                    <div class="alert alert-info fade in">
+                       <button data-dismiss="alert" class="close close-sm" type="button">
+                           <i class="fa fa-times"></i>
+                       </button>
+                       <strong>Perhatian!</strong> Silahkan klik map untuk mendapatkan lokasi ( lintang & bujur ).
+                   </div>
+                   <div id="map" class="gmaps"></div>
+                </div>
+            </section>
+        </div>
+
     </div>
 
 </div>
 <!--body wrapper end-->
 @stop
 
+@section('js_assets')
+<!-- Map -->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyDRcPjiRrLTw5_VxU2joPreWQ-KENxHOok"></script>
+<script src="{{ url('/assets/'.config('app.backend_template')) }}/js/gmaps.js"></script>
+@stop
+
 @section('js_section')
+<script>
+    // Default to blambangan location
+    var defLat  = {{ old('map_lat') ? old('map_lat') : $kecamatan->map_lat }};
+    var defLong = {{ old('map_long') ? old('map_long') : $kecamatan->map_long }};
+
+    var map = new GMaps({
+        div: '#map',
+        lat: defLat,
+        lng: defLong,
+        zoom: 16,
+    });
+
+    $("#map_lat").val(defLat);
+    $("#map_long").val(defLong);
+
+    map.addMarker({
+        lat: defLat,
+        lng: defLong,
+        draggable: true,
+        dragend: function(e) {
+            var location = {
+                lat: e.latLng.lat(),
+                long: e.latLng.lng()
+            };
+            //console.log(location);
+            $("#map_lat").val(location.lat);
+            $("#map_long").val(location.long);
+        }
+    });
+</script>
 @include('slicklab.partials.seo-update-section')
 @stop

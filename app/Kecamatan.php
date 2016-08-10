@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class Kecamatan extends SeoModel
 {
-    protected $fillable = ['name', 'seo_id', 'active'];
+    protected $fillable = ['name', 'seo_id', 'active', 'map_lat', 'map_long'];
     protected $hidden   = ['created_at', 'updated_at'];
 
     /* Relation */
