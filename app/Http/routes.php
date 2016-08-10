@@ -232,6 +232,10 @@ Route::group(['prefix' => 'backend'], function(){
         // Setting
         Route::get('/setting', 'SettingController@index');
         Route::post('/setting', 'SettingController@save');
+
+        Route::group(['prefix' => 'ajax'], function(){
+            Route::get('/kecamatan', 'KecamatanController@ajax');
+        });
     });
 });
 

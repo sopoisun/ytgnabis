@@ -111,44 +111,40 @@
         zoom: 16,
     });
 
-    GMaps.geolocate({
-        success: function(position) {
-            @if( !old('map_lat') )
-            defLat  = position.coords.latitude;
-            defLong = position.coords.longitude;
-            map.setCenter(position.coords.latitude, position.coords.longitude);
-            @endif
-        },
-        error: function(error) {
-            // set to blambangan location
-            map.setCenter(defLat, defLong);
-            //alert('Geolocation failed: '+error.message);
-        },
-        not_supported: function() {
-            toastr.options.closeButton = true;
-            toastr.options.positionClass = "toast-bottom-right";
-            toastr.error("Your browser does not support geolocation");
-        },
-        always: function() {
-            $("#map_lat").val(defLat);
-            $("#map_long").val(defLong);
+    loadKecamatan($("#kecamatan_id").val());
 
-            map.addMarker({
-                lat: defLat,
-                lng: defLong,
-                draggable: true,
-                dragend: function(e) {
-                    var location = {
-                        lat: e.latLng.lat(),
-                        long: e.latLng.lng()
-                    };
-                    //console.log(location);
-                    $("#map_lat").val(location.lat);
-                    $("#map_long").val(location.long);
-                }
-            });
-        }
+    $("#kecamatan_id").change(function() {
+        loadKecamatan($(this).val());
     });
+
+    function loadKecamatan(_id)
+    {
+        map.removeMarkers();
+        $.ajax({
+            type: "GET",
+            url: "{{ url('/backend/ajax/kecamatan') }}",
+            data: { id: _id },
+            success: function(res) {
+                $("#map_lat").val(res.map_lat);
+                $("#map_long").val(res.map_long);
+                map.setCenter(res.map_lat, res.map_long);
+                map.addMarker({
+                    lat: res.map_lat,
+                    lng: res.map_long,
+                    draggable: true,
+                    dragend: function(e) {
+                        var location = {
+                            lat: e.latLng.lat(),
+                            long: e.latLng.lng()
+                        };
+                        //console.log(location);
+                        $("#map_lat").val(location.lat);
+                        $("#map_long").val(location.long);
+                    }
+                });
+            }
+        });
+    }
 </script>
 @include('slicklab.partials.seo-create-section')
 @stop

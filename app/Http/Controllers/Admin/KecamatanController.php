@@ -113,4 +113,14 @@ class KecamatanController extends Controller
 
         return redirect()->back()->withErrors(['failed' => 'Gagal hapus data kecamatan.']);
     }
+
+    public function ajax(Request $request)
+    {
+        if( $request->get('id') ){
+            $id = $request->get('id');
+            return Kecamatan::find($id);
+        }
+
+        return Kecamatan::where('active', 1)->get();
+    }
 }
