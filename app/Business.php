@@ -7,6 +7,7 @@ use App\SeoModel;
 use App\Seo;
 use App\Kecamatan;
 use Carbon\Carbon;
+use Image;
 
 class Business extends SeoModel
 {
@@ -68,6 +69,9 @@ class Business extends SeoModel
                 $ext    = $request->file('image')->getClientOriginalExtension();
                 $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
                 $request->file('image')->move(public_path().'/files/businesses', $imgUrl);
+                $thumb = Image::make(public_path().'/files/businesses/'.$imgUrl);
+                $thumb->resize(120, 120);
+                $thumb->save(public_path().'/files/businesses/thumbs/'.$imgUrl);
 
                 $inputs  += [ 'image_url' => $imgUrl ];
             }
@@ -108,10 +112,14 @@ class Business extends SeoModel
             if ($request->file('image')->isValid()) {
                 if( $current->image_url != NULL ){
                     unlink(public_path().'/files/businesses/'.$current->image_url);
+                    unlink(public_path().'/files/businesses/thumbs/'.$current->image_url);
                 }
                 $ext    = $request->file('image')->getClientOriginalExtension();
                 $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
                 $request->file('image')->move(public_path().'/files/businesses', $imgUrl);
+                $thumb = Image::make(public_path().'/files/businesses/'.$imgUrl);
+                $thumb->resize(120, 120);
+                $thumb->save(public_path().'/files/businesses/thumbs/'.$imgUrl);
 
                 $inputs += [ 'image_url' => $imgUrl ];
             }

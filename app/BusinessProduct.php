@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\SeoModel;
 use Carbon\Carbon;
+use Image;
 
 class BusinessProduct extends SeoModel
 {
@@ -42,6 +43,9 @@ class BusinessProduct extends SeoModel
                 $ext    = $request->file('image')->getClientOriginalExtension();
                 $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
                 $request->file('image')->move(public_path().'/files/products', $imgUrl);
+                $thumb = Image::make(public_path().'/files/products/'.$imgUrl);
+                $thumb->resize(120, 120);
+                $thumb->save(public_path().'/files/products/thumbs/'.$imgUrl);
 
                 $inputs  += [ 'image_url' => $imgUrl ];
             }
@@ -85,6 +89,9 @@ class BusinessProduct extends SeoModel
                 $ext    = $request->file('image')->getClientOriginalExtension();
                 $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
                 $request->file('image')->move(public_path().'/files/products', $imgUrl);
+                $thumb = Image::make(public_path().'/files/products/'.$imgUrl);
+                $thumb->resize(120, 120);
+                $thumb->save(public_path().'/files/products/thumbs/'.$imgUrl);
 
                 $inputs += [ 'image_url' => $imgUrl ];
             }

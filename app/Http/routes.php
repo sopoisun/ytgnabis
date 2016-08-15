@@ -121,6 +121,11 @@ Route::group(['prefix' => 'api'], function(){
     Route::get('/kecamatans', 'Api\ApiController@kecamatans');
     Route::get('/business-categories', 'Api\ApiController@businessCategories');
     Route::get('/product-categories', 'Api\ApiController@productCategories');
+    Route::get('/businesses', 'Api\ApiController@businesses');
+    Route::get('/business', 'Api\ApiController@business');
+    Route::get('/products', 'Api\ApiController@products');
+    Route::get('/product', 'Api\ApiController@product');
+    Route::get('/map', 'Api\ApiController@map');
 });
 
 Route::group(['prefix' => 'backend'], function(){
