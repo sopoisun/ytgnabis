@@ -123,6 +123,7 @@ Route::group(['prefix' => 'api'], function(){
     Route::get('/product-categories', 'Api\ApiController@productCategories');
     Route::get('/businesses', 'Api\ApiController@businesses');
     Route::get('/business', 'Api\ApiController@business');
+    Route::get('/business_product', 'Api\ApiController@business_products');
     Route::get('/products', 'Api\ApiController@products');
     Route::get('/product', 'Api\ApiController@product');
     Route::get('/map', 'Api\ApiController@map');

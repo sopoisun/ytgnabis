@@ -40,25 +40,41 @@ class ApiController extends Controller
             });
         }
 
-        return $businesses->paginate(10);
+        return $businesses->paginate(5);
     }
 
     public function business(Request $request)
     {
         $id = $request->get('id');
         $business = \App\Business::with(['categories'])->find($id);
+        $products = \App\BusinessProduct::with(['category'])
+                    ->where('business_id', $business->id)
+                    ->orderBy('product_category_id');
 
         if( $request->get('q') ){ // produk search query
             $q = $request->get('q');
-            $business->load(['products' => function($query) use ($q) {
-                $query->where('name', 'like', '%'.$q.'%')
-                    ->with('category');
-            }]);
-        }else{
-            $business->load(['products.category']);
+            $products->where('name', 'like', '%'.$q.'%');
         }
 
-        return $business;
+        return [
+            'business' => $business,
+            'products' => $products->paginate(5),
+        ];
+    }
+
+    public function business_products(Request $request)
+    {
+        $id = $request->get('business_id');
+        $products = \App\BusinessProduct::with(['category'])
+                    ->where('business_id', $id)
+                    ->orderBy('product_category_id');
+
+        if( $request->get('q') ){ // produk search query
+            $q = $request->get('q');
+            $products->where('name', 'like', '%'.$q.'%');
+        }
+
+        return $products->paginate(5);
     }
 
     public function products(Request $request)
@@ -82,7 +98,7 @@ class ApiController extends Controller
             $products->where('name', 'like', '%'.$q.'%');
         }
 
-        return $products->paginate(10);
+        return $products->paginate(5);
     }
 
     public function product(Request $request)
