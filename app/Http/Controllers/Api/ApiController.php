@@ -11,7 +11,7 @@ class ApiController extends Controller
 {
     public function kecamatans()
     {
-        return \App\Kecamatan::all();
+        return \App\Kecamatan::where('active', 1)->get();
     }
 
     public function businessCategories()
