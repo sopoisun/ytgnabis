@@ -157,7 +157,7 @@ Route::group(['prefix' => 'backend'], function(){
         Route::post('/business/category/{id}/edit', 'CategoryController@update');
         Route::get('/business/category/{id}/delete', 'CategoryController@destroy');
 
-        // Business Products or service
+        // Business Products
         Route::get('/product', 'ProductController@index');
         Route::get('/product/add', 'ProductController@create');
         Route::post('/product/add', 'ProductController@store');
@@ -172,6 +172,14 @@ Route::group(['prefix' => 'backend'], function(){
         Route::get('/product/category/{id}/edit', 'ProductCategoryController@edit');
         Route::post('/product/category/{id}/edit', 'ProductCategoryController@update');
         Route::get('/product/category/{id}/delete', 'ProductCategoryController@destroy');
+
+        // Business Services
+        Route::get('/services', 'ServiceController@index');
+        Route::get('/services/add', 'ServiceController@create');
+        Route::post('/services/add', 'ServiceController@store');
+        Route::get('/services/{id}/edit', 'ServiceController@edit');
+        Route::post('/services/{id}/edit', 'ServiceController@update');
+        Route::get('/services/{id}/delete', 'ServiceController@destroy');
 
         // Post
         Route::get('/post', 'PostController@index');
