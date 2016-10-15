@@ -77,7 +77,7 @@ class Tour extends SeoModel
     {
         $inputs = $request->all();
 
-        $current = self::with('categories')->find( $id );
+        $current = self::find( $id );
 
         // Upload Image
         if ($request->hasFile('image')) {
@@ -88,10 +88,10 @@ class Tour extends SeoModel
                 }
                 $ext    = $request->file('image')->getClientOriginalExtension();
                 $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
-                $request->file('image')->move(public_path().'/files/businesses', $imgUrl);
-                $thumb = Image::make(public_path().'/files/businesses/'.$imgUrl);
+                $request->file('image')->move(public_path().'/files/tourises', $imgUrl);
+                $thumb = Image::make(public_path().'/files/tourises/'.$imgUrl);
                 $thumb->resize(120, 120);
-                $thumb->save(public_path().'/files/businesses/thumbs/'.$imgUrl);
+                $thumb->save(public_path().'/files/tourises/thumbs/'.$imgUrl);
 
                 $inputs += [ 'image_url' => $imgUrl ];
             }
@@ -126,12 +126,12 @@ class Tour extends SeoModel
 
     public static function seoIdAttribute()
     {
-        return "BSN-".Carbon::now()->format('dmyhis').str_random(5);
+        return "TOUR-".Carbon::now()->format('dmyhis').str_random(5);
     }
 
     public static function controllerAttribute()
     {
-        return "BusinessController";
+        return "TourController";
     }
 
     public static function functionAttribute()

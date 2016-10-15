@@ -29,7 +29,6 @@ class TourRequest extends SeoRequest
             'map_lat'   => 'required',
             'map_long'  => 'required',
             'phone'     => 'required',
-            'categories'=> 'required',
             'image'     => 'image|mimes:jpeg,png',
             'tiket'     => 'required|integer',
         ];
@@ -42,15 +41,14 @@ class TourRequest extends SeoRequest
     public function messages()
     {
         $messages = [
-            'name.required'     => 'Nama perusahaan tidak boleh kosong.',
-            'address.required'  => 'Alamat perusahaan tidak boleh kosong.',
+            'name.required'     => 'Nama tempat wisata tidak boleh kosong.',
+            'address.required'  => 'Alamat tempat wisata tidak boleh kosong.',
             'map_lat.required'  => 'Lintang peta tidak boleh kosong.',
             'map_long.required' => 'Bujur peta tidak boleh kosong.',
             'phone.required'    => 'Telpon tidak boleh kosong.',
-            'categories.required'=> 'Kategori tidak boleh kosong.',
             'image.image'        => 'Image harus gambar.',
             'image.mimes'        => 'Image harus format jpg atau png.',
-            'tiket.required'     => 'Tidak tidak boleh kosong.',
+            'tiket.required'     => 'Tiket tidak boleh kosong.',
             'tiket.integer'      => 'Input harus angka.',
         ];
 
