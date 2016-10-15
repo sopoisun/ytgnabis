@@ -96,6 +96,20 @@
                             <li class="{{ set_active('backend/service') }}"><a href="{{ url('/backend/service') }}"> Daftar Layanan</a></li>
                         </ul>
                     </li>
+                    <li class="menu-list {{ set_active('backend/tour/category*', 'nav-active') }}">
+                        <a href=""><i class="fa fa-flag"></i>  <span>Kategori Wisata</span></a>
+                        <ul class="child-list">
+                            <li class="{{ set_active('backend/tour/category/add') }}"><a href="{{ url('/backend/tour/category/add') }}"> Tambah Kategori Wisata</a></li>
+                            <li class="{{ set_active('backend/tour/category') }}"><a href="{{ url('/backend/tour/category') }}"> Daftar Kategori Wisata</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list {{ set_active('backend/tour*', 'nav-active') }}">
+                        <a href=""><i class="fa fa-life-ring"></i>  <span>Tempat Wisata</span></a>
+                        <ul class="child-list">
+                            <li class="{{ set_active('backend/tour/add') }}"><a href="{{ url('/backend/tour/add') }}"> Tambah Tempat Wisata</a></li>
+                            <li class="{{ set_active('backend/tour') }}"><a href="{{ url('/backend/tour') }}"> Daftar Tempat Wisata</a></li>
+                        </ul>
+                    </li>
                     <li class="menu-list {{ set_active('backend/post/category*', 'nav-active') }}">
                         <a href=""><i class="fa fa-leaf"></i>  <span>Kategori Post</span></a>
                         <ul class="child-list">

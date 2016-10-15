@@ -181,6 +181,22 @@ Route::group(['prefix' => 'backend'], function(){
         Route::post('/service/{id}/edit', 'ServiceController@update');
         Route::get('/service/{id}/delete', 'ServiceController@destroy');
 
+        // Tour
+        Route::get('/tour', 'TourController@index');
+        Route::get('/tour/add', 'TourController@create');
+        Route::post('/tour/add', 'TourController@store');
+        Route::get('/tour/{id}/edit', 'TourController@edit');
+        Route::post('/tour/{id}/edit', 'TourController@update');
+        Route::get('/tour/{id}/delete', 'TourController@destroy');
+
+        // Tour category
+        Route::get('/tour/category', 'TourCategoryController@index');
+        Route::get('/tour/category/add', 'TourCategoryController@create');
+        Route::post('/tour/category/add', 'TourCategoryController@store');
+        Route::get('/tour/category/{id}/edit', 'TourCategoryController@edit');
+        Route::post('/tour/category/{id}/edit', 'TourCategoryController@update');
+        Route::get('/tour/category/{id}/delete', 'TourCategoryController@destroy');
+
         // Post
         Route::get('/post', 'PostController@index');
         Route::get('/post/add', 'PostController@create');
