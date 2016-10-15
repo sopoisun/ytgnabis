@@ -83,10 +83,17 @@
                         </ul>
                     </li>
                     <li class="menu-list {{ set_active('backend/product*', 'nav-active') }}">
-                        <a href=""><i class="fa fa-flash"></i>  <span>Produk</span></a>
+                        <a href=""><i class="fa fa-cutlery"></i>  <span>Produk</span></a>
                         <ul class="child-list">
                             <li class="{{ set_active('backend/product/add') }}"><a href="{{ url('/backend/product/add') }}"> Tambah Produk</a></li>
                             <li class="{{ set_active('backend/product') }}"><a href="{{ url('/backend/product') }}"> Daftar Produk</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list {{ set_active('backend/service*', 'nav-active') }}">
+                        <a href=""><i class="fa fa-cubes"></i>  <span>Layanan</span></a>
+                        <ul class="child-list">
+                            <li class="{{ set_active('backend/service/add') }}"><a href="{{ url('/backend/service/add') }}"> Tambah Layanan</a></li>
+                            <li class="{{ set_active('backend/service') }}"><a href="{{ url('/backend/service') }}"> Daftar Layanan</a></li>
                         </ul>
                     </li>
                     <li class="menu-list {{ set_active('backend/post/category*', 'nav-active') }}">

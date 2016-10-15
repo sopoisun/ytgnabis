@@ -7,7 +7,7 @@ use App\SeoModel;
 use Carbon\Carbon;
 use Image;
 
-class BusinessServices extends SeoModel
+class BusinessService extends SeoModel
 {
     protected $fillable = ['business_id', 'seo_id', 'name', 'price', 'image_url', 'about', 'counter', 'active'];
     protected $hidden   = ['created_at', 'updated_at'];
@@ -79,6 +79,7 @@ class BusinessServices extends SeoModel
                 if( $current->image_url != NULL )
                 {
                     unlink(public_path().'/files/services/'.$current->image_url);
+                    unlink(public_path().'/files/services/thumbs/'.$current->image_url);
                 }
                 $ext    = $request->file('image')->getClientOriginalExtension();
                 $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
@@ -96,6 +97,21 @@ class BusinessServices extends SeoModel
             $fields     = array_merge($fields, $custom_fields);
             $seoInputs  = $request->only( $fields );
             if( Seo::where('seo_id', $current->seo_id)->update( $seoInputs['seo'] ) ){
+                return $current;
+            }
+        }
+
+        return false;
+    }
+
+    public static function hapus( $id )
+    {
+        $current = self::find( $id );
+        if (  $current->update(['active' => 0]) ) {
+            if( Seo::where('seo_id', $current->seo_id)->delete() ){
+                unlink(public_path().'/files/services/'.$current->image_url);
+                unlink(public_path().'/files/services/thumbs/'.$current->image_url);
+
                 return $current;
             }
         }
