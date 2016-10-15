@@ -132,7 +132,7 @@
                         </ul>
                     </li>-->
                     <li class="menu-list {{ set_active('backend/kecamatan*', 'nav-active') }}">
-                        <a href=""><i class="fa fa-maps"></i>  <span>Kecamatan</span></a>
+                        <a href=""><i class="fa fa-shield"></i>  <span>Kecamatan</span></a>
                         <ul class="child-list">
                             <li class="{{ set_active('backend/kecamatan/add') }}"><a href="{{ url('/backend/kecamatan/add') }}"> Tambah Kecamatan</a></li>
                             <li class="{{ set_active('backend/kecamatan') }}"><a href="{{ url('/backend/kecamatan') }}"> Daftar Kecamatan</a></li>
