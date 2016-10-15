@@ -25,6 +25,8 @@ class CreateToursTable extends Migration
             $table->integer('tiket');
             $table->integer('counter')->default(0);
             $table->enum('active', [1, 0])->default(1);
+            $table->string('tour_category_id');
+            $table->string('kecamatan_id');
             $table->timestamps();
         });
     }
