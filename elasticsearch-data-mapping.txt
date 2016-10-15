@@ -1,0 +1,126 @@
+{
+	"mappings": {
+        "kecamatans": {
+            "properties": {
+                "id": { "type": "integer" },
+                "name": { "type": "string" },
+                "location": { "type": "geo_point" }
+            }
+        },
+    	"products": {
+         	"properties": {
+            	"id": { "type": "integer" },
+				"name": { "type": "string" },
+				"price": { "type": "integer" },
+                "image": { "type": "string" },
+				"business": {
+					"type": "nested",
+                    "properties": {
+                    	"id": { "type": "integer" },
+                        "name": { "type": "string" },
+                        "address": { "type": "string" },
+                        "location": { "type": "geo_point" },
+                        "kecamatan": {
+                            "type": "nested",
+                            "properties": {
+                                "id": { "type": "integer" },
+                                "name": { "type": "string" }
+                            }
+                        }
+                    }
+                },
+                "category":{
+                	"type": "nested",
+                    "properties": {
+                     	"id": { "type": "integer" },
+                     	"name": { "type": "string" }
+                    }
+                }
+            }
+        },
+        "services": {
+            "properties": {
+                "id": { "type": "integer" },
+                "name": { "type": "string" },
+                "price": { "type": "integer" },
+                "image": { "type": "string" },
+                "business": {
+                    "type": "nested",
+                    "properties": {
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" },
+                        "address": { "type": "string" },
+                        "location": { "type": "geo_point" },
+                        "kecamatan": {
+                            "type": "nested",
+                            "properties": {
+                                "id": { "type": "integer" },
+                                "name": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "tour_categories": {
+            "properties": {
+                "id": { "type": "integer" },
+                "name": { "type": "string" }
+            }
+        },
+        "tours": {
+            "properties": {
+                "id": { "type": "integer" },
+                "name": { "type": "string" },
+                "ticket": { "type": "integer" },
+                "image": { "type": "string" },
+                "location": { "type": "geo_point" },
+                "info": { "type": "string" },
+                "category":{
+                    "type": "nested",
+                    "properties": {
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" }
+                    }
+                },
+                "kecamatan": {
+                    "type": "nested",
+                    "properties": {
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" }
+                    }
+                }
+            }
+        },
+        "business_categories": {
+            "properties": {
+                "id": { "type": "integer" },
+                "name": { "type": "string" }
+            }
+        },
+        "businesses": {
+            "properties": {
+                "id": { "type": "integer" },
+                "name": { "type": "string" },
+                "image": { "type": "string" },
+                "location": { "type": "geo_point" },
+                "info": { "type": "string" },
+                "address": { "type": "string" },
+                "categories":{
+                    "type": "nested",
+                    "properties": {
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" }
+                    }
+                },
+                "kecamatan": {
+                    "type": "nested",
+                    "properties": {
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -53,7 +53,7 @@ Route::get('/test', function(){
 });
 
 Route::get('/elasticsearch', function(){
-    $data = \App\BusinessProduct::with(['seo', 'business.seo'])->get();
+    $data = \App\BusinessProduct::with(['seo', 'business.seo'])->where('active', 1)->get();
 
     $display = [];
     foreach( $data as $d ){
