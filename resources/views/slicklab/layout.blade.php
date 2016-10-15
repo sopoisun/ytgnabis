@@ -110,7 +110,7 @@
                             <li class="{{ set_active('backend/tour') }}"><a href="{{ url('/backend/tour') }}"> Daftar Tempat Wisata</a></li>
                         </ul>
                     </li>
-                    <li class="menu-list {{ set_active('backend/post/category*', 'nav-active') }}">
+                    <!--<li class="menu-list {{ set_active('backend/post/category*', 'nav-active') }}">
                         <a href=""><i class="fa fa-leaf"></i>  <span>Kategori Post</span></a>
                         <ul class="child-list">
                             <li class="{{ set_active('backend/post/category/add') }}"><a href="{{ url('/backend/post/category/add') }}"> Tambah Kategori Post</a></li>
@@ -130,7 +130,7 @@
                             <li class="{{ set_active('backend/page/add') }}"><a href="{{ url('/backend/page/add') }}"> Tambah Page</a></li>
                             <li class="{{ set_active('backend/page') }}"><a href="{{ url('/backend/page') }}"> Daftar Page</a></li>
                         </ul>
-                    </li>
+                    </li>-->
                     <li class="menu-list {{ set_active('backend/kecamatan*', 'nav-active') }}">
                         <a href=""><i class="fa fa-maps"></i>  <span>Kecamatan</span></a>
                         <ul class="child-list">
