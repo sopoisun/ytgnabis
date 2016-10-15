@@ -142,6 +142,7 @@ Route::group(['prefix' => 'backend'], function(){
 
         // Business
         Route::get('/business', 'BusinessController@index');
+        Route::get('/business/write-to-es', 'BusinessController@write_to_es');
         Route::get('/business/map', 'BusinessController@map');
         Route::get('/business/add', 'BusinessController@create');
         Route::post('/business/add', 'BusinessController@store');
@@ -151,6 +152,7 @@ Route::group(['prefix' => 'backend'], function(){
 
         // Business Category
         Route::get('/business/category', 'CategoryController@index');
+        Route::get('/business/category/write-to-es', 'CategoryController@write_to_es');
         Route::get('/business/category/add', 'CategoryController@create');
         Route::post('/business/category/add', 'CategoryController@store');
         Route::get('/business/category/{id}/edit', 'CategoryController@edit');
@@ -183,6 +185,7 @@ Route::group(['prefix' => 'backend'], function(){
 
         // Tour
         Route::get('/tour', 'TourController@index');
+        Route::get('/tour/write-to-es', 'TourController@write_to_es');
         Route::get('/tour/add', 'TourController@create');
         Route::post('/tour/add', 'TourController@store');
         Route::get('/tour/{id}/edit', 'TourController@edit');
@@ -191,6 +194,7 @@ Route::group(['prefix' => 'backend'], function(){
 
         // Tour category
         Route::get('/tour/category', 'TourCategoryController@index');
+        Route::get('/tour/category/write-to-es', 'TourCategoryController@write_to_es');
         Route::get('/tour/category/add', 'TourCategoryController@create');
         Route::post('/tour/category/add', 'TourCategoryController@store');
         Route::get('/tour/category/{id}/edit', 'TourCategoryController@edit');
@@ -223,6 +227,7 @@ Route::group(['prefix' => 'backend'], function(){
 
         // Kecamatan
         Route::get('/kecamatan', 'KecamatanController@index');
+        Route::get('/kecamatan/write-to-es', 'KecamatanController@write_to_es');
         Route::get('/kecamatan/add', 'KecamatanController@create');
         Route::post('/kecamatan/add', 'KecamatanController@store');
         Route::get('/kecamatan/{id}/edit', 'KecamatanController@edit');

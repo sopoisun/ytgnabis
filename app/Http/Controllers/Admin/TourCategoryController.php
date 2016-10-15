@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\TourCategoryRequest;
 use App\Http\Controllers\Controller;
 use App\TourCategory;
+use Elasticsearch;
 
 class TourCategoryController extends Controller
 {
@@ -25,6 +26,30 @@ class TourCategoryController extends Controller
         ];
 
         return view(config('app.backend_template').'.tour-category.table', $data);
+    }
+
+    public function write_to_es()
+    {
+        $categories = TourCategory::where('active', 1)->get();
+
+        $docs = [];
+        foreach ( $categories as $category ) {
+            $doc = [
+                'index' => 'e-wangi',
+                'type'  => 'tour_categories',
+                'id'    => $category->id,
+                'body'  => [
+                    'id'    => $category->id,
+                    'name'  => $category->name,
+                ],
+            ];
+
+            $doc = Elasticsearch::index($doc);
+
+            array_push($docs, $doc);
+        }
+
+        return redirect()->back()->with(['success' => 'Sukses tulis di elasticsearch.']);
     }
 
     /**

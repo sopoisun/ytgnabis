@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\CategoryRequest;
 use App\Category;
+use Elasticsearch;
 
 class CategoryController extends Controller
 {
@@ -24,6 +25,30 @@ class CategoryController extends Controller
         ];
 
         return view(config('app.backend_template').'.category.table', $data);
+    }
+
+    public function write_to_es()
+    {
+        $categories = Category::where('active', 1)->get();
+
+        $docs = [];
+        foreach ( $categories as $category ) {
+            $doc = [
+                'index' => 'e-wangi',
+                'type'  => 'business_categories',
+                'id'    => $category->id,
+                'body'  => [
+                    'id'    => $category->id,
+                    'name'  => $category->name,
+                ],
+            ];
+
+            $doc = Elasticsearch::index($doc);
+
+            array_push($docs, $doc);
+        }
+
+        return redirect()->back()->with(['success' => 'Sukses tulis di elasticsearch.']);
     }
 
     /**
@@ -105,7 +130,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::hapus($id);
-        
+
         if( $category ){
             return redirect()->back()->with('success', 'Sukses hapus data '.$category->name.'.');
         }

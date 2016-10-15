@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\KecamatanRequest;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
+use Elasticsearch;
 
 class KecamatanController extends Controller
 {
@@ -18,13 +19,41 @@ class KecamatanController extends Controller
      */
     public function index()
     {
-        $kecamatans = Kecamatan::where('active', 1)->orderBy('name')->paginate(10);
+        $kecamatans = Kecamatan::where('active', 1)->orderBy('name')->paginate(30);
 
         $data = [
             'kecamatans' => $kecamatans,
         ];
 
         return view(config('app.backend_template').'.kecamatan.table', $data);
+    }
+
+    public function write_to_es()
+    {
+        $kecamatans = Kecamatan::where('active', 1)->orderBy('name')->paginate(30);
+
+        $docs = [];
+        foreach ( $kecamatans as $kecamatan ) {
+            $doc = [
+                'index' => 'e-wangi',
+                'type'  => 'kecamatans',
+                'id'    => $kecamatan->id,
+                'body'  => [
+                    'id'    => $kecamatan->id,
+                    'name'  => $kecamatan->name,
+                    'location'  => [
+                        'lat'   => $kecamatan->map_lat,
+                        'lon'   => $kecamatan->map_long,
+                    ],
+                ],
+            ];
+
+            $doc = Elasticsearch::index($doc);
+
+            array_push($docs, $doc);
+        }
+
+        return redirect()->back()->with(['success' => 'Sukses tulis di elasticsearch.']);
     }
 
     /**

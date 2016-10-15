@@ -35,6 +35,11 @@ class TourController extends Controller
         return view(config('app.backend_template').'.tour.table', $data);
     }
 
+    public function write_to_es()
+    {
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *
