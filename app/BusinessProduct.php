@@ -85,6 +85,7 @@ class BusinessProduct extends SeoModel
                 if( $current->image_url != NULL )
                 {
                     unlink(public_path().'/files/products/'.$current->image_url);
+                    unlink(public_path().'/files/products/thumbs/'.$current->image_url);
                 }
                 $ext    = $request->file('image')->getClientOriginalExtension();
                 $imgUrl = str_slug($request->get('name')).'-'.str_slug(str_random(40)).'.'.$ext;
@@ -102,6 +103,21 @@ class BusinessProduct extends SeoModel
             $fields     = array_merge($fields, $custom_fields);
             $seoInputs  = $request->only( $fields );
             if( Seo::where('seo_id', $current->seo_id)->update( $seoInputs['seo'] ) ){
+                return $current;
+            }
+        }
+
+        return false;
+    }
+
+    public static function hapus( $id )
+    {
+        $current = self::find( $id );
+        if (  $current->update(['active' => 0]) ) {
+            if( Seo::where('seo_id', $current->seo_id)->delete() ){
+                unlink(public_path().'/files/products/'.$current->image_url);
+                unlink(public_path().'/files/products/thumbs/'.$current->image_url);
+
                 return $current;
             }
         }

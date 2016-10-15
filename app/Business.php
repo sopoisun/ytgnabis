@@ -148,6 +148,21 @@ class Business extends SeoModel
         return false;
     }
 
+    public static function hapus( $id )
+    {
+        $current = self::find( $id );
+        if (  $current->update(['active' => 0]) ) {
+            if( Seo::where('seo_id', $current->seo_id)->delete() ){
+                unlink(public_path().'/files/businesses/'.$current->image_url);
+                unlink(public_path().'/files/businesses/thumbs/'.$current->image_url);
+
+                return $current;
+            }
+        }
+
+        return false;
+    }
+
     public static function seoIdAttribute()
     {
         return "BSN-".Carbon::now()->format('dmyhis').str_random(5);
