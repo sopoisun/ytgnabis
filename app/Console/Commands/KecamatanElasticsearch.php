@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Jobs\KecamatanElasticsearchJob;
 
 class KecamatanElasticsearch extends Command
 {
@@ -38,5 +39,6 @@ class KecamatanElasticsearch extends Command
     public function handle()
     {
         $this->info("kecamatan elasticsearch run...");
+        dispatch(new KecamatanElasticsearchJob());
     }
 }

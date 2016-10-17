@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Jobs\BusinessesElasticsearchJob;
 
 class BusinessesElasticsearch extends Command
 {
@@ -38,5 +39,6 @@ class BusinessesElasticsearch extends Command
     public function handle()
     {
         $this->info("businesses elasticsearch run...");
+        dispatch(new BusinessesElasticsearchJob());
     }
 }
