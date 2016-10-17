@@ -10,6 +10,7 @@ use App\Tour;
 use App\TourCategory;
 use App\Kecamatan;
 use Gate;
+use Elasticsearch;
 
 class TourController extends Controller
 {
@@ -37,7 +38,47 @@ class TourController extends Controller
 
     public function write_to_es()
     {
-        
+        $tours = Tour::with(['categories', 'kecamatan'])->where('active', 1)->get();
+
+        $docs = [];
+        foreach ( $tours as $tour ) {
+            $categories = [];
+            foreach($tour->categories as $c){
+                array_push($categories, [
+                    'id'    => $c->id,
+                    'name'  => $c->name,
+                ]);
+            }
+
+            $doc = [
+                'index' => 'e-wangi',
+                'type'  => 'tours',
+                'id'    => $tour->id,
+                'body'  => [
+                    'id'    => $tour->id,
+                    'name'  => $tour->name,
+                    'ticket'=> $tour->tiket,
+                    'image' => $tour->image_url,
+                    'location'  => [
+                        'lat'   => $tour->map_lat,
+                        'lon'   => $tour->map_long,
+                    ],
+                    'info'      => $tour->about,
+                    'address'   => $tour->address,
+                    'kecamatan' => [
+                        'id'    => $tour->kecamatan->id,
+                        'name'  => $tour->kecamatan->name,
+                    ],
+                    'categories'=> $categories
+                ],
+            ];
+
+            $doc = Elasticsearch::index($doc);
+
+            array_push($docs, $doc);
+        }
+
+        return redirect()->back()->with(['success' => 'Sukses tulis di elasticsearch.']);
     }
 
     /**

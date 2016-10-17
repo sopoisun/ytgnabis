@@ -76,7 +76,8 @@
                 "image": { "type": "string" },
                 "location": { "type": "geo_point" },
                 "info": { "type": "string" },
-                "category":{
+				"address": { "type": "string" },
+                "categories":{
                     "type": "nested",
                     "properties": {
                         "id": { "type": "integer" },

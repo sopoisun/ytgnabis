@@ -161,6 +161,7 @@ Route::group(['prefix' => 'backend'], function(){
 
         // Business Products
         Route::get('/product', 'ProductController@index');
+        Route::get('/product/write-to-es', 'ProductController@write_to_es');
         Route::get('/product/add', 'ProductController@create');
         Route::post('/product/add', 'ProductController@store');
         Route::get('/product/{id}/edit', 'ProductController@edit');
@@ -177,6 +178,7 @@ Route::group(['prefix' => 'backend'], function(){
 
         // Business Services
         Route::get('/service', 'ServiceController@index');
+        Route::get('/service/write-to-es', 'ServiceController@write_to_es');
         Route::get('/service/add', 'ServiceController@create');
         Route::post('/service/add', 'ServiceController@store');
         Route::get('/service/{id}/edit', 'ServiceController@edit');

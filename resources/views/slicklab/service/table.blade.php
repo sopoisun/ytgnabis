@@ -25,6 +25,11 @@
             <section class="panel">
                 <header class="panel-heading head-border">
                     Table of service
+                    <div class="btn-es">
+                        <a href="{{ url('/backend/service/write-to-es') }}" class="btn btn-info" onclick="return confirm('Tulis di elasticsearch?')">
+                            <i class="fa fa-refresh"></i> Write to ES
+                        </a>
+                    </div>
                 </header>
                 <table class="table table-bordered">
                     <thead>

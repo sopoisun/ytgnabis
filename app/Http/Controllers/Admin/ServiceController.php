@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\BusinessServiceRequest;
 use App\Business;
 use App\BusinessService;
+use Elasticsearch;
 
 class ServiceController extends Controller
 {
@@ -35,6 +36,45 @@ class ServiceController extends Controller
         ];
 
         return view(config('app.backend_template').'.service.table', $data);
+    }
+
+    public function write_to_es()
+    {
+        $services = BusinessService::with(['business.kecamatan'])->where('active', 1)->get();
+
+        $docs = [];
+        foreach ( $services as $service ) {
+            $doc = [
+                'index' => 'e-wangi',
+                'type'  => 'services',
+                'id'    => $service->id,
+                'body'  => [
+                    'id'    => $service->id,
+                    'name'  => $service->name,
+                    'price' => $service->price,
+                    'image' => $service->image_url,
+                    'business'  => [
+                        'id'        => $service->business->id,
+                        'name'      => $service->business->name,
+                        'address'   => $service->business->address,
+                        'location'  => [
+                            'lat'   => $service->business->map_lat,
+                            'lon'   => $service->business->map_long,
+                        ],
+                        'kecamatan' => [
+                            'id'    => $service->business->kecamatan->id,
+                            'name'  => $service->business->kecamatan->name,
+                        ],
+                    ]
+                ],
+            ];
+
+            $doc = Elasticsearch::index($doc);
+
+            array_push($docs, $doc);
+        }
+
+        return redirect()->back()->with(['success' => 'Sukses tulis di elasticsearch.']);
     }
 
     /**
