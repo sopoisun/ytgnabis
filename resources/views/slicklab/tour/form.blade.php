@@ -38,11 +38,11 @@
         @if($errors->has('tiket'))<span class="help-block">{{ $errors->first('tiket') }}</span>@endif
     </div>
 </div>
-<div class="form-group @if($errors->has('tour_category_id')) has-error @endif">
-    <label for="tour_category_id" class="col-lg-3 col-sm-3 control-label">Kategori</label>
-    <div class="col-lg-4">
-        {{ Form::select('tour_category_id', $categories, null, ['id' => 'tour_category_id', 'class' => 'form-control select2']) }}
-        @if($errors->has('tour_category_id'))<span class="help-block">{{ $errors->first('tour_category_id') }}</span>@endif
+<div class="form-group @if($errors->has('categories')) has-error @endif">
+    <label for="name" class="col-lg-3 col-sm-3 control-label">Kategori</label>
+    <div class="col-lg-9">
+        {{ Form::select('categories[]', $categories, isset($tour) ? json_decode($tour->categories->lists('id'), true) : [], ['id' => 'categories', 'class' => 'form-control select2-multiple', 'multiple' => 'multiple']) }}
+        @if($errors->has('categories'))<span class="help-block">{{ $errors->first('categories') }}</span>@endif
     </div>
 </div>
 <div class="form-group @if($errors->has('kecamatan_id')) has-error @endif">

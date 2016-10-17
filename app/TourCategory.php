@@ -17,9 +17,9 @@ class TourCategory extends SeoModel
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
     }
 
-    public function tour()
+    public function tours()
     {
-        return $this->hasMany(Tour::class);
+        return $this->belongsToMany(Tour::class);
     }
     /* End Relation */
 

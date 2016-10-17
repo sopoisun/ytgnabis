@@ -12,7 +12,7 @@ use Image;
 class Tour extends SeoModel
 {
     protected $fillable = ['name', 'seo_id', 'address', 'map_lat', 'map_long', 'phone', 'image_url', 'about',
-                            'counter', 'tiket', 'active', 'tour_category_id', 'kecamatan_id'];
+                            'counter', 'tiket', 'active', 'kecamatan_id'];
     protected $hidden   = ['created_at', 'updated_at'];
 
     /* Relation */
@@ -21,7 +21,7 @@ class Tour extends SeoModel
         return $this->hasOne(Seo::class, 'seo_id', 'seo_id');
     }
 
-    public function category()
+    public function categories()
     {
         return $this->belongsToMany(TourCategory::class);
     }
@@ -31,6 +31,26 @@ class Tour extends SeoModel
         return $this->belongsTo(Kecamatan::class);
     }
     /* End Relation */
+
+    /* Action for relation */
+    public function addCategory($category)
+    {
+        if (is_string($category)) {
+            $category = TourCategory::where('name', $category)->first();
+        }
+
+        return $this->categories()->attach($category);
+    }
+
+    public function removeCategory($category)
+    {
+        if (is_string($category)) {
+            $category = TourCategory::where('name', $category)->first();
+        }
+
+        return $this->categories()->detach($category);
+    }
+    /* end Action for relation */
 
     /* Seo Override */
     public static function simpan( $request )
@@ -58,6 +78,8 @@ class Tour extends SeoModel
         $result = self::create( $inputs );
 
         if ( $result ) {
+            $result->addCategory($inputs['categories']);
+
             $inputs['seo']['relation_id']   = $result->id;
             $inputs['seo']['seo_id']        = $seo_id;
             $inputs['seo']['controller']    = isset ( $inputs['seo']['controller'] ) ?
@@ -78,6 +100,7 @@ class Tour extends SeoModel
         $inputs = $request->all();
 
         $current = self::find( $id );
+        $oldCategories  = json_decode($current->categories->lists('id'), true);
 
         // Upload Image
         if ($request->hasFile('image')) {
@@ -98,6 +121,17 @@ class Tour extends SeoModel
         }
 
         if (  $current->update( $inputs ) ) {
+
+            $newCategories = array_diff($request->get('categories'), $oldCategories);
+            if( count($newCategories) ){
+                $current->addCategory($newCategories);
+            }
+
+            $removeCategories = array_diff($oldCategories, $request->get('categories'));
+            if( count($removeCategories) ){
+                $current->removeCategory($removeCategories);
+            }
+            
             $fields     = ['seo.site_title', 'seo.description', 'seo.keywords'];
             $fields     = array_merge($fields, $custom_fields);
             $seoInputs  = $request->only( $fields );
