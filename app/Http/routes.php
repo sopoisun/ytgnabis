@@ -57,6 +57,41 @@ Route::get('/es', function(){
 
     return Elasticsearch::updateByQuery([
         'index' => 'e-wangi',
+        'type'  => 'products',
+        'body'  => [
+            "script"    => [
+                "inline"    => "ctx._source.business = update_business",
+                "params"    => [
+                    "update_business" => [
+                        'id'        => 1,
+                        'name'      => "Bajax Laot",
+                        'address'   => "Jl. Kota Kota",
+                        'location'  => [
+                            'lat'   => "-8.222535748888834",
+                            'lon'   => "114.36782318766632",
+                        ],
+                        'kecamatan' => [
+                            'id'    => 1,
+                            'name'  => "Banyuwangi",
+                        ],
+                    ],
+                ]
+            ],
+            "query"         => [
+                "nested"    => [
+                    "path"  => "business",
+                    "query" => [
+                        "term" => [
+                            "business.id" => 1
+                        ]
+                    ]
+                ]
+            ],
+        ]
+    ]);
+
+    return Elasticsearch::updateByQuery([
+        'index' => 'e-wangi',
         'type'  => 'businesses',
         'body'  => [
             "script"    => [

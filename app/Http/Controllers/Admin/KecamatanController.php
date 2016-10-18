@@ -54,7 +54,11 @@ class KecamatanController extends Controller
      */
     public function store(KecamatanRequest $request)
     {
-        if( Kecamatan::simpan($request) ){
+        $kecamatan = Kecamatan::simpan($request);
+        if( $kecamatan ){
+            Artisan::call("elasticsearch:kecamatans", [
+                "id" => $kecamatan->id,
+            ]);
             return redirect('/backend/kecamatan')->with('success', 'Sukses simpan data kecamatan.');
         }
 
@@ -100,6 +104,9 @@ class KecamatanController extends Controller
     public function update(Request $request, $id)
     {
         if( Kecamatan::ubah($id, $request) ){
+            Artisan::call("elasticsearch:kecamatans", [
+                "id" => $id,
+            ]);
             return redirect('/backend/kecamatan')->with('success', 'Sukses ubah data kecamatan.');
         }
 
@@ -117,6 +124,11 @@ class KecamatanController extends Controller
         $kecamatan = Kecamatan::hapus($id);
 
         if( $kecamatan ){
+            Elasticsearch::delete([
+                'index' => 'e-wangi',
+                'type'  => 'kecamatans',
+                'id'    => $kecamatan->id
+            ]);
             return redirect()->back()->with('success', 'Sukses hapus data '.$kecamatan->name.'.');
         }
 

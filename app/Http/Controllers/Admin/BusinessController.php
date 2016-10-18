@@ -89,7 +89,11 @@ class BusinessController extends Controller
      */
     public function store(BusinessRequest $request)
     {
-        if( Business::simpan($request) ){
+        $business = Business::simpan($request);
+        if( $business ){
+            Artisan::call("elasticsearch:businesses", [
+                "id" => $business->id,
+            ]);
             return redirect('/backend/business')->with('success', 'Sukses simpan data bisnis.');
         }
 
@@ -140,6 +144,9 @@ class BusinessController extends Controller
     public function update(BusinessRequest $request, $id)
     {
         if( Business::ubah($id, $request) ){
+            Artisan::call("elasticsearch:businesses", [
+                "id" => $id,
+            ]);
             return redirect('/backend/business')->with('success', 'Sukses ubah data bisnis.');
         }
 
@@ -157,6 +164,11 @@ class BusinessController extends Controller
         $business = Business::hapus($id);
 
         if( $business ){
+            Elasticsearch::delete([
+                'index' => 'e-wangi',
+                'type'  => 'businesses',
+                'id'    => $business->id
+            ]);
             return redirect()->back()->with('success', 'Sukses hapus data '.$business->name.'.');
         }
 

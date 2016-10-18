@@ -38,6 +38,7 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
             $this->forAll();
         }else{
             Log::info("businesses elasticsearch run id ".$this->id);
+            $this->forOne();
         }
     }
 
@@ -83,5 +84,116 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
         }
 
         return $docs;
+    }
+
+    public function forOne()
+    {
+        $business = Business::with(['categories', 'kecamatan'])->find($this->id);
+
+        $categories = [];
+        foreach($business->categories as $c){
+            array_push($categories, [
+                'id'    => $c->id,
+                'name'  => $c->name,
+            ]);
+        }
+
+        $doc = [
+            'index' => 'e-wangi',
+            'type'  => 'businesses',
+            'id'    => $business->id,
+            'body'  => [
+                'id'    => $business->id,
+                'name'  => $business->name,
+                'image' => $business->image_url,
+                'location'  => [
+                    'lat'   => $business->map_lat,
+                    'lon'   => $business->map_long,
+                ],
+                'info'      => $business->about,
+                'address'   => $business->address,
+                'kecamatan' => [
+                    'id'    => $business->kecamatan->id,
+                    'name'  => $business->kecamatan->name,
+                ],
+                'categories'=> $categories
+            ],
+        ];
+
+        $doc = Elasticsearch::index($doc);
+
+        if( !$doc['created'] ){
+            // do update to relations
+            # products
+            Elasticsearch::updateByQuery([
+                'index' => 'e-wangi',
+                'type'  => 'products',
+                'body'  => [
+                    "script"    => [
+                        "inline"    => "ctx._source.business = update_business",
+                        "params"    => [
+                            "update_business" => [
+                                'id'        => $business->id,
+                                'name'      => $business->name,
+                                'address'   => $business->address,
+                                'location'  => [
+                                    'lat'   => $business->map_lat,
+                                    'lon'   => $business->map_long,
+                                ],
+                                'kecamatan' => [
+                                    'id'    => $business->kecamatan->id,
+                                    'name'  => $business->kecamatan->name,
+                                ],
+                            ],
+                        ]
+                    ],
+                    "query"         => [
+                        "nested"    => [
+                            "path"  => "business",
+                            "query" => [
+                                "term" => [
+                                    "business.id" => $business->id
+                                ]
+                            ]
+                        ]
+                    ],
+                ]
+            ]);
+            # services            
+            Elasticsearch::updateByQuery([
+                'index' => 'e-wangi',
+                'type'  => 'services',
+                'body'  => [
+                    "script"    => [
+                        "inline"    => "ctx._source.business = update_business",
+                        "params"    => [
+                            "update_business" => [
+                                'id'        => $business->id,
+                                'name'      => $business->name,
+                                'address'   => $business->address,
+                                'location'  => [
+                                    'lat'   => $business->map_lat,
+                                    'lon'   => $business->map_long,
+                                ],
+                                'kecamatan' => [
+                                    'id'    => $business->kecamatan->id,
+                                    'name'  => $business->kecamatan->name,
+                                ],
+                            ],
+                        ]
+                    ],
+                    "query"         => [
+                        "nested"    => [
+                            "path"  => "business",
+                            "query" => [
+                                "term" => [
+                                    "business.id" => $business->id
+                                ]
+                            ]
+                        ]
+                    ],
+                ]
+            ]);
+        }
     }
 }

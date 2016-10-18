@@ -53,7 +53,11 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        if( Category::simpan($request) ){
+        $category = Category::simpan($request);
+        if( $category ){
+            Artisan::call("elasticsearch:business-categories", [
+                "id" => $category->id,
+            ]);
             return redirect('/backend/business/category')->with('success', 'Sukses simpan data kategori bisnis.');
         }
 
@@ -119,6 +123,11 @@ class CategoryController extends Controller
         $category = Category::hapus($id);
 
         if( $category ){
+            Elasticsearch::delete([
+                'index' => 'e-wangi',
+                'type'  => 'business-categories',
+                'id'    => $id
+            ]);
             return redirect()->back()->with('success', 'Sukses hapus data '.$category->name.'.');
         }
 
