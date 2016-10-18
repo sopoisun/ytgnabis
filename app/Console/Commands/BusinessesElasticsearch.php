@@ -12,7 +12,7 @@ class BusinessesElasticsearch extends Command
      *
      * @var string
      */
-    protected $signature = 'elasticsearch:businesses';
+    protected $signature = 'elasticsearch:businesses {id?}';
 
     /**
      * The console command description.
@@ -38,7 +38,12 @@ class BusinessesElasticsearch extends Command
      */
     public function handle()
     {
-        $this->info("businesses elasticsearch run...");
-        dispatch(new BusinessesElasticsearchJob());
+        if( !$this->argument('id') ){
+            $this->info("businesses elasticsearch run for all");
+        }else{
+            $this->info("businesses elasticsearch run for id ".$this->argument('id'));
+        }
+
+        dispatch(new BusinessesElasticsearchJob($this->argument('id')));
     }
 }

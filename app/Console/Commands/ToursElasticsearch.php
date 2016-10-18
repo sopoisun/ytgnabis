@@ -12,7 +12,7 @@ class ToursElasticsearch extends Command
      *
      * @var string
      */
-    protected $signature = 'elasticsearch:tours';
+    protected $signature = 'elasticsearch:tours {id?}';
 
     /**
      * The console command description.
@@ -38,7 +38,12 @@ class ToursElasticsearch extends Command
      */
     public function handle()
     {
-        $this->info("tours elasticsearch run...");
-        dispatch(new ToursElasticsearchJob());
+        if( !$this->argument('id') ){
+            $this->info("tours elasticsearch run for all");
+        }else{
+            $this->info("tours elasticsearch run for id ".$this->argument('id'));
+        }
+
+        dispatch(new ToursElasticsearchJob($this->argument('id')));
     }
 }

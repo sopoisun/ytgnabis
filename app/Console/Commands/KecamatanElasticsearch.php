@@ -12,7 +12,7 @@ class KecamatanElasticsearch extends Command
      *
      * @var string
      */
-    protected $signature = 'elasticsearch:kecamatans';
+    protected $signature = 'elasticsearch:kecamatans {id?}';
 
     /**
      * The console command description.
@@ -38,7 +38,12 @@ class KecamatanElasticsearch extends Command
      */
     public function handle()
     {
-        $this->info("kecamatan elasticsearch run...");
-        dispatch(new KecamatanElasticsearchJob());
+        if( !$this->argument('id') ){
+            $this->info("kecamatan elasticsearch run for all");
+        }else{
+            $this->info("kecamatan elasticsearch run for id ".$this->argument('id'));
+        }
+
+        dispatch(new KecamatanElasticsearchJob($this->argument('id')));
     }
 }

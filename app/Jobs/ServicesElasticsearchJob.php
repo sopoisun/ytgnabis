@@ -12,14 +12,16 @@ class ServicesElasticsearchJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
+    protected $id;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($id = null)
     {
-        //
+        $this->id = $id;
     }
 
     /**
@@ -29,6 +31,10 @@ class ServicesElasticsearchJob extends Job implements ShouldQueue
      */
     public function handle()
     {
-        Log::info("services elasticsearch run...");
+        if( !$this->id ){
+            Log::info("services elasticsearch run for all");
+        }else{
+            Log::info("services elasticsearch run for id ".$this->id);
+        }
     }
 }
