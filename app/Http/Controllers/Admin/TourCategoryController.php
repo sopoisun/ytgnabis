@@ -9,6 +9,7 @@ use App\Http\Requests\TourCategoryRequest;
 use App\Http\Controllers\Controller;
 use App\TourCategory;
 use Elasticsearch;
+use Artisan;
 
 class TourCategoryController extends Controller
 {
@@ -30,24 +31,7 @@ class TourCategoryController extends Controller
 
     public function write_to_es()
     {
-        $categories = TourCategory::where('active', 1)->get();
-
-        $docs = [];
-        foreach ( $categories as $category ) {
-            $doc = [
-                'index' => 'e-wangi',
-                'type'  => 'tour_categories',
-                'id'    => $category->id,
-                'body'  => [
-                    'id'    => $category->id,
-                    'name'  => $category->name,
-                ],
-            ];
-
-            $doc = Elasticsearch::index($doc);
-
-            array_push($docs, $doc);
-        }
+        Artisan::call('elasticsearch:tour-categories');
 
         return redirect()->back()->with(['success' => 'Sukses tulis di elasticsearch.']);
     }

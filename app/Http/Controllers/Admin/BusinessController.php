@@ -11,6 +11,7 @@ use App\Category;
 use App\Kecamatan;
 use Gate;
 use Elasticsearch;
+use Artisan;
 
 class BusinessController extends Controller
 {
@@ -43,44 +44,7 @@ class BusinessController extends Controller
 
     public function write_to_es()
     {
-        $businesses = Business::with(['categories', 'kecamatan'])->where('active', 1)->get();
-
-        $docs = [];
-        foreach ( $businesses as $business ) {
-            $categories = [];
-            foreach($business->categories as $c){
-                array_push($categories, [
-                    'id'    => $c->id,
-                    'name'  => $c->name,
-                ]);
-            }
-
-            $doc = [
-                'index' => 'e-wangi',
-                'type'  => 'businesses',
-                'id'    => $business->id,
-                'body'  => [
-                    'id'    => $business->id,
-                    'name'  => $business->name,
-                    'image' => $business->image_url,
-                    'location'  => [
-                        'lat'   => $business->map_lat,
-                        'lon'   => $business->map_long,
-                    ],
-                    'info'      => $business->about,
-                    'address'   => $business->address,
-                    'kecamatan' => [
-                        'id'    => $business->kecamatan->id,
-                        'name'  => $business->kecamatan->name,
-                    ],
-                    'categories'=> $categories
-                ],
-            ];
-
-            $doc = Elasticsearch::index($doc);
-
-            array_push($docs, $doc);
-        }
+        Artisan::call('elasticsearch:businesses');
 
         return redirect()->back()->with(['success' => 'Sukses tulis di elasticsearch.']);
     }
