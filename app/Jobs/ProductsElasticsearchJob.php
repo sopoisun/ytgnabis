@@ -38,6 +38,7 @@ class ProductsElasticsearchJob extends Job implements ShouldQueue
             $this->forAll();
         }else{
             Log::info("products elasticsearch run for id ".$this->id);
+            $this->forOne();
         }
     }
 
@@ -82,5 +83,41 @@ class ProductsElasticsearchJob extends Job implements ShouldQueue
         }
 
         return $docs;
+    }
+
+    public function forOne()
+    {
+        $product = BusinessProduct::with(['category', 'business.kecamatan'])->find($this->id);
+
+        $doc = [
+            'index' => 'e-wangi',
+            'type'  => 'products',
+            'id'    => $product->id,
+            'body'  => [
+                'id'    => $product->id,
+                'name'  => $product->name,
+                'price' => $product->price,
+                'image' => $product->image_url,
+                'business'  => [
+                    'id'        => $product->business->id,
+                    'name'      => $product->business->name,
+                    'address'   => $product->business->address,
+                    'location'  => [
+                        'lat'   => $product->business->map_lat,
+                        'lon'   => $product->business->map_long,
+                    ],
+                    'kecamatan' => [
+                        'id'    => $product->business->kecamatan->id,
+                        'name'  => $product->business->kecamatan->name,
+                    ],
+                ],
+                'category'=> [
+                    'id'    => $product->category->id,
+                    'name'  => $product->category->name,
+                ]
+            ],
+        ];
+
+        return Elasticsearch::index($doc);
     }
 }

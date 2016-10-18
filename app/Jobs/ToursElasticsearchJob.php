@@ -38,6 +38,7 @@ class ToursElasticsearchJob extends Job implements ShouldQueue
             $this->forAll();
         }else{
             Log::info("tours elasticsearch run for id ".$this->id);
+            $this->forOne();
         }
     }
 
@@ -84,5 +85,43 @@ class ToursElasticsearchJob extends Job implements ShouldQueue
         }
 
         return $docs;
+    }
+
+    public function forOne()
+    {
+        $tour = Tour::with(['categories', 'kecamatan'])->find($this->id);
+
+        $categories = [];
+        foreach($tour->categories as $c){
+            array_push($categories, [
+                'id'    => $c->id,
+                'name'  => $c->name,
+            ]);
+        }
+
+        $doc = [
+            'index' => 'e-wangi',
+            'type'  => 'tours',
+            'id'    => $tour->id,
+            'body'  => [
+                'id'    => $tour->id,
+                'name'  => $tour->name,
+                'ticket'=> $tour->tiket,
+                'image' => $tour->image_url,
+                'location'  => [
+                    'lat'   => $tour->map_lat,
+                    'lon'   => $tour->map_long,
+                ],
+                'info'      => $tour->about,
+                'address'   => $tour->address,
+                'kecamatan' => [
+                    'id'    => $tour->kecamatan->id,
+                    'name'  => $tour->kecamatan->name,
+                ],
+                'categories'=> $categories
+            ],
+        ];
+
+        return Elasticsearch::index($doc);
     }
 }

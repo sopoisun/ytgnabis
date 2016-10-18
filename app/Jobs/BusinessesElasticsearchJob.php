@@ -129,5 +129,7 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
             # services
             dispatch(new ElasticsearchDataHierarchy("services_business", $business));
         }
+
+        return $doc;
     }
 }

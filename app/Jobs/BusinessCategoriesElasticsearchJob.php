@@ -111,5 +111,7 @@ class BusinessCategoriesElasticsearchJob extends Job implements ShouldQueue
                 ]
             ]);
         }
+
+        return $doc;
     }
 }

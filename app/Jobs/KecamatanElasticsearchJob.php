@@ -101,5 +101,7 @@ class KecamatanElasticsearchJob extends Job implements ShouldQueue
             # services
             dispatch(new ElasticsearchDataHierarchy("services_business_kecamatan", $kecamatan));
         }
+
+        return $doc;
     }
 }

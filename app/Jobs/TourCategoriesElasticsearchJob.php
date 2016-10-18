@@ -38,6 +38,7 @@ class TourCategoriesElasticsearchJob extends Job implements ShouldQueue
             $this->forAll();
         }else{
             Log::info("tour categories elasticsearch run for id ".$this->id);
+            $this->forOne();
         }
     }
 
@@ -63,5 +64,54 @@ class TourCategoriesElasticsearchJob extends Job implements ShouldQueue
         }
 
         return $docs;
+    }
+
+    public function forOne()
+    {
+        $category = TourCategory::find($this->id);
+
+        $doc = [
+            'index' => 'e-wangi',
+            'type'  => 'tour-categories',
+            'id'    => $category->id,
+            'body'  => [
+                'id'    => $category->id,
+                'name'  => $category->name,
+            ],
+        ];
+
+        $doc = Elasticsearch::index($doc);
+
+        if( !$doc['created'] ){
+            // do update to relations
+            # tours
+            Elasticsearch::updateByQuery([
+                'index' => 'e-wangi',
+                'type'  => 'tours',
+                'body'  => [
+                    "script"    => [
+                        "inline"    => "for (int i=0; i<ctx._source.categories.size(); i++) { item = ctx._source.categories[i]; if (item['id'] == s_id) { ctx._source.categories[i] = update_category; } };",
+                        "params"    => [
+                            "s_id"  => $category->id,
+                            "update_category" => [
+                                "id"    => $category->id,
+                                "name"  => $category->name,
+                            ],
+                        ]
+                    ],
+                    "query"     => [
+                        "bool"  => [
+                            "must" => [
+                                "match" => [
+                                    "categories.id" => 1
+                                ]
+                            ]
+                        ]
+                    ],
+                ]
+            ]);
+        }
+
+        return $doc;
     }
 }

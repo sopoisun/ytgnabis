@@ -38,6 +38,7 @@ class ServicesElasticsearchJob extends Job implements ShouldQueue
             $this->forAll();
         }else{
             Log::info("services elasticsearch run for id ".$this->id);
+            $this->forOne();
         }
     }
 
@@ -78,5 +79,37 @@ class ServicesElasticsearchJob extends Job implements ShouldQueue
         }
 
         return $docs;
+    }
+
+    public function forOne()
+    {
+        $service = BusinessService::with(['business.kecamatan'])->find($this->id);
+
+        $doc = [
+            'index' => 'e-wangi',
+            'type'  => 'services',
+            'id'    => $service->id,
+            'body'  => [
+                'id'    => $service->id,
+                'name'  => $service->name,
+                'price' => $service->price,
+                'image' => $service->image_url,
+                'business'  => [
+                    'id'        => $service->business->id,
+                    'name'      => $service->business->name,
+                    'address'   => $service->business->address,
+                    'location'  => [
+                        'lat'   => $service->business->map_lat,
+                        'lon'   => $service->business->map_long,
+                    ],
+                    'kecamatan' => [
+                        'id'    => $service->business->kecamatan->id,
+                        'name'  => $service->business->kecamatan->name,
+                    ],
+                ]
+            ],
+        ];
+
+        return Elasticsearch::index($doc);
     }
 }
