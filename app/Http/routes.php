@@ -52,6 +52,21 @@ Route::get('/test', function(){
     }
 });
 
+Route::get('/es', function(){
+    $doc = [
+        'index' => 'sibangty',
+        'type'  => 'users',
+        'id'    => 1,
+        'body'  => [
+            'id'        => '1',
+            'name'      => 'Rizal Afani',
+            'address'   => 'Banyuwangi',
+        ]
+    ];
+
+    return Elasticsearch::index($doc);
+});
+
 Route::get('/elasticsearch', function(){
     $data = \App\BusinessProduct::with(['seo', 'business.seo'])->where('active', 1)->get();
 
