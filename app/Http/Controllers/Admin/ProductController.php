@@ -74,7 +74,11 @@ class ProductController extends Controller
      */
     public function store(BusinessProductRequest $request)
     {
-        if( BusinessProduct::simpan($request) ){
+        $product = BusinessProduct::simpan($request);
+        if( $product ){
+            Artisan::call("elasticsearch:products", [
+                "id" => $product->id,
+            ]);
             return redirect('/backend/product')->with('success', 'Sukses simpan data produk.');
         }
 
@@ -125,6 +129,9 @@ class ProductController extends Controller
     public function update(BusinessProductRequest $request, $id)
     {
         if( BusinessProduct::ubah($id, $request) ){
+            Artisan::call("elasticsearch:products", [
+                "id" => $id,
+            ]);
             return redirect('/backend/product')->with('success', 'Sukses ubah data produk.');
         }
 
@@ -142,6 +149,11 @@ class ProductController extends Controller
         $product = BusinessProduct::hapus($id);
 
         if( $product ){
+            Elasticsearch::delete([
+                'index' => 'e-wangi',
+                'type'  => 'products',
+                'id'    => $product->id
+            ]);
             return redirect()->back()->with('success', 'Sukses hapus data '.$product->name.'.');
         }
 

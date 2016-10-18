@@ -67,7 +67,11 @@ class TourController extends Controller
      */
     public function store(TourRequest $request)
     {
-        if( Tour::simpan($request) ){
+        $tour = Tour::simpan($request);
+        if( $tour ){
+            Artisan::call("elasticsearch:tours", [
+                "id" => $tour->id,
+            ]);
             return redirect('/backend/tour')->with('success', 'Sukses simpan data wisata.');
         }
 
@@ -118,6 +122,9 @@ class TourController extends Controller
     public function update(TourRequest $request, $id)
     {
         if( Tour::ubah($id, $request) ){
+            Artisan::call("elasticsearch:tours", [
+                "id" => $id,
+            ]);
             return redirect('/backend/tour')->with('success', 'Sukses ubah data wisata.');
         }
 
@@ -135,6 +142,11 @@ class TourController extends Controller
         $tour = Tour::hapus($id);
 
         if( $tour ){
+            Elasticsearch::delete([
+                'index' => 'e-wangi',
+                'type'  => 'tours',
+                'id'    => $tour->id
+            ]);
             return redirect()->back()->with('success', 'Sukses hapus data '.$tour->name.'.');
         }
 

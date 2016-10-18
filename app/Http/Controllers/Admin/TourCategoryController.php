@@ -54,7 +54,11 @@ class TourCategoryController extends Controller
      */
     public function store(TourCategoryRequest $request)
     {
-        if( TourCategory::simpan($request) ){
+        $category = TourCategory::simpan($request);
+        if( $category ){
+            Artisan::call("elasticsearch:tour-categories", [
+                "id" => $category->id,
+            ]);
             return redirect('/backend/tour/category')->with('success', 'Sukses simpan data kategori tour.');
         }
 
@@ -100,6 +104,9 @@ class TourCategoryController extends Controller
     public function update(TourCategoryRequest $request, $id)
     {
         if( TourCategory::ubah($id, $request) ){
+            Artisan::call("elasticsearch:tour-categories", [
+                "id" => $id,
+            ]);
             return redirect('/backend/tour/category')->with('success', 'Sukses ubah data kategori tour.');
         }
 
@@ -117,6 +124,11 @@ class TourCategoryController extends Controller
         $category = TourCategory::hapus($id);
 
         if( $category ){
+            Elasticsearch::delete([
+                'index' => 'e-wangi',
+                'type'  => 'tour-categories',
+                'id'    => $category->id
+            ]);
             return redirect()->back()->with('success', 'Sukses hapus data '.$category->name.'.');
         }
 
