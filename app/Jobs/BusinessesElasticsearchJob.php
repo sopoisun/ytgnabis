@@ -125,9 +125,9 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
         if( !$doc['created'] ){
             // do update to relations
             # products
-            dispatch(new ElasticsearchChainData("products_business", $business));
+            dispatch(new ElasticsearchDataHierarchy("products_business", $business));
             # services
-            dispatch(new ElasticsearchChainData("services_business", $business));
+            dispatch(new ElasticsearchDataHierarchy("services_business", $business));
         }
     }
 }

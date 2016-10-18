@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Elasticsearch;
 
-class ElasticsearchChainData extends Job implements ShouldQueue
+class ElasticsearchDataHierarchy extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 

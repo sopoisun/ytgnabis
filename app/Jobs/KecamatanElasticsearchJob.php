@@ -93,13 +93,13 @@ class KecamatanElasticsearchJob extends Job implements ShouldQueue
         if( !$doc['created'] ){
             // do update to relations
             # businesses
-            dispatch(new ElasticsearchChainData("businesses_kecamatan", $kecamatan));
+            dispatch(new ElasticsearchDataHierarchy("businesses_kecamatan", $kecamatan));
             # tours
-            dispatch(new ElasticsearchChainData("tours_kecamatan", $kecamatan));
+            dispatch(new ElasticsearchDataHierarchy("tours_kecamatan", $kecamatan));
             # products
-            dispatch(new ElasticsearchChainData("products_business_kecamatan", $kecamatan));
+            dispatch(new ElasticsearchDataHierarchy("products_business_kecamatan", $kecamatan));
             # services
-            dispatch(new ElasticsearchChainData("services_business_kecamatan", $kecamatan));
+            dispatch(new ElasticsearchDataHierarchy("services_business_kecamatan", $kecamatan));
         }
     }
 }
