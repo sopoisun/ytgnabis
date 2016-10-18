@@ -92,111 +92,14 @@ class KecamatanElasticsearchJob extends Job implements ShouldQueue
 
         if( !$doc['created'] ){
             // do update to relations
-            # products
-            Elasticsearch::updateByQuery([
-                'index' => 'e-wangi',
-                'type'  => 'products',
-                'body'  => [
-                    "script"    => [
-                        "inline"    => "ctx._source.business.kecamatan = update_kecamatan",
-                        "params"    => [
-                            "update_kecamatan" => [
-                                'id'        => $kecamatan->id,
-                                'name'      => $kecamatan->name,
-                            ],
-                        ]
-                    ],
-                    "query"         => [
-                        "nested"    => [
-                            "path"  => "business.kecamatan",
-                            "query" => [
-                                "term" => [
-                                    "business.kecamatan.id" => $kecamatan->id
-                                ]
-                            ]
-                        ]
-                    ],
-                ]
-            ]);
-            # services
-            Elasticsearch::updateByQuery([
-                'index' => 'e-wangi',
-                'type'  => 'services',
-                'body'  => [
-                    "script"    => [
-                        "inline"    => "ctx._source.business.kecamatan = update_kecamatan",
-                        "params"    => [
-                            "update_kecamatan" => [
-                                'id'        => $kecamatan->id,
-                                'name'      => $kecamatan->name,
-                            ],
-                        ]
-                    ],
-                    "query"         => [
-                        "nested"    => [
-                            "path"  => "business.kecamatan",
-                            "query" => [
-                                "term" => [
-                                    "business.kecamatan.id" => $kecamatan->id
-                                ]
-                            ]
-                        ]
-                    ],
-                ]
-            ]);
-            # tours
-            Elasticsearch::updateByQuery([
-                'index' => 'e-wangi',
-                'type'  => 'tours',
-                'body'  => [
-                    "script"    => [
-                        "inline"    => "ctx._source.kecamatan = update_kecamatan",
-                        "params"    => [
-                            "update_kecamatan" => [
-                                'id'        => $kecamatan->id,
-                                'name'      => $kecamatan->name,
-                            ],
-                        ]
-                    ],
-                    "query"         => [
-                        "nested"    => [
-                            "path"  => "kecamatan",
-                            "query" => [
-                                "term" => [
-                                    "kecamatan.id" => $kecamatan->id
-                                ]
-                            ]
-                        ]
-                    ],
-                ]
-            ]);
-
             # businesses
-            Elasticsearch::updateByQuery([
-                'index' => 'e-wangi',
-                'type'  => 'businesses',
-                'body'  => [
-                    "script"    => [
-                        "inline"    => "ctx._source.kecamatan = update_kecamatan",
-                        "params"    => [
-                            "update_kecamatan" => [
-                                'id'        => $kecamatan->id,
-                                'name'      => $kecamatan->name,
-                            ],
-                        ]
-                    ],
-                    "query"         => [
-                        "nested"    => [
-                            "path"  => "kecamatan",
-                            "query" => [
-                                "term" => [
-                                    "kecamatan.id" => $kecamatan->id
-                                ]
-                            ]
-                        ]
-                    ],
-                ]
-            ]);
+            dispatch(new ElasticsearchChainData("businesses_kecamatan", $kecamatan));
+            # tours
+            dispatch(new ElasticsearchChainData("tours_kecamatan", $kecamatan));
+            # products
+            dispatch(new ElasticsearchChainData("products_business_kecamatan", $kecamatan));
+            # services
+            dispatch(new ElasticsearchChainData("services_business_kecamatan", $kecamatan));
         }
     }
 }

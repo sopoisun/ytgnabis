@@ -125,75 +125,9 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
         if( !$doc['created'] ){
             // do update to relations
             # products
-            Elasticsearch::updateByQuery([
-                'index' => 'e-wangi',
-                'type'  => 'products',
-                'body'  => [
-                    "script"    => [
-                        "inline"    => "ctx._source.business = update_business",
-                        "params"    => [
-                            "update_business" => [
-                                'id'        => $business->id,
-                                'name'      => $business->name,
-                                'address'   => $business->address,
-                                'location'  => [
-                                    'lat'   => $business->map_lat,
-                                    'lon'   => $business->map_long,
-                                ],
-                                'kecamatan' => [
-                                    'id'    => $business->kecamatan->id,
-                                    'name'  => $business->kecamatan->name,
-                                ],
-                            ],
-                        ]
-                    ],
-                    "query"         => [
-                        "nested"    => [
-                            "path"  => "business",
-                            "query" => [
-                                "term" => [
-                                    "business.id" => $business->id
-                                ]
-                            ]
-                        ]
-                    ],
-                ]
-            ]);
-            # services            
-            Elasticsearch::updateByQuery([
-                'index' => 'e-wangi',
-                'type'  => 'services',
-                'body'  => [
-                    "script"    => [
-                        "inline"    => "ctx._source.business = update_business",
-                        "params"    => [
-                            "update_business" => [
-                                'id'        => $business->id,
-                                'name'      => $business->name,
-                                'address'   => $business->address,
-                                'location'  => [
-                                    'lat'   => $business->map_lat,
-                                    'lon'   => $business->map_long,
-                                ],
-                                'kecamatan' => [
-                                    'id'    => $business->kecamatan->id,
-                                    'name'  => $business->kecamatan->name,
-                                ],
-                            ],
-                        ]
-                    ],
-                    "query"         => [
-                        "nested"    => [
-                            "path"  => "business",
-                            "query" => [
-                                "term" => [
-                                    "business.id" => $business->id
-                                ]
-                            ]
-                        ]
-                    ],
-                ]
-            ]);
+            dispatch(new ElasticsearchChainData("products_business", $business));
+            # services
+            dispatch(new ElasticsearchChainData("services_business", $business));
         }
     }
 }
