@@ -6,6 +6,8 @@ use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Business;
+use Elasticsearch;
 use Log;
 
 class BusinessesElasticsearchJob extends Job implements ShouldQueue
@@ -33,8 +35,53 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
     {
         if( !$this->id ){
             Log::info("businesses elasticsearch run for all");
+            $this->forAll();
         }else{
             Log::info("businesses elasticsearch run id ".$this->id);
         }
+    }
+
+    public function forAll()
+    {
+        $businesses = Business::with(['categories', 'kecamatan'])->where('active', 1)->get();
+
+        $docs = [];
+        foreach ( $businesses as $business ) {
+            $categories = [];
+            foreach($business->categories as $c){
+                array_push($categories, [
+                    'id'    => $c->id,
+                    'name'  => $c->name,
+                ]);
+            }
+
+            $doc = [
+                'index' => 'e-wangi',
+                'type'  => 'businesses',
+                'id'    => $business->id,
+                'body'  => [
+                    'id'    => $business->id,
+                    'name'  => $business->name,
+                    'image' => $business->image_url,
+                    'location'  => [
+                        'lat'   => $business->map_lat,
+                        'lon'   => $business->map_long,
+                    ],
+                    'info'      => $business->about,
+                    'address'   => $business->address,
+                    'kecamatan' => [
+                        'id'    => $business->kecamatan->id,
+                        'name'  => $business->kecamatan->name,
+                    ],
+                    'categories'=> $categories
+                ],
+            ];
+
+            $doc = Elasticsearch::index($doc);
+
+            array_push($docs, $doc);
+        }
+
+        return $docs;
     }
 }

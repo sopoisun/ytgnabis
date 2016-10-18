@@ -6,6 +6,8 @@ use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\BusinessService;
+use Elasticsearch;
 use Log;
 
 class ServicesElasticsearchJob extends Job implements ShouldQueue
@@ -33,8 +35,48 @@ class ServicesElasticsearchJob extends Job implements ShouldQueue
     {
         if( !$this->id ){
             Log::info("services elasticsearch run for all");
+            $this->forAll();
         }else{
             Log::info("services elasticsearch run for id ".$this->id);
         }
+    }
+
+    public function forAll()
+    {
+        $services = BusinessService::with(['business.kecamatan'])->where('active', 1)->get();
+
+        $docs = [];
+        foreach ( $services as $service ) {
+            $doc = [
+                'index' => 'e-wangi',
+                'type'  => 'services',
+                'id'    => $service->id,
+                'body'  => [
+                    'id'    => $service->id,
+                    'name'  => $service->name,
+                    'price' => $service->price,
+                    'image' => $service->image_url,
+                    'business'  => [
+                        'id'        => $service->business->id,
+                        'name'      => $service->business->name,
+                        'address'   => $service->business->address,
+                        'location'  => [
+                            'lat'   => $service->business->map_lat,
+                            'lon'   => $service->business->map_long,
+                        ],
+                        'kecamatan' => [
+                            'id'    => $service->business->kecamatan->id,
+                            'name'  => $service->business->kecamatan->name,
+                        ],
+                    ]
+                ],
+            ];
+
+            $doc = Elasticsearch::index($doc);
+
+            array_push($docs, $doc);
+        }
+
+        return $docs;
     }
 }
