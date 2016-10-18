@@ -99,6 +99,9 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, $id)
     {
         if( Category::ubah($id, $request) ){
+            Artisan::call("elasticsearch:business-categories", [
+                "id" => $id,
+            ]);
             return redirect('/backend/business/category')->with('success', 'Sukses ubah data kategori bisnis.');
         }
 

@@ -53,6 +53,34 @@ Route::get('/test', function(){
 });
 
 Route::get('/es', function(){
+    return;
+
+    return Elasticsearch::updateByQuery([
+        'index' => 'e-wangi',
+        'type'  => 'businesses',
+        'body'  => [
+            "script"    => [
+                "inline"    => "for (int i=0; i<ctx._source.categories.size(); i++) { item = ctx._source.categories[i]; if (item['id'] == s_id) { ctx._source.categories[i] = update_category; } };",
+                "params"    => [
+                    "s_id"  => 1,
+                    "update_category" => [
+                        "id"    => 1,
+                        "name"  => "Restoran",
+                    ],
+                ]
+            ],
+            "query"     => [
+                "bool"  => [
+                    "must" => [
+                        "match" => [
+                            "categories.id" => 1
+                        ]
+                    ]
+                ]
+            ],
+        ]
+    ]);
+
     $doc = [
         'index' => 'sibangty',
         'type'  => 'users',
@@ -61,6 +89,7 @@ Route::get('/es', function(){
             'id'        => '1',
             'name'      => 'Rizal Afani',
             'address'   => 'Banyuwangi',
+            'age'       => 20,
         ]
     ];
 
