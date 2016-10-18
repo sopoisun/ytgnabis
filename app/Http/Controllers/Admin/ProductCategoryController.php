@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\CategoryProductRequest;
 use App\ProductCategory;
+use Artisan;
 
 class ProductCategoryController extends Controller
 {
@@ -90,6 +91,9 @@ class ProductCategoryController extends Controller
     public function update(Request $request, $id)
     {
         if( ProductCategory::ubah($id, $request) ){
+            Artisan::call('elasticsearch:product-categories', [
+                'id' => $id
+            ]);
             return redirect('/backend/product/category')->with('success', 'Sukses ubah data kategori produk.');
         }
 

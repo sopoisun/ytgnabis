@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
         Commands\ToursElasticsearch::class,
         Commands\ProductsElasticsearch::class,
         Commands\ServicesElasticsearch::class,
+        Commands\ProductCategoriesElasticsearch::class,
     ];
 
     /**
