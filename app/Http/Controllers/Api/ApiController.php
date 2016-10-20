@@ -288,7 +288,7 @@ class ApiController extends Controller
             ];
         }else if( $request->get('kecamatan_id') ){
             $page   = $request->get('page') ? $request->get('page') : 1;
-            $limit  = 2;
+            $limit  = 10;
             $offset = ($page - 1) * $limit;
 
             $params['body']['query']['bool']['must'] = [
