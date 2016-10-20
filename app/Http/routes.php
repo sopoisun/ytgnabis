@@ -198,14 +198,21 @@ Route::get('/cek-login', function(){
 
 Route::group(['prefix' => 'api'], function(){
     Route::get('/kecamatans', 'Api\ApiController@kecamatans');
+
     Route::get('/business-categories', 'Api\ApiController@businessCategories');
-    Route::get('/product-categories', 'Api\ApiController@productCategories');
     Route::get('/businesses', 'Api\ApiController@businesses');
     Route::get('/business', 'Api\ApiController@business');
     Route::get('/business_product', 'Api\ApiController@business_products');
+
+    Route::get('/tour-categories', 'Api\ApiController@tourCategories');
+    Route::get('/tours', 'Api\ApiController@tours');
+    Route::get('/tour', 'Api\ApiController@tour');
+
+    Route::get('/services', 'Api\ApiController@services');
+    Route::get('/service', 'Api\ApiController@service');
+
     Route::get('/products', 'Api\ApiController@products');
     Route::get('/product', 'Api\ApiController@product');
-    Route::get('/map', 'Api\ApiController@map');
 });
 
 Route::group(['prefix' => 'backend'], function(){

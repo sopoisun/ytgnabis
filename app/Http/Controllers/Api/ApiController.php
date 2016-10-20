@@ -5,106 +5,437 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Elasticsearch;
 use DB;
 
 class ApiController extends Controller
 {
     public function kecamatans()
     {
-        return \App\Kecamatan::where('active', 1)->get();
+        return Elasticsearch::search([
+            'index' => 'e-wangi',
+            'type'  => 'kecamatans',
+            'body'  => [
+                'query' => [
+                    'match_all' => [],
+                ],
+                "size"  => 30,
+            ]
+        ]);
     }
 
     public function businessCategories()
     {
-        return \App\Category::where('active', 1)->get();
-    }
-
-    public function productCategories()
-    {
-        return \App\ProductCategory::where('active', 1)->get();
+        return Elasticsearch::search([
+            'index' => 'e-wangi',
+            'type'  => 'business-categories',
+            'body'  => [
+                'query' => [
+                    'match_all' => [],
+                ],
+                "size"  => 10,
+            ]
+        ]);
     }
 
     public function businesses(Request $request)
     {
-        $businesses = \App\Business::with('categories')->where('active', 1);
-
-        if( $request->get('kecamatan_id') ){
-            $kecamatan_id = $request->get('kecamatan_id');
-            $businesses->where('kecamatan_id', $kecamatan_id);
+        if( !$request->get('category_id') ){
+            return;
         }
 
-        if( $request->get('category_id') ){
-            $category_id = $request->get('category_id');
-            $businesses->whereHas('categories', function($query) use ($category_id) {
-                $query->where('category_id', $category_id);
-            });
+        $params = [
+            'index' => 'e-wangi',
+            'type'  => 'businesses',
+            'body'  => [
+                'query' => [
+                    'bool'  => [
+                        "must" => [
+                            "match" => [
+                                "categories.id" => $request->get('category_id'),
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
+
+        if( $request->get('lat') && $request->get('long') ){
+            $params['body']['query']['bool']['filter'] = [
+                "geo_distance"  => [
+                    "distance"  => "1km",
+                    "location"  => [
+                        "lat"   => $request->get('lat'),
+                        "lon"   => $request->get('long'),
+                    ]
+                ]
+            ];
+        }else if( $request->get('kecamatan_id') ){
+            $params['body']['query']['bool']['must'] = [
+                "match" => [
+                    "categories.id" => $request->get('category_id'),
+                ], [
+                    "nested" => [
+                        "path"  => "kecamatan",
+                        "query" => [
+                            "bool" => [
+                                "must"  => [
+                                    "match" => [
+                                        "kecamatan.id" => $request->get('kecamatan_id'),
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }else{
+
         }
 
-        return $businesses->paginate(5);
+        return Elasticsearch::search($params);
     }
 
     public function business(Request $request)
     {
-        $id = $request->get('id');
-        $business = \App\Business::with(['categories'])->find($id);
-        $products = \App\BusinessProduct::with(['category'])
-                    ->where('business_id', $business->id)
-                    ->orderBy('product_category_id');
-
-        if( $request->get('q') ){ // produk search query
-            $q = $request->get('q');
-            $products->where('name', 'like', '%'.$q.'%');
+        if( !$request->get('id') ){
+            return;
         }
 
-        return [
-            'business' => $business,
-            'products' => $products->paginate(5),
-        ];
+        return Elasticsearch::get([
+            'index' => 'e-wangi',
+            'type'  => 'businesses',
+            'id'    => $request->get('id')
+        ]);
     }
 
     public function business_products(Request $request)
     {
-        $id = $request->get('business_id');
-        $products = \App\BusinessProduct::with(['category'])
-                    ->where('business_id', $id)
-                    ->orderBy('product_category_id');
-
-        if( $request->get('q') ){ // produk search query
-            $q = $request->get('q');
-            $products->where('name', 'like', '%'.$q.'%');
+        if( !$request->get('business_id') ){
+            return;
         }
 
-        return $products->paginate(5);
+        return Elasticsearch::search([
+            'index' => 'e-wangi',
+            'type'  => 'products',
+            'body'  => [
+                'query' => [
+                    'nested' => [
+                        'path'  => 'business',
+                        'query' => [
+                            'term' => [
+                                'business.id' => $request->get('business_id')
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ]);
+    }
+
+    public function tourCategories()
+    {
+        return Elasticsearch::search([
+            'index' => 'e-wangi',
+            'type'  => 'tour-categories',
+            'body'  => [
+                'query' => [
+                    'match_all' => [],
+                ],
+                "size"  => 10,
+            ]
+        ]);
+    }
+
+    public function tours(Request $request)
+    {
+        if( !$request->get('category_id') ){
+            return;
+        }
+
+        $params = [
+            'index' => 'e-wangi',
+            'type'  => 'tours',
+            'body'  => [
+                'query' => [
+                    'bool'  => [
+                        'must' => [
+                            'match' => [
+                                'categories.id' => $request->get('category_id'),
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        if( $request->get('lat') && $request->get('long') ){
+            $params['body']['query']['bool']['filter'] = [
+                "geo_distance"  => [
+                    "distance"  => "1km",
+                    "location"  => [
+                        "lat"   => $request->get('lat'),
+                        "lon"   => $request->get('long'),
+                    ]
+                ]
+            ];
+        }else if( $request->get('kecamatan_id') ){
+            $params['body']['query']['bool']['must'] = [
+                "match" => [
+                    "categories.id" => $request->get('category_id'),
+                ], [
+                    "nested" => [
+                        "path"  => "kecamatan",
+                        "query" => [
+                            "bool" => [
+                                "must"  => [
+                                    "match" => [
+                                        "kecamatan.id" => $request->get('kecamatan_id'),
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }else{
+
+        }
+
+        return Elasticsearch::search($params);
+    }
+
+    public function tour(Request $request)
+    {
+        if( !$request->get('id') ){
+            return;
+        }
+
+        return Elasticsearch::get([
+            'index' => 'e-wangi',
+            'type'  => 'tours',
+            'id'    => $request->get('id')
+        ]);
+    }
+
+    public function services(Request $request)
+    {
+        $params = [
+            'index' => 'e-wangi',
+            'type'  => 'services',
+        ];
+
+        if( $request->get('lat') && $request->get('long') ){
+            $must = [];
+            if( $request->get('keywords') ){
+                $keywords = $request->get('keywords');
+                $keywords = explode(" ", $keywords);
+
+                $must = [];
+                foreach($keywords as $keyword){
+                    array_push($must, [
+                        'match' => [
+                            'name' => $keyword,
+                        ]
+                    ]);
+                }
+            }
+
+            $must = count($must) ? $must : [ 'match_all' => [] ];
+
+            $params['body'] = [
+                'query' => [
+                    'bool' => [
+                        'must' => $must,
+                        'filter' => [
+                            "nested" => [
+                                "path"      => "business",
+                                "filter"    => [
+                                    "geo_distance"  => [
+                                        "distance"  => "1km",
+                                        "business.location"  => [
+                                            "lat"   => $request->get('lat'),
+                                            "lon"   => $request->get('long'),
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }else if( $request->get('kecamatan_id') ){
+            $must[] = [
+                'nested'    => [
+                    'path'  => 'business.kecamatan',
+                    'query' => [
+                        'bool' => [
+                            "must"  => [
+                                "match" => [
+                                    "business.kecamatan.id" => $request->get('kecamatan_id'),
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+
+            if( $request->get('keywords') ){
+                $keywords = $request->get('keywords');
+                $keywords = explode(" ", $keywords);
+
+                foreach($keywords as $keyword){
+                    array_push($must, [
+                        'match' => [
+                            'name' => $keyword,
+                        ]
+                    ]);
+                }
+
+
+            }else{
+                $must[] = [ 'match_all' => [] ];
+            }
+
+            $params['body'] = [
+                'query' => [
+                    'bool' => [
+                        'must' => $must,
+                    ]
+                ]
+            ];
+        }else{
+
+        }
+
+        if( count($params) > 2 ){
+            return Elasticsearch::search($params);
+        }
+
+        return;
+    }
+
+    public function service(Request $request)
+    {
+        if( !$request->get('id') ){
+            return;
+        }
+
+        return Elasticsearch::get([
+            'index' => 'e-wangi',
+            'type'  => 'services',
+            'id'    => $request->get('id')
+        ]);
     }
 
     public function products(Request $request)
     {
-        $products = \App\BusinessProduct::with('business')->where('active', 1);
+        $params = [
+            'index' => 'e-wangi',
+            'type'  => 'products',
+        ];
 
-        if( $request->get('kecamatan_id') ){
-            $kecamatan_id = $request->get('kecamatan_id');
-            $products->whereHas('business', function($query) use ($kecamatan_id) {
-                $query->where('kecamatan_id', $kecamatan_id);
-            });
+        if( $request->get('lat') && $request->get('long') ){
+            $must = [];
+            if( $request->get('keywords') ){
+                $keywords = $request->get('keywords');
+                $keywords = explode(" ", $keywords);
+
+                $must = [];
+                foreach($keywords as $keyword){
+                    array_push($must, [
+                        'match' => [
+                            'name' => $keyword,
+                        ]
+                    ]);
+                }
+            }
+
+            $must = count($must) ? $must : [ 'match_all' => [] ];
+
+            $params['body'] = [
+                'query' => [
+                    'bool' => [
+                        'must' => $must,
+                        'filter' => [
+                            "nested" => [
+                                "path"      => "business",
+                                "filter"    => [
+                                    "geo_distance"  => [
+                                        "distance"  => "1km",
+                                        "business.location"  => [
+                                            "lat"   => $request->get('lat'),
+                                            "lon"   => $request->get('long'),
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }else if( $request->get('kecamatan_id') ){
+            $must[] = [
+                'nested'    => [
+                    'path'  => 'business.kecamatan',
+                    'query' => [
+                        'bool' => [
+                            "must"  => [
+                                "match" => [
+                                    "business.kecamatan.id" => $request->get('kecamatan_id'),
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+
+            if( $request->get('keywords') ){
+                $keywords = $request->get('keywords');
+                $keywords = explode(" ", $keywords);
+
+                foreach($keywords as $keyword){
+                    array_push($must, [
+                        'match' => [
+                            'name' => $keyword,
+                        ]
+                    ]);
+                }
+
+
+            }else{
+                $must[] = [ 'match_all' => [] ];
+            }
+
+            $params['body'] = [
+                'query' => [
+                    'bool' => [
+                        'must' => $must,
+                    ]
+                ]
+            ];
+        }else{
+
         }
 
-        if( $request->get('category_id') ){
-            $category_id = $request->get('category_id');
-            $products->where('product_category_id', $category_id);
+        if( count($params) > 2 ){
+            return Elasticsearch::search($params);
         }
 
-        if( $request->get('q') ){
-            $q = $request->get('q');
-            $products->where('name', 'like', '%'.$q.'%');
-        }
-
-        return $products->paginate(5);
+        return;
     }
 
     public function product(Request $request)
     {
-        $id = $request->get('id');
-        return \App\BusinessProduct::with(['business', 'category'])->find($id);
+        if( !$request->get('id') ){
+            return;
+        }
+
+        return Elasticsearch::get([
+            'index' => 'e-wangi',
+            'type'  => 'products',
+            'id'    => $request->get('id')
+        ]);
     }
 
     public function map()
