@@ -51,10 +51,17 @@ class ApiController extends Controller
                 'query' => [
                     'bool'  => [
                         "must" => [
-                            "match" => [
-                                "categories.id" => $request->get('category_id'),
+                            [
+                                "match" => [
+                                    "categories.id" => $request->get('category_id'),
+                                ]
                             ]
                         ]
+                    ]
+                ],
+                'sort'  => [
+                    'name_for_sort' => [
+                        'order'     => 'asc'
                     ]
                 ]
             ],
@@ -70,10 +77,17 @@ class ApiController extends Controller
                     ]
                 ]
             ];
+            $params['body']['size'] = 20;
         }else if( $request->get('kecamatan_id') ){
+            $page   = $request->get('page') ? $request->get('page') : 1;
+            $limit  = 10;
+            $offset = ($page - 1) * $limit;
+
             $params['body']['query']['bool']['must'] = [
-                "match" => [
-                    "categories.id" => $request->get('category_id'),
+                [
+                    "match" => [
+                        "categories.id" => $request->get('category_id'),
+                    ]
                 ], [
                     "nested" => [
                         "path"  => "kecamatan",
@@ -88,6 +102,11 @@ class ApiController extends Controller
                         ]
                     ]
                 ]
+            ];
+
+            $params['body'] += [
+                'from'  => $offset,
+                'size'  => $limit,
             ];
         }else{
 
@@ -114,6 +133,10 @@ class ApiController extends Controller
         if( !$request->get('business_id') ){
             return;
         }
+
+        $page   = $request->get('page') ? $request->get('page') : 1;
+        $limit  = 10;
+        $offset = ($page - 1) * $limit;
 
         $must = [];
 
@@ -149,8 +172,15 @@ class ApiController extends Controller
                     'bool' => [
                         'must' => $must,
                     ]
-                ]
-            ],
+                ],
+                'sort' => [
+                    'name_for_sort' => [
+                        'order'     => 'asc'
+                    ]
+                ],
+                'from'  => $offset,
+                'size'  => $limit,
+            ]
         ];
 
         return Elasticsearch::search($params);
@@ -230,10 +260,17 @@ class ApiController extends Controller
                 'query' => [
                     'bool'  => [
                         'must' => [
-                            'match' => [
-                                'categories.id' => $request->get('category_id'),
+                            [
+                                'match' => [
+                                    'categories.id' => $request->get('category_id'),
+                                ]
                             ]
                         ]
+                    ]
+                ],
+                'sort'  => [
+                    'name_for_sort' => [
+                        'order' => 'asc'
                     ]
                 ]
             ]
@@ -250,9 +287,15 @@ class ApiController extends Controller
                 ]
             ];
         }else if( $request->get('kecamatan_id') ){
+            $page   = $request->get('page') ? $request->get('page') : 1;
+            $limit  = 2;
+            $offset = ($page - 1) * $limit;
+
             $params['body']['query']['bool']['must'] = [
-                "match" => [
-                    "categories.id" => $request->get('category_id'),
+                [
+                    "match" => [
+                        "categories.id" => $request->get('category_id'),
+                    ]
                 ], [
                     "nested" => [
                         "path"  => "kecamatan",
@@ -267,6 +310,11 @@ class ApiController extends Controller
                         ]
                     ]
                 ]
+            ];
+
+            $params['body'] += [
+                'from'  => $offset,
+                'size'  => $limit,
             ];
         }else{
 
@@ -390,12 +438,23 @@ class ApiController extends Controller
                 $must[] = [ 'match_all' => [] ];
             }
 
+            $page   = $request->get('page') ? $request->get('page') : 1;
+            $limit  = 10;
+            $offset = ($page - 1) * $limit;
+
             $params['body'] = [
                 'query' => [
                     'bool' => [
                         'must' => $must,
                     ]
-                ]
+                ],
+                'sort' => [
+                    'name_for_sort' => [
+                        'order' => 'asc'
+                    ]
+                ],
+                'from' => $offset,
+                'size' => $limit,
             ];
         }else{
 
@@ -523,12 +582,23 @@ class ApiController extends Controller
                 $must[] = [ 'match_all' => [] ];
             }
 
+            $page   = $request->get('page') ? $request->get('page') : 1;
+            $limit  = 10;
+            $offset = ($page - 1) * $limit;
+
             $params['body'] = [
                 'query' => [
                     'bool' => [
                         'must' => $must,
                     ]
-                ]
+                ],
+                'sort'  => [
+                    'name_for_sort' => [
+                        'order' => 'asc'
+                    ]
+                ],
+                'from'  => $offset,
+                'size'  => $limit,
             ];
         }else{
 
