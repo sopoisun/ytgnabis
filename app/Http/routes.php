@@ -202,7 +202,8 @@ Route::group(['prefix' => 'api'], function(){
     Route::get('/business-categories', 'Api\ApiController@businessCategories');
     Route::get('/businesses', 'Api\ApiController@businesses');
     Route::get('/business', 'Api\ApiController@business');
-    Route::get('/business_product', 'Api\ApiController@business_products');
+    Route::get('/business_products', 'Api\ApiController@business_products');
+    Route::get('/business_services', 'Api\ApiController@business_services');
 
     Route::get('/tour-categories', 'Api\ApiController@tourCategories');
     Route::get('/tours', 'Api\ApiController@tours');

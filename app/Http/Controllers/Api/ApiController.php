@@ -115,22 +115,92 @@ class ApiController extends Controller
             return;
         }
 
-        return Elasticsearch::search([
+        $must = [];
+
+        if( $request->get('keywords') ){
+            $keywords = $request->get('keywords');
+            $keywords = explode(' ', $keywords);
+
+            foreach($keywords as $keyword){
+                $must[] = [
+                    'match' => [
+                        'name' => $keyword,
+                    ]
+                ];
+            }
+        }
+
+        $must[] = [
+            'nested' => [
+                'path'  => 'business',
+                'query' => [
+                    'term' => [
+                        'business.id' => $request->get('business_id')
+                    ]
+                ]
+            ]
+        ];
+
+        $params = [
             'index' => 'e-wangi',
             'type'  => 'products',
             'body'  => [
                 'query' => [
-                    'nested' => [
-                        'path'  => 'business',
-                        'query' => [
-                            'term' => [
-                                'business.id' => $request->get('business_id')
-                            ]
-                        ]
+                    'bool' => [
+                        'must' => $must,
                     ]
                 ]
             ],
-        ]);
+        ];
+
+        return Elasticsearch::search($params);
+    }
+
+    public function business_services(Request $request)
+    {
+        if( !$request->get('business_id') ){
+            return;
+        }
+
+        $must = [];
+
+        if( $request->get('keywords') ){
+            $keywords = $request->get('keywords');
+            $keywords = explode(' ', $keywords);
+
+            foreach($keywords as $keyword){
+                $must[] = [
+                    'match' => [
+                        'name' => $keyword,
+                    ]
+                ];
+            }
+        }
+
+        $must[] = [
+            'nested' => [
+                'path'  => 'business',
+                'query' => [
+                    'term' => [
+                        'business.id' => $request->get('business_id')
+                    ]
+                ]
+            ]
+        ];
+
+        $params = [
+            'index' => 'e-wangi',
+            'type'  => 'services',
+            'body'  => [
+                'query' => [
+                    'bool' => [
+                        'must' => $must,
+                    ]
+                ]
+            ],
+        ];
+
+        return Elasticsearch::search($params);
     }
 
     public function tourCategories()
