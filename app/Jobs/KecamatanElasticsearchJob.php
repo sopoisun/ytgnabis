@@ -55,6 +55,7 @@ class KecamatanElasticsearchJob extends Job implements ShouldQueue
                 'body'  => [
                     'id'    => $kecamatan->id,
                     'name'  => $kecamatan->name,
+                    'name_for_sort' => str_replace(" ", "", $kecamatan->name),
                     'location'  => [
                         'lat'   => $kecamatan->map_lat,
                         'lon'   => $kecamatan->map_long,
@@ -81,6 +82,7 @@ class KecamatanElasticsearchJob extends Job implements ShouldQueue
             'body'  => [
                 'id'    => $kecamatan->id,
                 'name'  => $kecamatan->name,
+                'name_for_sort' => str_replace(" ", "", $kecamatan->name),
                 'location'  => [
                     'lat'   => $kecamatan->map_lat,
                     'lon'   => $kecamatan->map_long,

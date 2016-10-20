@@ -55,6 +55,7 @@ class TourCategoriesElasticsearchJob extends Job implements ShouldQueue
                 'body'  => [
                     'id'    => $category->id,
                     'name'  => $category->name,
+                    'name_for_sort' => str_replace(" ", "", $category->name),
                 ],
             ];
 
@@ -77,6 +78,7 @@ class TourCategoriesElasticsearchJob extends Job implements ShouldQueue
             'body'  => [
                 'id'    => $category->id,
                 'name'  => $category->name,
+                'name_for_sort' => str_replace(" ", "", $category->name),
             ],
         ];
 

@@ -63,6 +63,7 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
                 'body'  => [
                     'id'    => $business->id,
                     'name'  => $business->name,
+                    'name_for_sort' => str_replace(" ", "", $business->name),
                     'image' => $business->image_url,
                     'location'  => [
                         'lat'   => $business->map_lat,
@@ -105,6 +106,7 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
             'body'  => [
                 'id'    => $business->id,
                 'name'  => $business->name,
+                'name_for_sort' => str_replace(" ", "", $business->name),
                 'image' => $business->image_url,
                 'location'  => [
                     'lat'   => $business->map_lat,

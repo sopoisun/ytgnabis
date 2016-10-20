@@ -63,6 +63,7 @@ class ToursElasticsearchJob extends Job implements ShouldQueue
                 'body'  => [
                     'id'    => $tour->id,
                     'name'  => $tour->name,
+                    'name_for_sort' => str_replace(" ", "", $tour->name),
                     'ticket'=> $tour->tiket,
                     'image' => $tour->image_url,
                     'location'  => [
@@ -106,6 +107,7 @@ class ToursElasticsearchJob extends Job implements ShouldQueue
             'body'  => [
                 'id'    => $tour->id,
                 'name'  => $tour->name,
+                'name_for_sort' => str_replace(" ", "", $tour->name),
                 'ticket'=> $tour->tiket,
                 'image' => $tour->image_url,
                 'location'  => [
