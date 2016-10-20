@@ -262,6 +262,29 @@ class ApiController extends Controller
                             ]
                         ]
                     ]
+                ],
+                'size' => 0,
+                'aggs' => [
+                    'group' => [
+                        'nested'    => [ 'path' => 'business' ],
+                        'aggs'      => [
+                            'business'    => [
+                                'terms'      => [
+                                    'field' => 'business.id'
+                                ],
+                                'aggs'      => [
+                                    'row'   => [
+                                        'top_hits'  => [
+                                            '_source'   => [
+                                                'id', 'name', 'address', 'location', 'kecamatan'
+                                            ],
+                                            'size'  => 1,
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
                 ]
             ];
         }else if( $request->get('kecamatan_id') ){
@@ -366,6 +389,29 @@ class ApiController extends Controller
                                         "business.location"  => [
                                             "lat"   => $request->get('lat'),
                                             "lon"   => $request->get('long'),
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                'size' => 0,
+                'aggs' => [
+                    'group' => [
+                        'nested'    => [ 'path' => 'business' ],
+                        'aggs'      => [
+                            'business'    => [
+                                'terms'      => [
+                                    'field' => 'business.id'
+                                ],
+                                'aggs'      => [
+                                    'row'   => [
+                                        'top_hits'  => [
+                                            '_source'   => [
+                                                'id', 'name', 'address', 'location', 'kecamatan'
+                                            ],
+                                            'size'  => 1,
                                         ]
                                     ]
                                 ]
