@@ -68,6 +68,15 @@ class ApiController extends Controller
         ];
 
         if( $request->get('lat') && $request->get('long') ){
+            if( $request->get('ids') ){
+                $ids = explode(',', $request->get('ids'));
+                $params['body']['query']['bool']['must_not'] = [
+                    "terms" => [
+                        "id"    => $ids,
+                    ]
+                ];
+            }
+
             $params['body']['query']['bool']['filter'] = [
                 "geo_distance"  => [
                     "distance"  => "1km",
@@ -277,6 +286,15 @@ class ApiController extends Controller
         ];
 
         if( $request->get('lat') && $request->get('long') ){
+            if( $request->get('ids') ){
+                $ids = explode(',', $request->get('ids'));
+                $params['body']['query']['bool']['must_not'] = [
+                    "terms" => [
+                        "id"    => $ids,
+                    ]
+                ];
+            }
+
             $params['body']['query']['bool']['filter'] = [
                 "geo_distance"  => [
                     "distance"  => "1km",
@@ -359,7 +377,27 @@ class ApiController extends Controller
                 }
             }
 
-            $must = count($must) ? $must : [ 'match_all' => [] ];
+            $must = count($must) ? $must : [[ 'match_all' => [] ]];
+
+            if( $request->get('ids') ){
+                $ids = explode(',', $request->get('ids'));
+                array_push($must, [
+                    "nested" => [
+                        "path"  => "business",
+                        "query" => [
+                            "bool"  => [
+                                "must_not" => [
+                                    [
+                                        "terms" => [
+                                            "business.id"    => $ids,
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]);
+            }
 
             $params['body'] = [
                 'query' => [
@@ -503,7 +541,27 @@ class ApiController extends Controller
                 }
             }
 
-            $must = count($must) ? $must : [ 'match_all' => [] ];
+            $must = count($must) ? $must : [[ 'match_all' => [] ]];
+
+            if( $request->get('ids') ){
+                $ids = explode(',', $request->get('ids'));
+                array_push($must, [
+                    "nested" => [
+                        "path"  => "business",
+                        "query" => [
+                            "bool"  => [
+                                "must_not" => [
+                                    [
+                                        "terms" => [
+                                            "business.id"    => $ids,
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]);
+            }
 
             $params['body'] = [
                 'query' => [
