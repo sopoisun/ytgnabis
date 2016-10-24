@@ -505,6 +505,16 @@ class ApiController extends Controller
                 'from' => $offset,
                 'size' => $limit,
             ];
+
+            if( $request->get('not_id') ){
+                $params['body']['query']['bool']['must_not'] = [
+                    [
+                        'term' => [
+                            'id' => $request->get('not_id'),
+                        ]
+                    ]
+                ];
+            }
         }else{
 
         }
@@ -669,6 +679,16 @@ class ApiController extends Controller
                 'from'  => $offset,
                 'size'  => $limit,
             ];
+
+            if( $request->get('not_id') ){
+                $params['body']['query']['bool']['must_not'] = [
+                    [
+                        'term' => [
+                            'id' => $request->get('not_id'),
+                        ]
+                    ]
+                ];
+            }
         }else{
 
         }
