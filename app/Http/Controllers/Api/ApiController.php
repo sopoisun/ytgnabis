@@ -201,6 +201,10 @@ class ApiController extends Controller
             return;
         }
 
+        $page   = $request->get('page') ? $request->get('page') : 1;
+        $limit  = 10;
+        $offset = ($page - 1) * $limit;
+
         $must = [];
 
         if( $request->get('keywords') ){
@@ -235,7 +239,14 @@ class ApiController extends Controller
                     'bool' => [
                         'must' => $must,
                     ]
-                ]
+                ],
+                'sort' => [
+                    'name_for_sort' => [
+                        'order'     => 'asc'
+                    ]
+                ],
+                'from'  => $offset,
+                'size'  => $limit,
             ],
         ];
 
