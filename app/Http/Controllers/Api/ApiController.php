@@ -526,6 +526,81 @@ class ApiController extends Controller
         return;
     }
 
+    public function similiar_services(Request $request)
+    {
+        if( !$request->get('kecamatan_id') || !$request->get('keywords') || !$request->get('not_id') ){
+            return;
+        }
+
+        $keywords = $request->get('keywords');
+        $keywords = explode(" ", $keywords);
+
+        $should = [];
+        foreach($keywords as $keyword){
+            array_push($should, [
+                'match' => [
+                    'name' => $keyword,
+                ]
+            ]);
+        }
+
+        $page   = $request->get('page') ? $request->get('page') : 1;
+        $limit  = 10;
+        $offset = ($page - 1) * $limit;
+
+        $params = [
+            'index' => 'e-wangi',
+            'type'  => 'services',
+            'body' => [
+                'query' => [
+                    'filtered' => [
+                        'query' => [
+                            'bool' => [
+                                'should'  => $should,
+                                'must_not'  => [
+                                    [
+                                        'term' => [
+                                            'id' => $request->get('not_id'),
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ],
+                        'filter' => [
+                            'bool' => [
+                                'must' => [
+                                    [
+                                        'nested'    => [
+                                            'path'  => 'business.kecamatan',
+                                            'query' => [
+                                                'bool' => [
+                                                    "must"  => [
+                                                        "match" => [
+                                                            "business.kecamatan.id" => $request->get('kecamatan_id'),
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                'sort' => [
+                    'name_for_sort' => [
+                        'order' => 'asc'
+                    ]
+                ],
+                'from' => $offset,
+                'size' => $limit,
+            ]
+        ];
+
+        return Elasticsearch::search($params);
+    }
+
     public function service(Request $request)
     {
         if( !$request->get('id') ){
@@ -698,6 +773,81 @@ class ApiController extends Controller
         }
 
         return;
+    }
+
+    public function similiar_products(Request $request)
+    {
+        if( !$request->get('kecamatan_id') || !$request->get('keywords') || !$request->get('not_id') ){
+            return;
+        }
+
+        $keywords = $request->get('keywords');
+        $keywords = explode(" ", $keywords);
+
+        $should = [];
+        foreach($keywords as $keyword){
+            array_push($should, [
+                'match' => [
+                    'name' => $keyword,
+                ]
+            ]);
+        }
+
+        $page   = $request->get('page') ? $request->get('page') : 1;
+        $limit  = 10;
+        $offset = ($page - 1) * $limit;
+
+        $params = [
+            'index' => 'e-wangi',
+            'type'  => 'products',
+            'body' => [
+                'query' => [
+                    'filtered' => [
+                        'query' => [
+                            'bool' => [
+                                'should'  => $should,
+                                'must_not'  => [
+                                    [
+                                        'term' => [
+                                            'id' => $request->get('not_id'),
+                                        ]
+                                    ]
+                                ],
+                            ]
+                        ],
+                        'filter' => [
+                            'bool'  => [
+                                'must' => [
+                                    [
+                                        'nested'    => [
+                                            'path'  => 'business.kecamatan',
+                                            'query' => [
+                                                'bool' => [
+                                                    "must"  => [
+                                                        "match" => [
+                                                            "business.kecamatan.id" => $request->get('kecamatan_id'),
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                ],
+                'sort' => [
+                    'name_for_sort' => [
+                        'order' => 'asc'
+                    ]
+                ],
+                'from' => $offset,
+                'size' => $limit,
+            ]
+        ];
+
+        return Elasticsearch::search($params);
     }
 
     public function product(Request $request)

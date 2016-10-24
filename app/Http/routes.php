@@ -51,6 +51,9 @@ Route::group(['prefix' => 'api'], function(){
 
     Route::get('/products', 'Api\ApiController@products');
     Route::get('/product', 'Api\ApiController@product');
+
+    Route::get('/similiar-services', 'Api\ApiController@similiar_services');
+    Route::get('/similiar-products', 'Api\ApiController@similiar_products');
 });
 
 Route::group(['prefix' => 'backend'], function(){
