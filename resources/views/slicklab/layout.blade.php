@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <link rel="shortcut icon" href="javascript:;" type="image/png">
 
-    <title>Sibangty Admin</title>
+    <title>E-wangi Admin</title>
 
     <!--right slidebar-->
     <link href="{{ url('/assets/'.config('app.backend_template')) }}/css/slidebars.css" rel="stylesheet">

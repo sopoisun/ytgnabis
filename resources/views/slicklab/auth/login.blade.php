@@ -7,7 +7,7 @@
     <meta name="description" content="Admin Template">
     <meta name="keywords" content="admin dashboard, admin, flat, flat ui, ui kit, app, web app, responsive">
     <link rel="shortcut icon" href="img/ico/favicon.png">
-    <title>Sibangty Administrator Login</title>
+    <title>E-wangi Administrator Login</title>
 
     <!--toastr-->
     <link href="{{ url('/assets/'.config('app.backend_template')) }}/js/toastr-master/toastr.css" rel="stylesheet" type="text/css" />

@@ -209,5 +209,7 @@ Route::group(['prefix' => 'ajax'], function(){
     Route::get('/forget-map', 'Web\MapPageController@clear');
 });
 
-
-Route::get('{permalink?}', 'PermalinkController@index');
+Route::get('/', function(){
+    return redirect('/backend');
+});
+//Route::get('{permalink?}', 'PermalinkController@index');
