@@ -33,6 +33,7 @@ Route::get('/cek-login', function(){
     }
 });
 
+/*
 Route::group(['prefix' => 'api'], function(){
     Route::get('/kecamatans', 'Api\ApiController@kecamatans');
 
@@ -55,6 +56,7 @@ Route::group(['prefix' => 'api'], function(){
     Route::get('/similiar-services', 'Api\ApiController@similiar_services');
     Route::get('/similiar-products', 'Api\ApiController@similiar_products');
 });
+*/
 
 Route::group(['prefix' => 'backend'], function(){
     // Login
