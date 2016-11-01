@@ -38,7 +38,7 @@ class UserController extends Controller
     public function create()
     {
         $data = [
-            'roles' => Role::where('key', '!=', 'superuser')->get(),
+            'roles' => Role::all(),
         ];
 
         return view(config('app.backend_template').'.user.create', $data);
@@ -75,7 +75,7 @@ class UserController extends Controller
             return view(config('app.backend_template').'.error.404');
         }
 
-        $roles  = Role::where('key', '!=', 'superuser')->get();
+        $roles  = Role::all();
         $data   = ['roles' => $roles, 'user' => $user];
         return view(config('app.backend_template').'.user.update', $data);
     }
