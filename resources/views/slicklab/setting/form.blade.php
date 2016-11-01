@@ -142,7 +142,7 @@
 <script type="text/javascript" src="{{ url('/assets/'.config('app.backend_template')) }}/js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
 
 <!-- Map -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAnGBfzMEan-bf6oEWoL6j_YmWH0wnzifA"></script>
 <script src="{{ url('/assets/'.config('app.backend_template')) }}/js/gmaps.js"></script>
 @stop
 

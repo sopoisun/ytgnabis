@@ -108,7 +108,7 @@
 @stop
 
 @section('js_assets')
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAnGBfzMEan-bf6oEWoL6j_YmWH0wnzifA"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/markerwithlabel_packed.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/infobox.js"></script>
 <script type="text/javascript" src="{{ url('assets/zoner') }}/js/owl.carousel.min.js"></script>
