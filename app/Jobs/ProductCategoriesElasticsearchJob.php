@@ -43,7 +43,7 @@ class ProductCategoriesElasticsearchJob extends Job implements ShouldQueue
 
         # businesses
         $doc = Elasticsearch::updateByQuery([
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'products',
                 'body'  => [
                     "script"    => [

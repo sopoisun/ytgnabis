@@ -57,7 +57,7 @@ class ToursElasticsearchJob extends Job implements ShouldQueue
             }
 
             $doc = [
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'tours',
                 'id'    => $tour->id,
                 'body'  => [
@@ -101,7 +101,7 @@ class ToursElasticsearchJob extends Job implements ShouldQueue
         }
 
         $doc = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'tours',
             'id'    => $tour->id,
             'body'  => [

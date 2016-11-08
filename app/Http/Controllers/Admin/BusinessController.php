@@ -165,7 +165,7 @@ class BusinessController extends Controller
 
         if( $business ){
             Elasticsearch::delete([
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'businesses',
                 'id'    => $business->id
             ]);

@@ -125,7 +125,7 @@ class KecamatanController extends Controller
 
         if( $kecamatan ){
             Elasticsearch::delete([
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'kecamatans',
                 'id'    => $kecamatan->id
             ]);

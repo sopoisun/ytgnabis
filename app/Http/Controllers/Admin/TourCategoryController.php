@@ -125,7 +125,7 @@ class TourCategoryController extends Controller
 
         if( $category ){
             Elasticsearch::delete([
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'tour-categories',
                 'id'    => $category->id
             ]);

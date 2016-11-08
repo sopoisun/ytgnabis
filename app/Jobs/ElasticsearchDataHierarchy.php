@@ -41,7 +41,7 @@ class ElasticsearchDataHierarchy extends Job implements ShouldQueue
     public function products_business()
     {
         Elasticsearch::updateByQuery([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'products',
             'body'  => [
                 "script"    => [
@@ -79,7 +79,7 @@ class ElasticsearchDataHierarchy extends Job implements ShouldQueue
     public function services_business()
     {
         Elasticsearch::updateByQuery([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'services',
             'body'  => [
                 "script"    => [
@@ -119,7 +119,7 @@ class ElasticsearchDataHierarchy extends Job implements ShouldQueue
     public function businesses_kecamatan()
     {
         Elasticsearch::updateByQuery([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'businesses',
             'body'  => [
                 "script"    => [
@@ -148,7 +148,7 @@ class ElasticsearchDataHierarchy extends Job implements ShouldQueue
     public function tours_kecamatan()
     {
         Elasticsearch::updateByQuery([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'tours',
             'body'  => [
                 "script"    => [
@@ -177,7 +177,7 @@ class ElasticsearchDataHierarchy extends Job implements ShouldQueue
     public function products_business_kecamatan()
     {
         Elasticsearch::updateByQuery([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'products',
             'body'  => [
                 "script"    => [
@@ -206,7 +206,7 @@ class ElasticsearchDataHierarchy extends Job implements ShouldQueue
     public function services_business_kecamatan()
     {
         Elasticsearch::updateByQuery([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'services',
             'body'  => [
                 "script"    => [

@@ -57,7 +57,7 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
             }
 
             $doc = [
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'businesses',
                 'id'    => $business->id,
                 'body'  => [
@@ -100,7 +100,7 @@ class BusinessesElasticsearchJob extends Job implements ShouldQueue
         }
 
         $doc = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'businesses',
             'id'    => $business->id,
             'body'  => [

@@ -49,7 +49,7 @@ class BusinessCategoriesElasticsearchJob extends Job implements ShouldQueue
         $docs = [];
         foreach ( $categories as $category ) {
             $doc = [
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'business-categories',
                 'id'    => $category->id,
                 'body'  => [
@@ -72,7 +72,7 @@ class BusinessCategoriesElasticsearchJob extends Job implements ShouldQueue
         $category = Category::find($this->id);
 
         $doc = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'business-categories',
             'id'    => $category->id,
             'body'  => [
@@ -88,7 +88,7 @@ class BusinessCategoriesElasticsearchJob extends Job implements ShouldQueue
             // do update to relations
             # businesses
             Elasticsearch::updateByQuery([
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'businesses',
                 'body'  => [
                     "script"    => [

@@ -124,7 +124,7 @@ class CategoryController extends Controller
 
         if( $category ){
             Elasticsearch::delete([
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'business-categories',
                 'id'    => $id
             ]);

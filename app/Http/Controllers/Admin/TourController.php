@@ -143,7 +143,7 @@ class TourController extends Controller
 
         if( $tour ){
             Elasticsearch::delete([
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'tours',
                 'id'    => $tour->id
             ]);

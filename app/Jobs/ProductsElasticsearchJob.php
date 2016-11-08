@@ -49,7 +49,7 @@ class ProductsElasticsearchJob extends Job implements ShouldQueue
         $docs = [];
         foreach ( $products as $product ) {
             $doc = [
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'products',
                 'id'    => $product->id,
                 'body'  => [
@@ -91,7 +91,7 @@ class ProductsElasticsearchJob extends Job implements ShouldQueue
         $product = BusinessProduct::with(['category', 'business.kecamatan'])->find($this->id);
 
         $doc = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'products',
             'id'    => $product->id,
             'body'  => [

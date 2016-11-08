@@ -143,7 +143,7 @@ class ServiceController extends Controller
 
          if( $service ){
              Elasticsearch::delete([
-                 'index' => 'e-wangi',
+                 'index' => env('ES_INDEX'),
                  'type'  => 'services',
                  'id'    => $service->id
              ]);

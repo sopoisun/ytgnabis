@@ -13,7 +13,7 @@ class ApiController extends Controller
     public function kecamatans()
     {
         return Elasticsearch::search([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'kecamatans',
             'body'  => [
                 'query' => [
@@ -27,7 +27,7 @@ class ApiController extends Controller
     public function businessCategories()
     {
         return Elasticsearch::search([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'business-categories',
             'body'  => [
                 'query' => [
@@ -45,7 +45,7 @@ class ApiController extends Controller
         }
 
         $params = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'businesses',
             'body'  => [
                 'query' => [
@@ -131,7 +131,7 @@ class ApiController extends Controller
         }
 
         return Elasticsearch::get([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'businesses',
             'id'    => $request->get('id')
         ]);
@@ -174,7 +174,7 @@ class ApiController extends Controller
         ];
 
         $params = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'products',
             'body'  => [
                 'query' => [
@@ -232,7 +232,7 @@ class ApiController extends Controller
         ];
 
         $params = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'services',
             'body'  => [
                 'query' => [
@@ -256,7 +256,7 @@ class ApiController extends Controller
     public function tourCategories()
     {
         return Elasticsearch::search([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'tour-categories',
             'body'  => [
                 'query' => [
@@ -274,7 +274,7 @@ class ApiController extends Controller
         }
 
         $params = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'tours',
             'body'  => [
                 'query' => [
@@ -359,7 +359,7 @@ class ApiController extends Controller
         }
 
         return Elasticsearch::get([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'tours',
             'id'    => $request->get('id')
         ]);
@@ -368,7 +368,7 @@ class ApiController extends Controller
     public function services(Request $request)
     {
         $params = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'services',
         ];
 
@@ -549,7 +549,7 @@ class ApiController extends Controller
         $offset = ($page - 1) * $limit;
 
         $params = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'services',
             'body' => [
                 'query' => [
@@ -608,7 +608,7 @@ class ApiController extends Controller
         }
 
         return Elasticsearch::get([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'services',
             'id'    => $request->get('id')
         ]);
@@ -617,7 +617,7 @@ class ApiController extends Controller
     public function products(Request $request)
     {
         $params = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'products',
         ];
 
@@ -798,7 +798,7 @@ class ApiController extends Controller
         $offset = ($page - 1) * $limit;
 
         $params = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'products',
             'body' => [
                 'query' => [
@@ -857,7 +857,7 @@ class ApiController extends Controller
         }
 
         return Elasticsearch::get([
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'products',
             'id'    => $request->get('id')
         ]);

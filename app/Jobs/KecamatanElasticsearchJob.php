@@ -49,7 +49,7 @@ class KecamatanElasticsearchJob extends Job implements ShouldQueue
         $docs = [];
         foreach ( $kecamatans as $kecamatan ) {
             $doc = [
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'kecamatans',
                 'id'    => $kecamatan->id,
                 'body'  => [
@@ -76,7 +76,7 @@ class KecamatanElasticsearchJob extends Job implements ShouldQueue
         $kecamatan = Kecamatan::find($this->id);
 
         $doc = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'kecamatans',
             'id'    => $kecamatan->id,
             'body'  => [

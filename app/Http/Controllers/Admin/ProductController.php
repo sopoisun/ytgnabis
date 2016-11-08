@@ -150,7 +150,7 @@ class ProductController extends Controller
 
         if( $product ){
             Elasticsearch::delete([
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'products',
                 'id'    => $product->id
             ]);

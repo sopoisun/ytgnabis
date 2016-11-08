@@ -49,7 +49,7 @@ class ServicesElasticsearchJob extends Job implements ShouldQueue
         $docs = [];
         foreach ( $services as $service ) {
             $doc = [
-                'index' => 'e-wangi',
+                'index' => env('ES_INDEX'),
                 'type'  => 'services',
                 'id'    => $service->id,
                 'body'  => [
@@ -87,7 +87,7 @@ class ServicesElasticsearchJob extends Job implements ShouldQueue
         $service = BusinessService::with(['business.kecamatan'])->find($this->id);
 
         $doc = [
-            'index' => 'e-wangi',
+            'index' => env('ES_INDEX'),
             'type'  => 'services',
             'id'    => $service->id,
             'body'  => [
