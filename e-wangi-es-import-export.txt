@@ -1,0 +1,6 @@
+#References
+https://github.com/taskrabbit/elasticsearch-dump
+http://blog.kiyanpro.com/2016/03/11/elasticsearch/Export-Index-Using-Elasticsearch-Dump/
+
+#Copy localdata to server
+elasticdump --input=http://localhost:9200/e-wangi-beta --output=http://103.23.21.194:9200/e-wangi-beta --type=data
