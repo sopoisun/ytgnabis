@@ -58,6 +58,7 @@ class ServicesElasticsearchJob extends Job implements ShouldQueue
                     'name_for_sort' => str_replace(" ", "", $service->name),
                     'price' => $service->price,
                     'image' => $service->image_url,
+                    'original_image' => $product->original_image,
                     'business'  => [
                         'id'        => $service->business->id,
                         'name'      => $service->business->name,
@@ -96,6 +97,7 @@ class ServicesElasticsearchJob extends Job implements ShouldQueue
                 'name_for_sort' => str_replace(" ", "", $service->name),
                 'price' => $service->price,
                 'image' => $service->image_url,
+                'original_image' => $product->original_image,
                 'business'  => [
                     'id'        => $service->business->id,
                     'name'      => $service->business->name,

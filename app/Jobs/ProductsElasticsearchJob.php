@@ -58,6 +58,8 @@ class ProductsElasticsearchJob extends Job implements ShouldQueue
                     'name_for_sort' => str_replace(" ", "", $product->name),
                     'price' => $product->price,
                     'image' => $product->image_url,
+                    'original_image' => $product->original_image,
+                    'satuan'    => $product->satuan,
                     'business'  => [
                         'id'        => $product->business->id,
                         'name'      => $product->business->name,
@@ -100,6 +102,8 @@ class ProductsElasticsearchJob extends Job implements ShouldQueue
                 'name_for_sort' => str_replace(" ", "", $product->name),
                 'price' => $product->price,
                 'image' => $product->image_url,
+                'original_image' => $product->original_image,
+                'satuan'    => $product->satuan,
                 'business'  => [
                     'id'        => $product->business->id,
                     'name'      => $product->business->name,
