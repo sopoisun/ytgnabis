@@ -38,11 +38,25 @@
         @if($errors->has('price'))<span class="help-block">{{ $errors->first('price') }}</span>@endif
     </div>
 </div>
+<div class="form-group @if($errors->has('satuan')) has-error @endif">
+    <label for="satuan" class="col-lg-3 col-sm-3 control-label">Satuan</label>
+    <div class="col-lg-9">
+        {{ Form::text('satuan', null, ['class' => 'form-control', 'id' => 'satuan', 'placeholder' => 'Enter satuan']) }}
+        @if($errors->has('satuan'))<span class="help-block">{{ $errors->first('satuan') }}</span>@endif
+    </div>
+</div>
 <div class="form-group @if($errors->has('product_category_id')) has-error @endif">
     <label for="product_category_id" class="col-lg-3 col-sm-3 control-label">Kategori</label>
     <div class="col-lg-9">
         {{ Form::select('product_category_id', $categories, null, ['id' => 'product_category_id', 'class' => 'form-control select2']) }}
         @if($errors->has('product_category_id'))<span class="help-block">{{ $errors->first('product_category_id') }}</span>@endif
+    </div>
+</div>
+<div class="form-group @if($errors->has('original_image')) has-error @endif">
+    <label for="original_image" class="col-lg-3 col-sm-3 control-label">Original Image</label>
+    <div class="col-lg-9">
+        {{ Form::checkbox('original_image', 1, null, ['id' => 'original_image', 'class' => 'js-switch-small-green']) }}
+        @if($errors->has('original_image'))<span class="help-block">{{ $errors->first('original_image') }}</span>@endif
     </div>
 </div>
 <div class="form-group @if($errors->has('image')) has-error @endif">

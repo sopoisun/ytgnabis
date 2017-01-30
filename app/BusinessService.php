@@ -9,7 +9,8 @@ use Image;
 
 class BusinessService extends SeoModel
 {
-    protected $fillable = ['business_id', 'seo_id', 'name', 'price', 'image_url', 'about', 'counter', 'active'];
+    protected $fillable = ['business_id', 'seo_id', 'name', 'price', 'image_url', 'about', 'counter',
+                                'active', 'original_image'];
     protected $hidden   = ['created_at', 'updated_at'];
 
     /* Relation */
@@ -28,7 +29,7 @@ class BusinessService extends SeoModel
     public static function simpan( $request )
     {
         // for database
-        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'seo']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'seo', 'original_image']);
 
         // Upload image
         if( $request->hasFile('image') ){
@@ -69,7 +70,7 @@ class BusinessService extends SeoModel
 
     public static function ubah( $id, $request, $custom_fields = [] )
     {
-        $inputs = $request->only(['business_id', 'name', 'price', 'about']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'original_image']);
 
         $current = self::find( $id );
 

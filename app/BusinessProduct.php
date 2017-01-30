@@ -10,7 +10,7 @@ use Image;
 class BusinessProduct extends SeoModel
 {
     protected $fillable = ['business_id', 'seo_id', 'name', 'price', 'image_url', 'about', 'product_category_id',
-                                'counter', 'active'];
+                                'counter', 'active', 'original_image', 'satuan'];
     protected $hidden   = ['created_at', 'updated_at'];
 
     /* Relation */
@@ -34,7 +34,11 @@ class BusinessProduct extends SeoModel
     public static function simpan( $request )
     {
         // for database
-        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id', 'seo']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id', 'seo', 'satuan']);
+
+        if( $request->has('original_image') ){
+            $inputs += [ 'original_image' => $request->get('original_image') ];
+        }
 
         // Upload image
         if( $request->hasFile('image') ){
@@ -75,7 +79,11 @@ class BusinessProduct extends SeoModel
 
     public static function ubah( $id, $request, $custom_fields = [] )
     {
-        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id', 'satuan']);
+
+        if( $request->has('original_image') ){
+            $inputs += [ 'original_image' => $request->get('original_image') ];
+        }
 
         $current = self::find( $id );
 
