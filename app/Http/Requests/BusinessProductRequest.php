@@ -32,6 +32,8 @@ class BusinessProductRequest extends SeoRequest
 
         $rules += $this->seoRules();
 
+        unset($rules['seo.permalink']);
+
         return $rules;
     }
 

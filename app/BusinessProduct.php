@@ -62,6 +62,7 @@ class BusinessProduct extends SeoModel
 
         if ( $result ) {
 
+            $inputs['seo']['permalink']     = $inputs['seo']['permalink'].'-'.str_random(5);
             $inputs['seo']['relation_id']   = $result->id;
             $inputs['seo']['seo_id']        = $seo_id;
             $inputs['seo']['controller']    = isset ( $inputs['seo']['controller'] ) ?
