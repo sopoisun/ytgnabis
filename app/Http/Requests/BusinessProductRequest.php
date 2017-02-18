@@ -28,7 +28,6 @@ class BusinessProductRequest extends SeoRequest
             'name'          => 'required',
             'price'         => 'required|string|integer',
             'image'         => 'image|mimes:jpeg,png',
-            'satuan'        => 'required',
         ];
 
         $rules += $this->seoRules();

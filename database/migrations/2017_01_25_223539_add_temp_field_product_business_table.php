@@ -14,7 +14,7 @@ class AddTempFieldProductBusinessTable extends Migration
     {
         Schema::table('business_products', function (Blueprint $table) {
             $table->enum('original_image', [0, 1])->default(0);
-            $table->string('satuan');
+            $table->string('satuan')->nullable();
         });
     }
 
