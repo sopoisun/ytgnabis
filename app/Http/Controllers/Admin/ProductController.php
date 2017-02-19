@@ -32,13 +32,14 @@ class ProductController extends Controller
                 $business->where('business_id', $request->get('business'));
             }
 
-            $products = $business->where('active', 1)->orderBy('name')->get();
+            $products = $business->where('active', 1)->orderBy('name')->paginate(50);
         }else{
-            $products = BusinessProduct::where('active', 1)->orderBy('name')->get();
+            $products = BusinessProduct::with(['category', 'business'])
+                ->where('active', 1)->orderBy('name')->paginate(50);
         }
 
         $data = [
-            'products' => $products->load(['category', 'business']),
+            'products' => $products,
         ];
 
         return view(config('app.backend_template').'.product.table', $data);

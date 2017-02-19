@@ -66,6 +66,9 @@
                         @endif
                     </tbody>
                 </table>
+
+                @include('slicklab.paginator', ['paginator' => $products])
+
             </section>
         </div>
     </div>
