@@ -67,8 +67,12 @@
                     <li>
                         <h3 class="navigation-title">Navigation</h3>
                     </li>
-                    <li class="{{ set_active('backend', 'nav-active') }}"><a href="{{ url('/backend/') }}"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
-                    <li class="{{ set_active('backend/image', 'nav-active') }}"><a href="{{ url('/backend/image') }}"><i class="fa fa-image"></i> <span>Image Server</span></a></li>
+                    <li class="{{ set_active('backend') }}">
+                        <a href="{{ url('/backend/') }}"><i class="fa fa-home"></i> <span>Dashboard</span></a>
+                    </li>
+                    <li class="{{ set_active('backend/image') }}">
+                        <a href="{{ url('/backend/image') }}"><i class="fa fa-image"></i> <span>Image Server</span></a>
+                    </li>
                     <li class="menu-list {{ set_active('backend/business/category*', 'nav-active') }}">
                         <a href=""><i class="fa fa-tag"></i>  <span>Kategori Bisnis</span></a>
                         <ul class="child-list">
