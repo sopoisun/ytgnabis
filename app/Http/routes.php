@@ -69,6 +69,9 @@ Route::group(['prefix' => 'backend'], function(){
         Route::get('/', 'DashboardController@index');
         Route::get('/dashboard', 'DashboardController@index');
 
+        // Image
+        Route::get('/image', 'ImageController@index');
+
         // Business
         Route::get('/business', 'BusinessController@index');
         Route::get('/business/write-to-es', 'BusinessController@write_to_es');
