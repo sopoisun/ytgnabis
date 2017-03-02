@@ -61,14 +61,14 @@
         placeholder: placeholder
     });
 
-    CKEDITOR.replace('isi', {
+    /*CKEDITOR.replace('isi', {
         filebrowserBrowseUrl: '{{ url("/jseditor/kcfinder/browse.php?type=files") }}',
         filebrowserImageBrowseUrl: '{{ url("/jseditor/kcfinder/browse.php?type=images") }}',
         filebrowserFlashBrowseUrl: '{{ url("/jseditor/kcfinder/browse.php?type=flash") }}',
         filebrowserUploadUrl: '{{ url("/jseditor/kcfinder/upload.php?type=files") }}',
         filebrowserImageUploadUrl: '{{ ("/jseditor/kcfinder/upload.php?type=images") }}',
         filebrowserFlashUploadUrl: '{{ url("/jseditor/kcfinder/upload.php?type=flash") }}'
-    });
+    });*/
 </script>
 @include('slicklab.partials.seo-create-section', ['mainComponent' => 'page_title'])
 @stop
