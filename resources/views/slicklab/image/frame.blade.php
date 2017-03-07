@@ -27,7 +27,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div style="height:600px; padding:5px; background:#DDD; border-radius:5px;">
-                <iframe src="{{ url('/jseditor/kcfinder/browse.php?type=images') }}"
+                <iframe src="http://dmb.e-wangi.com/kcfinder/index.php?type=images&tokenkey={{ env('IMG_SERVER_KEY') }}"
                     frameborder="0" width="100%" height="100%" marginwidth="0"
                         marginheight="0" scrolling="no"></iframe>
             </div>
