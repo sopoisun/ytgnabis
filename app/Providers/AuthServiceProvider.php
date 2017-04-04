@@ -32,11 +32,11 @@ class AuthServiceProvider extends ServiceProvider
          * NOTE!!
          * First time migration will fails, because permissions table doesn't exists.
          */
-         foreach($this->getPermissions() as $permission) {
+         /*foreach($this->getPermissions() as $permission) {
              $gate->define($permission->key, function($user) use ($permission) {
                  return $user->hasRole($permission->roles);
              });
-         }
+         }*/
     }
 
     protected function getPermissions()
