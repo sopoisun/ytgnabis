@@ -34,12 +34,13 @@ class BusinessProduct extends SeoModel
     public static function simpan( $request )
     {
         // for database
-        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id', 'seo', 'satuan']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id', 'seo', 'satuan', 'image_url']);
 
         if( $request->has('original_image') ){
             $inputs += [ 'original_image' => $request->get('original_image') ];
         }
 
+        /*
         // Upload image
         if( $request->hasFile('image') ){
             if( $request->file('image')->isValid() )
@@ -54,6 +55,7 @@ class BusinessProduct extends SeoModel
                 $inputs  += [ 'image_url' => $imgUrl ];
             }
         }
+        */
 
         $seo_id             = isset ( $inputs['seo_id'] ) ? $inputs['seo_id'] : self::seoIdAttribute();
         $inputs['seo_id']   = $seo_id;
@@ -80,7 +82,7 @@ class BusinessProduct extends SeoModel
 
     public static function ubah( $id, $request, $custom_fields = [] )
     {
-        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id', 'satuan']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'product_category_id', 'satuan', 'image_url']);
 
         if( $request->has('original_image') ){
             $inputs += [ 'original_image' => $request->get('original_image') ];
@@ -88,6 +90,7 @@ class BusinessProduct extends SeoModel
 
         $current = self::find( $id );
 
+        /*
         // Upload Image
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
@@ -106,6 +109,7 @@ class BusinessProduct extends SeoModel
                 $inputs += [ 'image_url' => $imgUrl ];
             }
         }
+        */
 
         if (  $current->update( $inputs ) ) {
             $fields     = ['seo.site_title', 'seo.description', 'seo.keywords'];
@@ -124,8 +128,8 @@ class BusinessProduct extends SeoModel
         $current = self::find( $id );
         if (  $current->update(['active' => 0]) ) {
             if( Seo::where('seo_id', $current->seo_id)->delete() ){
-                unlink(public_path().'/files/products/'.$current->image_url);
-                unlink(public_path().'/files/products/thumbs/'.$current->image_url);
+                //unlink(public_path().'/files/products/'.$current->image_url);
+                //unlink(public_path().'/files/products/thumbs/'.$current->image_url);
 
                 return $current;
             }
