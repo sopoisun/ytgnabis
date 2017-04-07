@@ -87,11 +87,18 @@
         @if($errors->has('seo.keywords'))<span class="help-block">{{ $errors->first('seo.keywords') }}</span>@endif
     </div>
 </div>
-<div class="form-group @if($errors->has('image')) has-error @endif">
+<!--<div class="form-group @if($errors->has('image')) has-error @endif">
     <label for="image" class="col-lg-3 col-sm-3 control-label">Image</label>
     <div class="col-lg-9">
         {{ Form::file('image', ['class' => 'form-control file', 'id' => 'image']) }}
         @if($errors->has('image'))<span class="help-block">{{ $errors->first('image') }}</span>@endif
+    </div>
+</div>-->
+<div class="form-group @if($errors->has('image_url')) has-error @endif">
+    <label for="image" class="col-lg-3 col-sm-3 control-label">Image URL</label>
+    <div class="col-lg-9">
+        {{ Form::text('image_url', null, ['class' => 'form-control', 'id' => 'image_url', 'placeholder' => 'Enter Image URL']) }}
+        @if($errors->has('image_url'))<span class="help-block">{{ $errors->first('image_url') }}</span>@endif
     </div>
 </div>
 <div class="form-group @if($errors->has('about')) has-error @endif">

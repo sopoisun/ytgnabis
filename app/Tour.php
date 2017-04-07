@@ -57,6 +57,7 @@ class Tour extends SeoModel
     {
         $inputs = $request->all();
 
+        /*
         // Upload image
         if( $request->hasFile('image') ){
             if( $request->file('image')->isValid() )
@@ -71,6 +72,7 @@ class Tour extends SeoModel
                 $inputs  += [ 'image_url' => $imgUrl ];
             }
         }
+        */
 
         $seo_id             = isset ( $inputs['seo_id'] ) ? $inputs['seo_id'] : self::seoIdAttribute();
         $inputs['seo_id']   = $seo_id;
@@ -102,6 +104,7 @@ class Tour extends SeoModel
         $current = self::find( $id );
         $oldCategories  = json_decode($current->categories->lists('id'), true);
 
+        /*
         // Upload Image
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
@@ -119,6 +122,7 @@ class Tour extends SeoModel
                 $inputs += [ 'image_url' => $imgUrl ];
             }
         }
+        */
 
         if (  $current->update( $inputs ) ) {
 
@@ -131,7 +135,7 @@ class Tour extends SeoModel
             if( count($removeCategories) ){
                 $current->removeCategory($removeCategories);
             }
-            
+
             $fields     = ['seo.site_title', 'seo.description', 'seo.keywords'];
             $fields     = array_merge($fields, $custom_fields);
             $seoInputs  = $request->only( $fields );

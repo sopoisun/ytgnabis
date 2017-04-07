@@ -29,7 +29,8 @@ class TourRequest extends SeoRequest
             'map_lat'   => 'required',
             'map_long'  => 'required',
             'phone'     => 'required',
-            'image'     => 'image|mimes:jpeg,png',
+            //'image'     => 'image|mimes:jpeg,png',
+            'image_url' => 'required',
             'tiket'     => 'required|integer',
         ];
 
@@ -48,6 +49,7 @@ class TourRequest extends SeoRequest
             'phone.required'    => 'Telpon tidak boleh kosong.',
             'image.image'        => 'Image harus gambar.',
             'image.mimes'        => 'Image harus format jpg atau png.',
+            'image_url.required' => 'Image url tidak boleh kosong.',
             'tiket.required'     => 'Tiket tidak boleh kosong.',
             'tiket.integer'      => 'Input harus angka.',
         ];
