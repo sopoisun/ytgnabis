@@ -152,8 +152,8 @@ class Tour extends SeoModel
         $current = self::find( $id );
         if (  $current->update(['active' => 0]) ) {
             if( Seo::where('seo_id', $current->seo_id)->delete() ){
-                unlink(public_path().'/files/tourises/'.$current->image_url);
-                unlink(public_path().'/files/tourises/thumbs/'.$current->image_url);
+                //unlink(public_path().'/files/tourises/'.$current->image_url);
+                //unlink(public_path().'/files/tourises/thumbs/'.$current->image_url);
 
                 return $current;
             }
