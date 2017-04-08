@@ -30,7 +30,8 @@ class BusinessRequest extends SeoRequest
             'map_long'  => 'required',
             'phone'     => 'required',
             'categories'=> 'required',
-            'image'     => 'image|mimes:jpeg,png',
+            //'image'     => 'image|mimes:jpeg,png',
+            'image_url' => 'required',
         ];
 
         $rules += $this->seoRules();
@@ -49,6 +50,7 @@ class BusinessRequest extends SeoRequest
             'categories.required'=> 'Kategori tidak boleh kosong.',
             'image.image'        => 'Image harus gambar.',
             'image.mimes'        => 'Image harus format jpg atau png.',
+            'image_url.required' => 'Image url tidak boleh kosong.',
         ];
 
         $messages += $this->seoMessages();

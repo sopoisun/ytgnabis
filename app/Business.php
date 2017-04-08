@@ -62,6 +62,7 @@ class Business extends SeoModel
     {
         $inputs = $request->all();
 
+        /*
         // Upload image
         if( $request->hasFile('image') ){
             if( $request->file('image')->isValid() )
@@ -76,6 +77,7 @@ class Business extends SeoModel
                 $inputs  += [ 'image_url' => $imgUrl ];
             }
         }
+        */
 
         $seo_id             = isset ( $inputs['seo_id'] ) ? $inputs['seo_id'] : self::seoIdAttribute();
         $inputs['seo_id']   = $seo_id;
@@ -107,6 +109,7 @@ class Business extends SeoModel
         $current = self::with('categories')->find( $id );
         $oldCategories  = json_decode($current->categories->lists('id'), true);
 
+        /*
         // Upload Image
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
@@ -124,6 +127,7 @@ class Business extends SeoModel
                 $inputs += [ 'image_url' => $imgUrl ];
             }
         }
+        */
 
         if (  $current->update( $inputs ) ) {
 
@@ -153,8 +157,8 @@ class Business extends SeoModel
         $current = self::find( $id );
         if (  $current->update(['active' => 0]) ) {
             if( Seo::where('seo_id', $current->seo_id)->delete() ){
-                unlink(public_path().'/files/businesses/'.$current->image_url);
-                unlink(public_path().'/files/businesses/thumbs/'.$current->image_url);
+                //unlink(public_path().'/files/businesses/'.$current->image_url);
+                //unlink(public_path().'/files/businesses/thumbs/'.$current->image_url);
 
                 return $current;
             }
