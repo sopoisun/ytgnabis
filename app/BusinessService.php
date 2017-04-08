@@ -29,8 +29,9 @@ class BusinessService extends SeoModel
     public static function simpan( $request )
     {
         // for database
-        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'seo', 'original_image']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'seo', 'original_image', 'image_url']);
 
+        /*
         // Upload image
         if( $request->hasFile('image') ){
             if( $request->file('image')->isValid() )
@@ -45,6 +46,7 @@ class BusinessService extends SeoModel
                 $inputs  += [ 'image_url' => $imgUrl ];
             }
         }
+        */
 
         $seo_id             = isset ( $inputs['seo_id'] ) ? $inputs['seo_id'] : self::seoIdAttribute();
         $inputs['seo_id']   = $seo_id;
@@ -70,10 +72,11 @@ class BusinessService extends SeoModel
 
     public static function ubah( $id, $request, $custom_fields = [] )
     {
-        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'original_image']);
+        $inputs = $request->only(['business_id', 'name', 'price', 'about', 'original_image', 'image_url']);
 
         $current = self::find( $id );
 
+        /*
         // Upload Image
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
@@ -92,6 +95,7 @@ class BusinessService extends SeoModel
                 $inputs += [ 'image_url' => $imgUrl ];
             }
         }
+        */
 
         if (  $current->update( $inputs ) ) {
             $fields     = ['seo.site_title', 'seo.description', 'seo.keywords'];
@@ -110,8 +114,8 @@ class BusinessService extends SeoModel
         $current = self::find( $id );
         if (  $current->update(['active' => 0]) ) {
             if( Seo::where('seo_id', $current->seo_id)->delete() ){
-                unlink(public_path().'/files/services/'.$current->image_url);
-                unlink(public_path().'/files/services/thumbs/'.$current->image_url);
+                //unlink(public_path().'/files/services/'.$current->image_url);
+                //unlink(public_path().'/files/services/thumbs/'.$current->image_url);
 
                 return $current;
             }

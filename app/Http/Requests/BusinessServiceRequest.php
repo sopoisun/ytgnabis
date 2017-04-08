@@ -27,7 +27,8 @@ class BusinessServiceRequest extends SeoRequest
             'business_id'   => 'required|exists:businesses,id',
             'name'          => 'required',
             'price'         => 'required|string|integer',
-            'image'         => 'image|mimes:jpeg,png',
+            //'image'         => 'image|mimes:jpeg,png',
+            'image_url'     => 'required',
         ];
 
         $rules += $this->seoRules();
@@ -46,6 +47,7 @@ class BusinessServiceRequest extends SeoRequest
             'image.required'        => 'Image tidak boleh kosong.',
             'image.image'           => 'Image harus gambar.',
             'image.mimes'           => 'Image harus format jpg atau png.',
+            'image_url.required'    => 'Image url tidak boleh kosong.',
         ];
 
         $messages += $this->seoMessages();
